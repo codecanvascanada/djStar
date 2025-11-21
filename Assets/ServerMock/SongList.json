@@ -1,0 +1,108 @@
+{
+    "songs": [
+        {
+            "id": "cherry",
+            "assetBundleName": "song_cherry",
+            "versionHash": "ea9c786823b8edf6edb7ef247302196e",
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "base"
+            ],
+            "availableUntil": ""
+        },
+        {
+            "id": "unfold",
+            "assetBundleName": "song_unfold",
+            "versionHash": "4dee47ac5626ac5cb17c5f722e799327",
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "base"
+            ],
+            "availableUntil": ""
+        },
+        {
+            "id": "20minutes",
+            "assetBundleName": "song_20minutes",
+            "versionHash": "bad26eb169baa40fed4573faa97449de",
+            "unlockedByDefault": false,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "base"
+            ],
+            "availableUntil": ""
+        },
+        {
+            "id": "Unfold",
+            "assetBundleName": "song_Unfold",
+            "versionHash": "4dee47ac5626ac5cb17c5f722e799327",
+            "unlockedByDefault": false,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "base"
+            ],
+            "availableUntil": ""
+        },
+        {
+            "id": "happy",
+            "assetBundleName": "song_happy",
+            "versionHash": "b0d6c059d2cd3cf00d027f5db13cce86",
+            "unlockedByDefault": false,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "base"
+            ],
+            "availableUntil": ""
+        },
+        {
+            "id": "honey",
+            "assetBundleName": "song_honey",
+            "versionHash": "6baabbe0fc779c12f733d58e17c1af45",
+            "unlockedByDefault": false,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "base"
+            ],
+            "availableUntil": ""
+        },
+        {
+            "id": "melody",
+            "assetBundleName": "song_melody",
+            "versionHash": "3b949d6de3d9931a95091d0c6cbcec21",
+            "unlockedByDefault": false,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "base"
+            ],
+            "availableUntil": ""
+        },
+        {
+            "id": "moonlight",
+            "assetBundleName": "song_moonlight",
+            "versionHash": "2265da0962ad7e34b6054b915377836e",
+            "unlockedByDefault": false,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "base"
+            ],
+            "availableUntil": ""
+        }
+    ]
+}

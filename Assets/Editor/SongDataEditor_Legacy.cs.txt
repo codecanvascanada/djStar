@@ -1,0 +1,102 @@
+using UnityEngine;
+using UnityEditor;
+using System.Collections.Generic;
+
+[CustomEditor(typeof(SongData_Legacy))]
+public class SongDataEditor_Legacy : Editor
+{
+    // Enum to define our filter options
+    private enum NoteFilter
+    {
+        All,
+        Tap,
+        Hold
+    }
+
+    // Static variable to remember the filter selection between inspector updates
+    private static NoteFilter currentFilter = NoteFilter.All;
+
+    private SerializedProperty audioClipProp;
+    private SerializedProperty bpmProp;
+    private SerializedProperty artistNameProp;
+    private SerializedProperty songNameProp;
+    private SerializedProperty notesProp;
+    private SerializedProperty lyricsProp;
+
+    private void OnEnable()
+    {
+        // Link our SerializedProperty variables to the properties of the SongData script
+        audioClipProp = serializedObject.FindProperty("audioClip");
+        bpmProp = serializedObject.FindProperty("bpm");
+        artistNameProp = serializedObject.FindProperty("artistName");
+        songNameProp = serializedObject.FindProperty("songName");
+        notesProp = serializedObject.FindProperty("notes");
+        lyricsProp = serializedObject.FindProperty("lyrics");
+    }
+
+    public override void OnInspectorGUI()
+    {
+        // Update the serializedObject to get the latest data
+        serializedObject.Update();
+
+        // Draw the default fields for Song Info
+        EditorGUILayout.LabelField("Song Info", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(audioClipProp);
+        EditorGUILayout.PropertyField(bpmProp);
+        EditorGUILayout.PropertyField(artistNameProp);
+        EditorGUILayout.PropertyField(songNameProp);
+
+        EditorGUILayout.Space();
+
+        // --- Notes Section with Filter ---
+        EditorGUILayout.LabelField("Gameplay Data", EditorStyles.boldLabel);
+
+        // Draw the filter dropdown
+        currentFilter = (NoteFilter)EditorGUILayout.EnumPopup("Filter Notes By Type", currentFilter);
+
+        EditorGUILayout.Space();
+
+        // Display the notes list based on the filter
+        int originalListSize = notesProp.arraySize;
+        List<int> filteredIndices = new List<int>();
+
+        // First, find all indices that match the filter
+        for (int i = 0; i < originalListSize; i++)
+        {
+            SerializedProperty noteProp = notesProp.GetArrayElementAtIndex(i);
+            SerializedProperty noteTypeProp = noteProp.FindPropertyRelative("noteType");
+
+            if (currentFilter == NoteFilter.All || 
+                (currentFilter == NoteFilter.Tap && (NoteType)noteTypeProp.enumValueIndex == NoteType.Tap) ||
+                (currentFilter == NoteFilter.Hold && (NoteType)noteTypeProp.enumValueIndex == NoteType.Hold))
+            {
+                filteredIndices.Add(i);
+            }
+        }
+
+        // Display the size of the filtered list
+        EditorGUILayout.LabelField($"Showing {filteredIndices.Count} of {originalListSize} notes.");
+
+        // Draw a property field for each filtered note
+        // We use a foldout to make it collapsible
+        notesProp.isExpanded = EditorGUILayout.Foldout(notesProp.isExpanded, "Notes");
+        if (notesProp.isExpanded)
+        {
+            EditorGUI.indentLevel++;
+            foreach (int index in filteredIndices)
+            {
+                EditorGUILayout.PropertyField(notesProp.GetArrayElementAtIndex(index), new GUIContent($"Note {index}"), true);
+            }
+            EditorGUI.indentLevel--;
+        }
+
+        EditorGUILayout.Space();
+
+        // Draw the lyrics list
+        EditorGUILayout.LabelField("Lyric Data", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(lyricsProp, true);
+
+        // Apply any changes made in the inspector
+        serializedObject.ApplyModifiedProperties();
+    }
+}

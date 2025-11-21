@@ -1,0 +1,43 @@
+using UnityEngine;
+using System.Collections.Generic;
+
+// A serializable class for a single line of lyrics
+[System.Serializable]
+public class LyricLine
+{
+    public string line;
+    public float timeInSeconds;
+}
+
+// Enum to define the type of note
+public enum NoteType
+{
+    Tap,
+    Hold
+}
+
+// A serializable class for a single gameplay note
+[System.Serializable]
+public class NoteData
+{
+    public int laneIndex; // 0 to 3 for our 4 lanes
+    public float timeToHit;
+    public NoteType noteType;
+    public float holdDuration; // Only used if noteType is Hold
+}
+
+[CreateAssetMenu(fileName = "New SongData", menuName = "DJStar/Song Data")]
+public class SongData : ScriptableObject
+{
+    [Header("Song Info")]
+    public AudioClip audioClip;
+    public float bpm; // Beats Per Minute
+    public string artistName;
+    public string songName;
+
+    [Header("Gameplay Data")]
+    public List<NoteData> notes;
+
+    [Header("Lyric Data")]
+    public List<LyricLine> lyrics;
+}
