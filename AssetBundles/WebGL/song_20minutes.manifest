@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 2540560287
+CRC: 1702559514
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3395c4c246a17a42f1821e6b23ea0c3d
+    Hash: c57df329bcd9eb9f46cf2eee48540eba
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 87d8623b7646ca1c37beabebb6945dde
+    Hash: dbf648af05de5a032c66fac982dec0e9
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 3395c4c246a17a42f1821e6b23ea0c3d
+    Hash: c57df329bcd9eb9f46cf2eee48540eba
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -17,17 +17,17 @@ ClassTypes:
 - Class: 83
   Script: {instanceID: 0}
 - Class: 114
-  Script: {fileID: 11500000, guid: 951b9fbb9622543e9a6876fe91ca8877, type: 3}
+  Script: {fileID: 11500000, guid: 8b22792c3b570444eb18cb78c2af3a74, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 87c8ec3f25bd74b63b63c5bf1d127c8b, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 8b22792c3b570444eb18cb78c2af3a74, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 1d0e215490a954b7c9dfdf0b3219414d, type: 3}
+  Script: {fileID: 11500000, guid: 951b9fbb9622543e9a6876fe91ca8877, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
+  Script: {fileID: 11500000, guid: 1d0e215490a954b7c9dfdf0b3219414d, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 213
@@ -44,8 +44,8 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: Unity.Timeline
   ClassName: UnityEngine.Timeline.TimelineClip
 Assets:
+- Assets/songs/20minutes/20 minutes.ogg
 - Assets/songs/20minutes/20minutes.playable
-- Assets/songs/20minutes/20 minutes.wav
 - Assets/songs/20minutes/images/bg.jpg
 - Assets/songs/20minutes/20minutes.asset
 Dependencies: []
