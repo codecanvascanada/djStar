@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 3823078423
+CRC: 723768904
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: deaa483ae17cacb1cb5af6fc6d902a5f
+    Hash: b63158e2854969576f3a82d605a12054
   TypeTreeHash:
     serializedVersion: 2
     Hash: 87d8623b7646ca1c37beabebb6945dde
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: deaa483ae17cacb1cb5af6fc6d902a5f
+    Hash: b63158e2854969576f3a82d605a12054
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -44,8 +44,8 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: Unity.Timeline
   ClassName: UnityEngine.Timeline.TimelineClip
 Assets:
-- Assets/songs/20minutes/20minutes.mp3
 - Assets/songs/20minutes/20minutes.playable
+- Assets/songs/20minutes/20 minutes.wav
 - Assets/songs/20minutes/images/bg.jpg
 - Assets/songs/20minutes/20minutes.asset
 Dependencies: []
