@@ -3,106 +3,72 @@
         {
             "id": "cherry",
             "assetBundleName": "song_cherry",
-            "versionHash": "ea9c786823b8edf6edb7ef247302196e",
-            "unlockedByDefault": true,
-            "priceCoins": 1000,
+            "version": 0,
+            "unlockedByDefault": false,
+            "priceCoins": 0,
             "priceGems": 0,
-            "requiredLevel": 1,
-            "tags": [
-                "base"
-            ],
-            "availableUntil": ""
+            "requiredLevel": 0,
+            "tags": []
         },
         {
             "id": "unfold",
             "assetBundleName": "song_unfold",
-            "versionHash": "4dee47ac5626ac5cb17c5f722e799327",
-            "unlockedByDefault": true,
-            "priceCoins": 1000,
-            "priceGems": 0,
-            "requiredLevel": 1,
-            "tags": [
-                "base"
-            ],
-            "availableUntil": ""
-        },
-        {
-            "id": "20minutes",
-            "assetBundleName": "song_20minutes",
-            "versionHash": "bad26eb169baa40fed4573faa97449de",
+            "version": 0,
             "unlockedByDefault": false,
-            "priceCoins": 1000,
+            "priceCoins": 0,
             "priceGems": 0,
-            "requiredLevel": 1,
-            "tags": [
-                "base"
-            ],
-            "availableUntil": ""
-        },
-        {
-            "id": "Unfold",
-            "assetBundleName": "song_Unfold",
-            "versionHash": "4dee47ac5626ac5cb17c5f722e799327",
-            "unlockedByDefault": false,
-            "priceCoins": 1000,
-            "priceGems": 0,
-            "requiredLevel": 1,
-            "tags": [
-                "base"
-            ],
-            "availableUntil": ""
+            "requiredLevel": 0,
+            "tags": []
         },
         {
             "id": "happy",
             "assetBundleName": "song_happy",
-            "versionHash": "b0d6c059d2cd3cf00d027f5db13cce86",
+            "version": 0,
             "unlockedByDefault": false,
-            "priceCoins": 1000,
+            "priceCoins": 0,
             "priceGems": 0,
-            "requiredLevel": 1,
-            "tags": [
-                "base"
-            ],
-            "availableUntil": ""
+            "requiredLevel": 0,
+            "tags": []
         },
         {
             "id": "honey",
             "assetBundleName": "song_honey",
-            "versionHash": "6baabbe0fc779c12f733d58e17c1af45",
+            "version": 0,
             "unlockedByDefault": false,
-            "priceCoins": 1000,
+            "priceCoins": 0,
             "priceGems": 0,
-            "requiredLevel": 1,
-            "tags": [
-                "base"
-            ],
-            "availableUntil": ""
+            "requiredLevel": 0,
+            "tags": []
         },
         {
             "id": "melody",
             "assetBundleName": "song_melody",
-            "versionHash": "3b949d6de3d9931a95091d0c6cbcec21",
+            "version": 0,
             "unlockedByDefault": false,
-            "priceCoins": 1000,
+            "priceCoins": 0,
             "priceGems": 0,
-            "requiredLevel": 1,
-            "tags": [
-                "base"
-            ],
-            "availableUntil": ""
+            "requiredLevel": 0,
+            "tags": []
         },
         {
             "id": "moonlight",
             "assetBundleName": "song_moonlight",
-            "versionHash": "2265da0962ad7e34b6054b915377836e",
-            "unlockedByDefault": false,
-            "priceCoins": 1000,
+            "version": 1,
+            "unlockedByDefault": true,
+            "priceCoins": 0,
             "priceGems": 0,
-            "requiredLevel": 1,
-            "tags": [
-                "base"
-            ],
-            "availableUntil": ""
+            "requiredLevel": 0,
+            "tags": []
+        },
+        {
+            "id": "20minutes",
+            "assetBundleName": "song_20minutes",
+            "version": 4,
+            "unlockedByDefault": true,
+            "priceCoins": 0,
+            "priceGems": 0,
+            "requiredLevel": 0,
+            "tags": []
         }
     ]
 }
