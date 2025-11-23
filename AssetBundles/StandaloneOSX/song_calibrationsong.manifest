@@ -3,13 +3,13 @@ CRC: 2734491635
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 4735898482beee115cba8007f95227db
+    Hash: 657d14fc4a2df7b580369b240a87a107
   TypeTreeHash:
     serializedVersion: 2
     Hash: dbf648af05de5a032c66fac982dec0e9
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 4735898482beee115cba8007f95227db
+    Hash: 657d14fc4a2df7b580369b240a87a107
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -44,8 +44,8 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: Unity.Timeline
   ClassName: UnityEngine.Timeline.TimelineClip
 Assets:
-- Assets/songs/calibrationsong/calibrationSong.asset
-- Assets/songs/calibrationsong/calibrationSong.playable
-- Assets/songs/calibrationsong/images/bg.jpg
-- Assets/songs/calibrationsong/calibrationSong.mp3
+- Assets/Songs/calibrationsong/calibrationSong.asset
+- Assets/Songs/calibrationsong/calibrationSong.playable
+- Assets/Songs/calibrationsong/images/bg.jpg
+- Assets/Songs/calibrationsong/calibrationSong.mp3
 Dependencies: []
