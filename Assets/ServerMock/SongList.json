@@ -1,0 +1,100 @@
+{
+    "songs": [
+        {
+            "id": "20minutes",
+            "assetBundleName": "song_20minutes",
+            "version": 3,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "calibrationsong",
+            "assetBundleName": "song_calibrationsong",
+            "version": 4,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "cherry",
+            "assetBundleName": "song_cherry",
+            "version": 3,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "happy",
+            "assetBundleName": "song_happy",
+            "version": 1,
+            "unlockedByDefault": false,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "honey",
+            "assetBundleName": "song_honey",
+            "version": 1,
+            "unlockedByDefault": false,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "melody",
+            "assetBundleName": "song_melody",
+            "version": 1,
+            "unlockedByDefault": false,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "moonlight",
+            "assetBundleName": "song_moonlight",
+            "version": 1,
+            "unlockedByDefault": false,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "unfold",
+            "assetBundleName": "song_unfold",
+            "version": 1,
+            "unlockedByDefault": false,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        }
+    ]
+}

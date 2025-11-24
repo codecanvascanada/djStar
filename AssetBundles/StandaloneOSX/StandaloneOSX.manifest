@@ -1,0 +1,30 @@
+ManifestFileVersion: 0
+CRC: 1131303202
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: song_unfold
+      Dependencies:
+        Dependency_0: song_20minutes
+    Info_1:
+      Name: song_moonlight
+      Dependencies: {}
+    Info_2:
+      Name: song_honey
+      Dependencies: {}
+    Info_3:
+      Name: song_melody
+      Dependencies:
+        Dependency_0: song_20minutes
+    Info_4:
+      Name: song_cherry
+      Dependencies: {}
+    Info_5:
+      Name: song_20minutes
+      Dependencies: {}
+    Info_6:
+      Name: song_happy
+      Dependencies: {}
+    Info_7:
+      Name: song_calibrationsong
+      Dependencies: {}
