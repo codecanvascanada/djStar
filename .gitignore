@@ -18,7 +18,3 @@
 /Assets/ServerMock/*
 !/Assets/ServerMock/SongList.json
 !/Assets/ServerMock/SongList.json.meta
-
-# Keep the entire Songs source folder and everything inside it
-!/Assets/Songs/
-!/Assets/Songs/**
