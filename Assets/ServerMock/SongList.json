@@ -3,7 +3,7 @@
         {
             "id": "20minutes",
             "assetBundleName": "song_20minutes",
-            "version": 3,
+            "version": 4,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -27,7 +27,7 @@
         {
             "id": "cherry",
             "assetBundleName": "song_cherry",
-            "version": 3,
+            "version": 4,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -39,8 +39,8 @@
         {
             "id": "happy",
             "assetBundleName": "song_happy",
-            "version": 1,
-            "unlockedByDefault": false,
+            "version": 4,
+            "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
             "requiredLevel": 1,
