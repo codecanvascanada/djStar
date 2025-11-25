@@ -3,7 +3,7 @@
         {
             "id": "20minutes",
             "assetBundleName": "song_20minutes",
-            "version": 4,
+            "version": 5,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -15,7 +15,7 @@
         {
             "id": "calibrationsong",
             "assetBundleName": "song_calibrationsong",
-            "version": 4,
+            "version": 5,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -27,7 +27,7 @@
         {
             "id": "cherry",
             "assetBundleName": "song_cherry",
-            "version": 4,
+            "version": 5,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -39,7 +39,7 @@
         {
             "id": "happy",
             "assetBundleName": "song_happy",
-            "version": 4,
+            "version": 5,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -51,7 +51,7 @@
         {
             "id": "honey",
             "assetBundleName": "song_honey",
-            "version": 1,
+            "version": 5,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -63,7 +63,7 @@
         {
             "id": "melody",
             "assetBundleName": "song_melody",
-            "version": 1,
+            "version": 5,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -75,7 +75,7 @@
         {
             "id": "moonlight",
             "assetBundleName": "song_moonlight",
-            "version": 1,
+            "version": 5,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -87,7 +87,7 @@
         {
             "id": "unfold",
             "assetBundleName": "song_unfold",
-            "version": 1,
+            "version": 5,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
