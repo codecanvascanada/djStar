@@ -10,6 +10,9 @@
 !/AssetBundles/
 !/AssetBundles/**
 
+# But ignore the .manifest files inside AssetBundles
+/AssetBundles/**/*.manifest
+
 # Keep the SongList.json and its meta file
 # To do this, we must un-ignore the parent directories, then re-ignore their other contents.
 !/Assets/
