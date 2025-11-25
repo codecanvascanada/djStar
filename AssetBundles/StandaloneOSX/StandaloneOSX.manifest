@@ -1,30 +1,60 @@
 ManifestFileVersion: 0
-CRC: 1131303202
+CRC: 2141497028
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: song_unfold
-      Dependencies:
-        Dependency_0: song_20minutes
-    Info_1:
-      Name: song_moonlight
+      Name: music_20minutes
       Dependencies: {}
+    Info_1:
+      Name: chart_20minutes
+      Dependencies:
+        Dependency_0: music_20minutes
     Info_2:
-      Name: song_honey
+      Name: music_calibrationsong
       Dependencies: {}
     Info_3:
-      Name: song_melody
+      Name: chart_calibrationsong
       Dependencies:
-        Dependency_0: song_20minutes
+        Dependency_0: music_calibrationsong
     Info_4:
-      Name: song_cherry
+      Name: music_cherry
       Dependencies: {}
     Info_5:
-      Name: song_20minutes
-      Dependencies: {}
+      Name: chart_cherry
+      Dependencies:
+        Dependency_0: music_cherry
     Info_6:
-      Name: song_happy
+      Name: music_happy
       Dependencies: {}
     Info_7:
-      Name: song_calibrationsong
+      Name: chart_happy
+      Dependencies:
+        Dependency_0: music_happy
+    Info_8:
+      Name: music_honey
       Dependencies: {}
+    Info_9:
+      Name: chart_honey
+      Dependencies:
+        Dependency_0: music_honey
+    Info_10:
+      Name: music_melody
+      Dependencies: {}
+    Info_11:
+      Name: chart_melody
+      Dependencies:
+        Dependency_0: music_melody
+    Info_12:
+      Name: music_moonlight
+      Dependencies: {}
+    Info_13:
+      Name: chart_moonlight
+      Dependencies:
+        Dependency_0: music_moonlight
+    Info_14:
+      Name: music_unfold
+      Dependencies: {}
+    Info_15:
+      Name: chart_unfold
+      Dependencies:
+        Dependency_0: music_unfold

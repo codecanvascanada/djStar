@@ -1,0 +1,20 @@
+ManifestFileVersion: 0
+CRC: 1004211750
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 23b06e9a5fedbf243ed1a054e61215c3
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9a2ca7bdbd1871f7131daf57de908e0c
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 23b06e9a5fedbf243ed1a054e61215c3
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Songs/20minutes/20 minutes.ogg
+Dependencies: []
