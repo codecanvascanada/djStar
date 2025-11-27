@@ -770,6 +770,16 @@ public class SongManager : EditorWindow
                     private void CommitAndPush()
                     {
                         UnityEngine.Debug.Log("--- Starting Git Commit & Push ---");
+
+                        // Determine the current branch
+                        string branchNameOutput = RunGitCommandSync("rev-parse --abbrev-ref HEAD");
+                        if (branchNameOutput.Contains("ERROR:") || string.IsNullOrEmpty(branchNameOutput))
+                        {
+                            UnityEngine.Debug.LogError("Could not determine current git branch. Aborting push.");
+                            return;
+                        }
+                        string currentBranch = branchNameOutput.Trim();
+                        UnityEngine.Debug.Log($"Detected current branch as '{currentBranch}'");
                 
                         string addResult = RunGitCommandSync("add .");
                         UnityEngine.Debug.Log("Git Add Result:\n" + addResult);
@@ -780,16 +790,16 @@ public class SongManager : EditorWindow
                         UnityEngine.Debug.Log("Git Commit Result:\n" + commitResult);
                         // Don't return on commit error, as it might be 'nothing to commit' which is fine
                 
-                        string pullResult = RunGitCommandSync("pull --rebase origin main");
-                        UnityEngine.Debug.Log("Git Pull --rebase Result:\n" + pullResult);
+                        string pullResult = RunGitCommandSync($"pull --rebase origin {currentBranch}");
+                        UnityEngine.Debug.Log($"Git Pull --rebase Result (from branch {currentBranch}):\n" + pullResult);
                         if (pullResult.Contains("ERROR:") || pullResult.Contains("EXCEPTION:") || pullResult.ToLower().Contains("conflict"))
                         {
                             UnityEngine.Debug.LogError("Aborting push due to pull/rebase failure. Please resolve conflicts manually in the terminal.");
                             return;
                         }
                 
-                        string pushResult = RunGitCommandSync("push origin main");
-                        UnityEngine.Debug.Log("Git Push Result:\n" + pushResult);
+                        string pushResult = RunGitCommandSync($"push -u origin {currentBranch}");
+                        UnityEngine.Debug.Log($"Git Push Result (to branch {currentBranch}):\n" + pushResult);
                 
                         UnityEngine.Debug.Log("--- Git Commit & Push finished. ---");
                 
