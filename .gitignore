@@ -1,19 +1,13 @@
-# Unity가 생성하는 임시 파일 및 폴더
-/Library/
-/Temp/
-/Obj/
-/Build/
-/Builds/
-/Logs/
-/UserSettings/
+# 1. Ignore everything by default
+*
 
-# AssetBundle 매니페스트 파일은 무시
-*.manifest
+# 2. Un-ignore this .gitignore file
+!.gitignore
 
-# 자동 생성되는 솔루션/프로젝트 파일
-*.sln
-*.csproj
+# 3. Un-ignore the AssetBundles folder and its contents
+!/AssetBundles
+!/AssetBundles/**
 
-# OS 생성 파일
-.DS_Store
-Thumbs.db
+# 4. Un-ignore the ServerMock folder and its contents
+!/Assets/ServerMock
+!/Assets/ServerMock/**
