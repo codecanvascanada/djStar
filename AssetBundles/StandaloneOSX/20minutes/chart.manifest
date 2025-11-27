@@ -1,19 +1,17 @@
 ManifestFileVersion: 0
-CRC: 527217882
+CRC: 3581157120
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ab0f36a702f6917b053e010329da1946
+    Hash: 51d7094749d6fea340a5fae40c209521
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 87d8623b7646ca1c37beabebb6945dde
+    Hash: 711e8b72a4a42a3758e0ff63a8b12c7e
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: ab0f36a702f6917b053e010329da1946
+    Hash: 51d7094749d6fea340a5fae40c209521
 HashAppended: 0
 ClassTypes:
-- Class: 28
-  Script: {instanceID: 0}
 - Class: 83
   Script: {instanceID: 0}
 - Class: 114
@@ -29,8 +27,6 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
 - Class: 115
-  Script: {instanceID: 0}
-- Class: 213
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
 - AssemblyName: Unity.Timeline
