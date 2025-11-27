@@ -630,31 +630,75 @@ public class SongManager : EditorWindow
             
                 
             
-                    private void BuildSongs(List<SongMetadata> songsToBuild, bool forceRebuild)
+    private void BuildSongs(List<SongMetadata> songsToBuild, bool forceRebuild)
+    {
+        string platformDirectory = Path.Combine(AssetBundlesOutputPath, EditorUserBuildSettings.activeBuildTarget.ToString());
+
+        if (forceRebuild && Directory.Exists(platformDirectory)) { Directory.Delete(platformDirectory, true); }
+        if (!Directory.Exists(platformDirectory)) { Directory.CreateDirectory(platformDirectory); }
+        
+        foreach (var song in songsToBuild)
+        {
+            string sourceFolder = SongsSourceBasePath + song.id;
+            if (!Directory.Exists(sourceFolder))
+            {
+                UnityEngine.Debug.LogWarning($"Skipping '{song.id}' in build, source folder not found at '{sourceFolder}'");
+                continue;
+            }
+
+            string audioPath = FindSourceAudio(song.id);
+            string songInfoPath = FindSpecificAsset(song.id, "asset");
+            string timelinePath = FindSpecificAsset(song.id, "playable");
+
+            if (string.IsNullOrEmpty(audioPath) || string.IsNullOrEmpty(songInfoPath) || string.IsNullOrEmpty(timelinePath))
+            {
+                UnityEngine.Debug.LogWarning($"Skipping '{song.id}' due to missing critical assets. Audio: {!string.IsNullOrEmpty(audioPath)}, SongInfo: {!string.IsNullOrEmpty(songInfoPath)}, Timeline: {!string.IsNullOrEmpty(timelinePath)}");
+                continue;
+            }
             
-                    {
+            // --- NEW DETAILED DEBUG LOG ---
+            var singleSongBuildMapLog = new System.Text.StringBuilder();
+            singleSongBuildMapLog.AppendLine($"[GEMINI_DEBUG] Preparing to build for song '{song.id}':");
+            // --- END NEW DETAILED DEBUG LOG ---
+
+            List<AssetBundleBuild> singleSongBuildMap = new List<AssetBundleBuild>();
+
+            // Music Bundle
+            singleSongBuildMap.Add(new AssetBundleBuild
+            {
+                assetBundleName = song.musicBundleName,
+                assetNames = new string[] { audioPath }
+            });
+            singleSongBuildMapLog.AppendLine($"  - Music Bundle Name: {song.musicBundleName}, Asset: {audioPath}");
+
+
+            // Chart Bundle
+            singleSongBuildMap.Add(new AssetBundleBuild
+            {
+                assetBundleName = song.chartBundleName,
+                assetNames = new string[] { songInfoPath, timelinePath }
+            });
+            singleSongBuildMapLog.AppendLine($"  - Chart Bundle Name: {song.chartBundleName}, Assets: {songInfoPath}, {timelinePath}");
             
-                        string platformDirectory = Path.Combine(AssetBundlesOutputPath, EditorUserBuildSettings.activeBuildTarget.ToString());
-            
-                        if (forceRebuild && Directory.Exists(platformDirectory)) { Directory.Delete(platformDirectory, true); }
-            
-                        if (!Directory.Exists(platformDirectory)) { Directory.CreateDirectory(platformDirectory); }
-            
-                
-            
-                        List<AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
-            
-                        foreach (var song in songsToBuild)
-            
-                        {
-            
-                            string sourceFolder = SongsSourceBasePath + song.id;
-            
-                            if (!Directory.Exists(sourceFolder))
-            
-                            {
-            
-                                UnityEngine.Debug.LogWarning($"Skipping '{song.id}' in build, source folder not found at '{sourceFolder}'");
+            UnityEngine.Debug.Log(singleSongBuildMapLog.ToString());
+
+            if (singleSongBuildMap.Count == 0)
+            {
+                UnityEngine.Debug.LogWarning($"[GEMINI_DEBUG] No valid AssetBundleBuild objects created for song '{song.id}'. Skipping build for this song.");
+                continue;
+            }
+
+            // Build this single song's bundles
+            BuildPipeline.BuildAssetBundles(platformDirectory, singleSongBuildMap.ToArray(),
+                BuildAssetBundleOptions.None, // Use None as we've already done forceRebuild setup outside if needed
+                EditorUserBuildSettings.activeBuildTarget);
+
+            UnityEngine.Debug.Log($"[GEMINI_DEBUG] Build completed for song '{song.id}'.");
+        }
+
+        UnityEngine.Debug.Log(string.Format("Build of {0} song(s) complete.", songsToBuild.Count));
+        ReloadData();
+    }"Skipping '{song.id}' in build, source folder not found at '{sourceFolder}'");
             
                                 continue;
             
