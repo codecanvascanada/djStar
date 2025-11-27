@@ -1,23 +1,19 @@
-# 1. Ignore everything by default
-*
+# Unity가 생성하는 임시 파일 및 폴더
+/Library/
+/Temp/
+/Obj/
+/Build/
+/Builds/
+/Logs/
+/UserSettings/
 
-# 2. But KEEP the following files and folders:
+# AssetBundle 매니페스트 파일은 무시
+*.manifest
 
-# Keep this .gitignore file itself
-!.gitignore
+# 자동 생성되는 솔루션/프로젝트 파일
+*.sln
+*.csproj
 
-# Keep the entire AssetBundles folder and everything inside it
-!/AssetBundles/
-!/AssetBundles/**
-
-# But ignore the .manifest files inside AssetBundles
-/AssetBundles/**/*.manifest
-
-# Keep the SongList.json and its meta file
-# To do this, we must un-ignore the parent directories, then re-ignore their other contents.
-!/Assets/
-/Assets/*
-!/Assets/ServerMock/
-/Assets/ServerMock/*
-!/Assets/ServerMock/SongList.json
-!/Assets/ServerMock/SongList.json.meta
+# OS 생성 파일
+.DS_Store
+Thumbs.db
