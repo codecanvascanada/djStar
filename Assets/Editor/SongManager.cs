@@ -426,37 +426,27 @@ public class SongManager : EditorWindow
     {
         string songDirectory = SongsSourceBasePath + songId;
         if (!Directory.Exists(songDirectory)) return null;
-        string[] files = Directory.GetFiles(songDirectory, $"*.{extension}");
+        string[] files = Directory.GetFiles(songDirectory, $"*."{extension}");
         return files.Length > 0 ? files[0] : null;
     }
             
-    private void OpenBuildFolder()
-    {
-        if (!Directory.Exists(AssetBundlesOutputPath)) Directory.CreateDirectory(AssetBundlesOutputPath);
-        EditorUtility.RevealInFinder(AssetBundlesOutputPath);
-    }
-
-    private void OpenSongListJsonFolder()
-    {
-        if (File.Exists(SongListPath)) EditorUtility.RevealInFinder(SongListPath);
-        else UnityEngine.Debug.LogError($"Song Manager: SongList.json not found at {SongListPath}");
-    }
-
     private void BuildSongs(List<SongMetadata> songsToBuild, bool forceRebuild)
     {
         string platformDirectory = Path.Combine(AssetBundlesOutputPath, EditorUserBuildSettings.activeBuildTarget.ToString());
 
         if (forceRebuild && Directory.Exists(platformDirectory)) { Directory.Delete(platformDirectory, true); }
         if (!Directory.Exists(platformDirectory)) { Directory.CreateDirectory(platformDirectory); }
-        
+
+        List<AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
+
         foreach (var song in songsToBuild)
         {
             string sourceFolder = SongsSourceBasePath + song.id;
+
             if (!Directory.Exists(sourceFolder))
             {
                 UnityEngine.Debug.LogWarning($"Skipping '{song.id}' in build, source folder not found at '{sourceFolder}'");
-                
-                                continue;
+                continue;
             }
 
             string audioPath = FindSourceAudio(song.id);
@@ -468,46 +458,47 @@ public class SongManager : EditorWindow
                 UnityEngine.Debug.LogWarning($"Skipping '{song.id}' due to missing critical assets. Audio: {!string.IsNullOrEmpty(audioPath)}, SongInfo: {!string.IsNullOrEmpty(songInfoPath)}, Timeline: {!string.IsNullOrEmpty(timelinePath)}");
                 continue;
             }
-            
+
             // --- NEW DETAILED DEBUG LOG ---
-            var singleSongBuildMapLog = new System.Text.StringBuilder();
-            singleSongBuildMapLog.AppendLine($"[GEMINI_DEBUG] Preparing to build for song '{song.id}':");
+            UnityEngine.Debug.Log($"[GEMINI_DEBUG] Build Log for song '{song.id}':");
+            UnityEngine.Debug.Log($"          => Music Bundle '{song.musicBundleName}' will contain: {audioPath}");
+            UnityEngine.Debug.Log($"          => Chart Bundle '{song.chartBundleName}' will contain: {songInfoPath} AND {timelinePath}");
             // --- END NEW DETAILED DEBUG LOG ---
 
-            List<AssetBundleBuild> singleSongBuildMap = new List<AssetBundleBuild>();
-
             // Music Bundle
-            singleSongBuildMap.Add(new AssetBundleBuild
+            buildMap.Add(new AssetBundleBuild
             {
                 assetBundleName = song.musicBundleName,
                 assetNames = new string[] { audioPath }
             });
-            singleSongBuildMapLog.AppendLine($"  - Music Bundle Name: {song.musicBundleName}, Asset: {audioPath}");
-
 
             // Chart Bundle
-            singleSongBuildMap.Add(new AssetBundleBuild
+            buildMap.Add(new AssetBundleBuild
             {
                 assetBundleName = song.chartBundleName,
                 assetNames = new string[] { songInfoPath, timelinePath }
             });
-            singleSongBuildMapLog.AppendLine($"  - Chart Bundle Name: {song.chartBundleName}, Assets: {songInfoPath}, {timelinePath}");
-            
-            UnityEngine.Debug.Log(singleSongBuildMapLog.ToString());
-
-            if (singleSongBuildMap.Count == 0)
-            {
-                UnityEngine.Debug.LogWarning($"[GEMINI_DEBUG] No valid AssetBundleBuild objects created for song '{song.id}'. Skipping build for this song.");
-                continue;
-            }
-
-            // Build this single song's bundles
-            BuildPipeline.BuildAssetBundles(platformDirectory, singleSongBuildMap.ToArray(),
-                BuildAssetBundleOptions.None, // Use None as we've already done forceRebuild setup outside if needed
-                EditorUserBuildSettings.activeBuildTarget);
-
-            UnityEngine.Debug.Log($"[GEMINI_DEBUG] Build completed for song '{song.id}'.");
         }
+
+        if (buildMap.Count == 0) { EditorUtility.DisplayDialog("No Songs Found", "Could not find any valid song source folders to build.", "OK"); return; }
+    
+        // --- NEW DETAILED DEBUG LOG ---
+        var finalBuildMapLog = new System.Text.StringBuilder();
+        finalBuildMapLog.AppendLine("[GEMINI_DEBUG] Final Build Map to be processed by Unity:");
+        foreach(var build in buildMap)
+        {
+            finalBuildMapLog.AppendLine($"  - Bundle Name: {build.assetBundleName}");
+            foreach(var asset in build.assetNames)
+            {
+                finalBuildMapLog.AppendLine($"    - Asset: {asset}");
+            }
+        }
+        UnityEngine.Debug.Log(finalBuildMapLog.ToString());
+        // --- END NEW DETAILED DEBUG LOG ---
+
+        BuildPipeline.BuildAssetBundles(platformDirectory, buildMap.ToArray(),
+            BuildAssetBundleOptions.None, // Use None as we've already done forceRebuild setup outside if needed
+            EditorUserBuildSettings.activeBuildTarget);
 
         UnityEngine.Debug.Log(string.Format("Build of {0} song(s) complete.", songsToBuild.Count));
         ReloadData();
@@ -604,8 +595,8 @@ public class SongManager : EditorWindow
 
             Process process = new Process { StartInfo = startInfo };
             
-            var outputBuilder = new StringBuilder();
-            var errorBuilder = new StringBuilder();
+            var outputBuilder = new System.Text.StringBuilder();
+            var errorBuilder = new System.Text.StringBuilder();
 
             process.OutputDataReceived += (sender, e) => { if (e.Data != null) outputBuilder.AppendLine(e.Data); };
             process.ErrorDataReceived += (sender, e) => { if (e.Data != null) errorBuilder.AppendLine(e.Data); };
