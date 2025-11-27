@@ -143,8 +143,9 @@ public class AssetDownloadManager : MonoBehaviour
 
     public IEnumerator PrepareSongCoroutine(string songId, Action<SongInfo> onComplete, Action<float> onProgress)
     {
+        Debug.Log($"[GEMINI_DEBUG] ----- New Song Preparation Started for ID: '{songId}' -----");
+
         // Step 0: Unload ALL previously loaded bundles to ensure a clean state.
-        // This is the most robust way to prevent bundle conflicts given the current asset build.
         UnloadAllBundles(); 
         _preparedSong = null;
         onProgress?.Invoke(0);
@@ -163,6 +164,8 @@ public class AssetDownloadManager : MonoBehaviour
             onComplete?.Invoke(null);
             yield break;
         }
+        
+        Debug.Log($"[GEMINI_DEBUG] Found metadata for '{songId}': ChartBundle='{metadata.chartBundleName}', MusicBundle='{metadata.musicBundleName}'");
 
         // Step 1: Load Music Bundle
         yield return StartCoroutine(LoadBundleCoroutine(metadata.musicBundleName, metadata.version));
@@ -198,6 +201,7 @@ public class AssetDownloadManager : MonoBehaviour
             if (chartBundle.LoadAsset(assetName) is SongInfo loadedAsset)
             {
                 songInfo = loadedAsset;
+                Debug.Log($"[GEMINI_DEBUG] Loaded SongInfo asset: '{loadedAsset.name}' from bundle '{metadata.chartBundleName}'");
                 break;
             }
         }
@@ -209,6 +213,7 @@ public class AssetDownloadManager : MonoBehaviour
             if (musicBundle.LoadAsset(assetName) is AudioClip clip)
             {
                 correctAudioClip = clip;
+                Debug.Log($"[GEMINI_DEBUG] Loaded AudioClip asset: '{clip.name}' from bundle '{metadata.musicBundleName}'");
                 break;
             }
         }
