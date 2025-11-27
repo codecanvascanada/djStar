@@ -103,6 +103,19 @@
             "tags": [
                 "new"
             ]
+        },
+        {
+            "id": "skyBlue",
+            "chartBundleName": "skyBlue/chart",
+            "musicBundleName": "skyBlue/music",
+            "version": 1,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
         }
     ]
 }

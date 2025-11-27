@@ -1,60 +1,11 @@
 ManifestFileVersion: 0
-CRC: 1435299711
+CRC: 2725539502
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: 20minutes/music
+      Name: skyblue/music
       Dependencies: {}
     Info_1:
-      Name: 20minutes/chart
+      Name: skyblue/chart
       Dependencies:
-        Dependency_0: 20minutes/music
-    Info_2:
-      Name: calibrationsong/music
-      Dependencies: {}
-    Info_3:
-      Name: calibrationsong/chart
-      Dependencies:
-        Dependency_0: calibrationsong/music
-    Info_4:
-      Name: cherry/music
-      Dependencies: {}
-    Info_5:
-      Name: cherry/chart
-      Dependencies:
-        Dependency_0: cherry/music
-    Info_6:
-      Name: happy/music
-      Dependencies: {}
-    Info_7:
-      Name: happy/chart
-      Dependencies:
-        Dependency_0: happy/music
-    Info_8:
-      Name: honey/music
-      Dependencies: {}
-    Info_9:
-      Name: honey/chart
-      Dependencies:
-        Dependency_0: honey/music
-    Info_10:
-      Name: melody/music
-      Dependencies: {}
-    Info_11:
-      Name: melody/chart
-      Dependencies:
-        Dependency_0: melody/music
-    Info_12:
-      Name: moonlight/music
-      Dependencies: {}
-    Info_13:
-      Name: moonlight/chart
-      Dependencies:
-        Dependency_0: moonlight/music
-    Info_14:
-      Name: unfold/music
-      Dependencies: {}
-    Info_15:
-      Name: unfold/chart
-      Dependencies:
-        Dependency_0: unfold/music
+        Dependency_0: skyblue/music
