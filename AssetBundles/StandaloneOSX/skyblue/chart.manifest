@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 4213153402
+CRC: 1494045774
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: df1f68dfcb50a0ee04dad5f59aacfc8c
+    Hash: 8d7d63e50e67390d74d26f7dbe6ea27a
   TypeTreeHash:
     serializedVersion: 2
     Hash: 87d8623b7646ca1c37beabebb6945dde
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: df1f68dfcb50a0ee04dad5f59aacfc8c
+    Hash: 8d7d63e50e67390d74d26f7dbe6ea27a
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -44,7 +44,7 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: Unity.Timeline
   ClassName: UnityEngine.Timeline.TimelineClip
 Assets:
-- Assets/Songs/skyBlue/skyBlue.asset
-- Assets/Songs/skyBlue/skyBlue.playable
+- Assets/Songs/skyblue/skyblue.asset
+- Assets/Songs/skyblue/skyblue.playable
 Dependencies:
 - /Users/aj/djStar/AssetBundles/StandaloneOSX/skyblue/music
