@@ -346,7 +346,6 @@ public class SongManager : EditorWindow
         }
         string outputOggPath = Path.Combine(Path.GetDirectoryName(sourceAudioPath), Path.GetFileNameWithoutExtension(sourceAudioPath) + ".ogg");
         
-        // In case the source was an .ogg file, we'll make a new one.
         if (sourceAudioPath.EndsWith(".ogg", StringComparison.OrdinalIgnoreCase)) {
             outputOggPath = Path.Combine(Path.GetDirectoryName(sourceAudioPath), Path.GetFileNameWithoutExtension(sourceAudioPath) + "_new.ogg");
         }
@@ -426,10 +425,10 @@ public class SongManager : EditorWindow
     {
         string songDirectory = SongsSourceBasePath + songId;
         if (!Directory.Exists(songDirectory)) return null;
-        string[] files = Directory.GetFiles(songDirectory, $"*.{extension}");
+        string[] files = Directory.GetFiles(songDirectory, $"*."{extension}");
         return files.Length > 0 ? files[0] : null;
     }
-            
+
     private void OpenBuildFolder()
     {
         if (!Directory.Exists(AssetBundlesOutputPath)) Directory.CreateDirectory(AssetBundlesOutputPath);
@@ -441,20 +440,18 @@ public class SongManager : EditorWindow
         if (File.Exists(SongListPath)) EditorUtility.RevealInFinder(SongListPath);
         else UnityEngine.Debug.LogError($"Song Manager: SongList.json not found at {SongListPath}");
     }
-
+            
     private void BuildSongs(List<SongMetadata> songsToBuild, bool forceRebuild)
     {
         string platformDirectory = Path.Combine(AssetBundlesOutputPath, EditorUserBuildSettings.activeBuildTarget.ToString());
 
         if (forceRebuild && Directory.Exists(platformDirectory)) { Directory.Delete(platformDirectory, true); }
         if (!Directory.Exists(platformDirectory)) { Directory.CreateDirectory(platformDirectory); }
-
-        List<AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
-
+        
+        // Build bundles for each song individually to prevent state pollution
         foreach (var song in songsToBuild)
         {
             string sourceFolder = SongsSourceBasePath + song.id;
-
             if (!Directory.Exists(sourceFolder))
             {
                 UnityEngine.Debug.LogWarning($"Skipping '{song.id}' in build, source folder not found at '{sourceFolder}'");
@@ -470,47 +467,40 @@ public class SongManager : EditorWindow
                 UnityEngine.Debug.LogWarning($"Skipping '{song.id}' due to missing critical assets. Audio: {!string.IsNullOrEmpty(audioPath)}, SongInfo: {!string.IsNullOrEmpty(songInfoPath)}, Timeline: {!string.IsNullOrEmpty(timelinePath)}");
                 continue;
             }
+            
+            var singleSongBuildMapLog = new System.Text.StringBuilder();
+            singleSongBuildMapLog.AppendLine($"[GEMINI_DEBUG] Preparing to build for song '{song.id}':");
 
-            // --- NEW DETAILED DEBUG LOG ---
-            UnityEngine.Debug.Log($"[GEMINI_DEBUG] Build Log for song '{song.id}':");
-            UnityEngine.Debug.Log($"          => Music Bundle '{song.musicBundleName}' will contain: {audioPath}");
-            UnityEngine.Debug.Log($"          => Chart Bundle '{song.chartBundleName}' will contain: {songInfoPath} AND {timelinePath}");
-            // --- END NEW DETAILED DEBUG LOG ---
+            List<AssetBundleBuild> singleSongBuildMap = new List<AssetBundleBuild>();
 
-            // Music Bundle
-            buildMap.Add(new AssetBundleBuild
+            singleSongBuildMap.Add(new AssetBundleBuild
             {
                 assetBundleName = song.musicBundleName,
                 assetNames = new string[] { audioPath }
             });
+            singleSongBuildMapLog.AppendLine($"  - Music Bundle Name: {song.musicBundleName}, Asset: {audioPath}");
 
-            // Chart Bundle
-            buildMap.Add(new AssetBundleBuild
+            singleSongBuildMap.Add(new AssetBundleBuild
             {
                 assetBundleName = song.chartBundleName,
                 assetNames = new string[] { songInfoPath, timelinePath }
             });
-        }
+            singleSongBuildMapLog.AppendLine($"  - Chart Bundle Name: {song.chartBundleName}, Assets: {songInfoPath}, {timelinePath}");
+            
+            UnityEngine.Debug.Log(singleSongBuildMapLog.ToString());
 
-        if (buildMap.Count == 0) { EditorUtility.DisplayDialog("No Songs Found", "Could not find any valid song source folders to build.", "OK"); return; }
-    
-        // --- NEW DETAILED DEBUG LOG ---
-        var finalBuildMapLog = new System.Text.StringBuilder();
-        finalBuildMapLog.AppendLine("[GEMINI_DEBUG] Final Build Map to be processed by Unity:");
-        foreach(var build in buildMap)
-        {
-            finalBuildMapLog.AppendLine($"  - Bundle Name: {build.assetBundleName}");
-            foreach(var asset in build.assetNames)
+            if (singleSongBuildMap.Count == 0)
             {
-                finalBuildMapLog.AppendLine($"    - Asset: {asset}");
+                UnityEngine.Debug.LogWarning($"[GEMINI_DEBUG] No valid AssetBundleBuild objects created for song '{song.id}'. Skipping build for this song.");
+                continue;
             }
-        }
-        UnityEngine.Debug.Log(finalBuildMapLog.ToString());
-        // --- END NEW DETAILED DEBUG LOG ---
 
-        BuildPipeline.BuildAssetBundles(platformDirectory, buildMap.ToArray(),
-            BuildAssetBundleOptions.None, // Use None as we've already done forceRebuild setup outside if needed
-            EditorUserBuildSettings.activeBuildTarget);
+            BuildPipeline.BuildAssetBundles(platformDirectory, singleSongBuildMap.ToArray(),
+                BuildAssetBundleOptions.None, 
+                EditorUserBuildSettings.activeBuildTarget);
+
+            UnityEngine.Debug.Log($"[GEMINI_DEBUG] Build completed for song '{song.id}'.");
+        }
 
         UnityEngine.Debug.Log(string.Format("Build of {0} song(s) complete.", songsToBuild.Count));
         ReloadData();
@@ -520,8 +510,8 @@ public class SongManager : EditorWindow
     #region Git Integration
     private void UpdateGitStatus()
     {
-        _globalBranchStatus = "Checking..."; // Placeholder for now
-        _songListGitStatus = "Checking...";  // Placeholder for now
+        _globalBranchStatus = "Checking...";
+        _songListGitStatus = "Checking...";
         Repaint();
     }
 
@@ -529,7 +519,6 @@ public class SongManager : EditorWindow
     {
         UnityEngine.Debug.Log("--- Starting Git Commit & Push ---");
 
-        // Determine the current branch
         string branchNameOutput = RunGitCommandSync("rev-parse --abbrev-ref HEAD");
         if (branchNameOutput.Contains("ERROR:") || string.IsNullOrEmpty(branchNameOutput))
         {
@@ -546,7 +535,6 @@ public class SongManager : EditorWindow
         string formattedMessage = _commitMessage.Replace("\"", "\\\"");
         string commitResult = RunGitCommandSync(string.Format("commit -m \"{0}\"", formattedMessage));
         UnityEngine.Debug.Log("Git Commit Result:\n" + commitResult);
-        // Don't return on commit error, as it might be 'nothing to commit' which is fine
 
         string pullResult = RunGitCommandSync($"pull --rebase origin {currentBranch}");
         UnityEngine.Debug.Log($"Git Pull --rebase Result (from branch {currentBranch}):\n" + pullResult);
@@ -561,10 +549,8 @@ public class SongManager : EditorWindow
 
         UnityEngine.Debug.Log("--- Git Commit & Push finished. ---");
 
-        // Refresh the status after operations
         EditorApplication.delayCall += UpdateGitStatus;
-    }
-            
+    }            
     private string RunGitCommandSync(string args)
     {
         string output, error;
@@ -582,7 +568,6 @@ public class SongManager : EditorWindow
             return output; 
         }
 
-        // For some commands (like push), output is on stderr even on success
         if (string.IsNullOrEmpty(output) && !string.IsNullOrEmpty(error))
         {
             return error;
