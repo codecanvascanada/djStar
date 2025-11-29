@@ -98,8 +98,25 @@ public class AssetDownloadManager : MonoBehaviour
 
     public bool IsBundleCached(string songId)
     {
-        Debug.Log($"[GEMINI_DEBUG] IsBundleCached({songId}) called. FORCING-FALSE for this test.");
-        return false;
+        Debug.Log($"[GEMINI_DEBUG] IsBundleCached({songId}) called.");
+        if (manifest == null || manifest.songs == null)
+        {
+            Debug.Log($"[GEMINI_DEBUG] IsBundleCached: Manifest not loaded or empty. Returning false.");
+            return false;
+        }
+        SongMetadata metadata = manifest.songs.Find(s => s.id == songId);
+        if (metadata == null)
+        {
+            Debug.Log($"[GEMINI_DEBUG] IsBundleCached: Metadata for '{songId}' not found. Returning false.");
+            return false;
+        }
+
+        bool chartCached = _loadedBundles.ContainsKey(metadata.chartBundleName);
+        bool musicCached = _loadedBundles.ContainsKey(metadata.musicBundleName);
+        bool result = chartCached && musicCached;
+
+        Debug.Log($"[GEMINI_DEBUG] IsBundleCached: For '{songId}' -> ChartBundle '{metadata.chartBundleName}' cached: {chartCached}, MusicBundle '{metadata.musicBundleName}' cached: {musicCached}. Result: {result}");
+        return result;
     }
 
     private IEnumerator LoadBundleCoroutine(string bundleName, int version)
