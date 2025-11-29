@@ -173,9 +173,9 @@ public class SongManager : EditorWindow
             List<string> currentTags = songInfo.tags_edit.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();
             string primaryTag = "None";
 
-            if (currentTags.Contains("base")) { primaryTag = "Base"; }
-            else if (currentTags.Contains("new")) { primaryTag = "New"; }
-            else if (currentTags.Contains("dlc")) { primaryTag = "DLC"; }
+            if (currentTags.Contains("base")) { primaryTag = "Base"; } 
+            else if (currentTags.Contains("new")) { primaryTag = "New"; } 
+            else if (currentTags.Contains("dlc")) { primaryTag = "DLC"; } 
             
             Color tagButtonColor = Color.gray;
             if (primaryTag == "Base") tagButtonColor = Color.cyan;
@@ -189,12 +189,12 @@ public class SongManager : EditorWindow
                 int currentIndex = cycleTags.IndexOf(primaryTag.ToLower());
                 string nextTag;
 
-                if (currentIndex == -1) { nextTag = cycleTags[0]; }
-                else if (currentIndex == cycleTags.Count - 1) { nextTag = "None"; }
-                else { nextTag = cycleTags[currentIndex + 1]; }
+                if (currentIndex == -1) { nextTag = cycleTags[0]; } 
+                else if (currentIndex == cycleTags.Count - 1) { nextTag = "None"; } 
+                else { nextTag = cycleTags[currentIndex + 1]; } 
 
                 currentTags.RemoveAll(t => cycleTags.Contains(t));
-                if (nextTag != "None") { currentTags.Add(nextTag); }
+                if (nextTag != "None") { currentTags.Add(nextTag); } 
                 
                 songInfo.tags_edit = string.Join(", ", currentTags);
                 songInfo.MarkAsDirty();
@@ -209,7 +209,7 @@ public class SongManager : EditorWindow
 
             if (GUILayout.Button(new GUIContent("[+", "Increment version number"), GUILayout.Width(30))) { IncrementVersion(songInfo); }
             if (GUILayout.Button("To OGG", GUILayout.Width(60))) { EditorApplication.delayCall += () => ConvertToCompatibleOGG(songInfo); }
-            if (GUILayout.Button("Build", GUILayout.Width(60))) { EditorApplication.delayCall += () => BuildSingleSong(songInfo.metadata); }
+            if (GUILayout.Button("Build", GUILayout.Width(60))) { EditorApplication.delayCall += () => BuildSingleSong(songInfo.metadata); } 
             
             EditorGUILayout.EndHorizontal();
         }
@@ -289,7 +289,7 @@ public class SongManager : EditorWindow
             if (ignoreList.Contains(songMetadata.id)) { continue; }
             var info = new SongBuildInfo(songMetadata);
             string sourceFolderPath = SongsSourceBasePath + songMetadata.id;
-            string bundleFilePath = Path.Combine(platformBundlePath, songMetadata.chartBundleName); // Check for chart bundle
+            string bundleFilePath = Path.Combine(platformBundlePath, songMetadata.chartBundleName); 
             if (!Directory.Exists(sourceFolderPath)) { info.status = "❌ Error"; info.statusColor = Color.red; }
             else if (!File.Exists(bundleFilePath)) { info.status = "✨ New"; info.statusColor = Color.cyan; }
             else
@@ -308,7 +308,7 @@ public class SongManager : EditorWindow
     private new void SaveChanges()
     {
         SongManifest manifest = new SongManifest();
-        if (File.Exists(SongListPath)) { manifest = JsonUtility.FromJson<SongManifest>(File.ReadAllText(SongListPath)); }
+        if (File.Exists(SongListPath)) { manifest = JsonUtility.FromJson<SongManifest>(File.ReadAllText(SongListPath)); } 
         else { manifest.songs = new List<SongMetadata>(); }
         foreach (var info in _songInfos)
         {
@@ -374,7 +374,7 @@ public class SongManager : EditorWindow
     private void ScanForNewSongs()
     {
         SongManifest manifest = new SongManifest();
-        if (File.Exists(SongListPath)) { manifest = JsonUtility.FromJson<SongManifest>(File.ReadAllText(SongListPath)); }
+        if (File.Exists(SongListPath)) { manifest = JsonUtility.FromJson<SongManifest>(File.ReadAllText(SongListPath)); } 
         else { manifest.songs = new List<SongMetadata>(); }
         var ignoreList = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "title" };
         var existingSongIds = new HashSet<string>(manifest.songs.Select(s => s.id), StringComparer.OrdinalIgnoreCase);
@@ -388,8 +388,6 @@ public class SongManager : EditorWindow
                 newSongIds.Add(songId);
                 manifest.songs.Add(new SongMetadata {
                     id = songId,
-                    chartBundleName = songId + "/chart",
-                    musicBundleName = songId + "/music",
                     version = 1,
                     unlockedByDefault = false,
                     priceCoins = 1000,
@@ -412,20 +410,16 @@ public class SongManager : EditorWindow
         ReloadData();
     }
             
-    private void BuildSingleSong(SongMetadata songToBuild) { BuildSongs(new List<SongMetadata> { songToBuild }, false); }
-    private void BuildChangedSongs()
-    {
-        List<SongMetadata> songsToBuild = _songInfos.Where(s => s.status.Contains("Needs Build") || s.status.Contains("New")).Select(s => s.metadata).ToList();
-        if (songsToBuild.Count == 0) { EditorUtility.DisplayDialog("No Changes", "All songs are up-to-date.", "OK"); return; }
-        BuildSongs(songsToBuild, false);
-    }
-    private void BuildAllSongs(bool forceRebuild) { BuildSongs(_songInfos.Select(s => s.metadata).ToList(), forceRebuild); }
-            
+    private void BuildAllSongs(bool forceRebuild) 
+    { 
+        BuildSongs(_songInfos.Select(s => s.metadata).ToList(), forceRebuild); 
+    } 
+           
     private string FindSpecificAsset(string songId, string extension)
     {
         string songDirectory = SongsSourceBasePath + songId;
         if (!Directory.Exists(songDirectory)) return null;
-        string[] files = Directory.GetFiles(songDirectory, $"*.{extension}");
+        string[] files = Directory.GetFiles(songDirectory, $"*."{extension}");
         return files.Length > 0 ? files[0] : null;
     }
 
@@ -447,180 +441,47 @@ public class SongManager : EditorWindow
 
         if (forceRebuild && Directory.Exists(platformDirectory)) { Directory.Delete(platformDirectory, true); }
         if (!Directory.Exists(platformDirectory)) { Directory.CreateDirectory(platformDirectory); }
-        
-        // Build bundles for each song individually to prevent state pollution
+
+        List<AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
+
+        var ignoreList = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "title", "calibrationsong" };
+
         foreach (var song in songsToBuild)
         {
-            string sourceFolder = SongsSourceBasePath + song.id;
-            if (!Directory.Exists(sourceFolder))
-            {
-                UnityEngine.Debug.LogWarning($"Skipping '{song.id}' in build, source folder not found at '{sourceFolder}'");
-                continue;
-            }
+            if(ignoreList.Contains(song.id)) continue;
 
             string audioPath = FindSourceAudio(song.id);
+            if (!string.IsNullOrEmpty(audioPath)) allAudioPaths.Add(audioPath);
+
             string songInfoPath = FindSpecificAsset(song.id, "asset");
+            if (!string.IsNullOrEmpty(songInfoPath)) allChartPaths.Add(songInfoPath);
+            
             string timelinePath = FindSpecificAsset(song.id, "playable");
+            if (!string.IsNullOrEmpty(timelinePath)) allChartPaths.Add(timelinePath);
+        }
 
-            if (string.IsNullOrEmpty(audioPath) || string.IsNullOrEmpty(songInfoPath) || string.IsNullOrEmpty(timelinePath))
+        if(allAudioPaths.Count > 0)
+        {
+            buildMap.Add(new AssetBundleBuild
             {
-                UnityEngine.Debug.LogWarning($"Skipping '{song.id}' due to missing critical assets. Audio: {!string.IsNullOrEmpty(audioPath)}, SongInfo: {!string.IsNullOrEmpty(songInfoPath)}, Timeline: {!string.IsNullOrEmpty(timelinePath)}");
-                continue;
-            }
-            
-            var singleSongBuildMapLog = new System.Text.StringBuilder();
-            singleSongBuildMapLog.AppendLine($"[GEMINI_DEBUG] Preparing to build for song '{song.id}':");
-
-            List<AssetBundleBuild> singleSongBuildMap = new List<AssetBundleBuild>();
-
-            singleSongBuildMap.Add(new AssetBundleBuild
-            {
-                assetBundleName = song.musicBundleName,
-                assetNames = new string[] { audioPath }
+                assetBundleName = "songs/music",
+                assetNames = allAudioPaths.ToArray()
             });
-            singleSongBuildMapLog.AppendLine($"  - Music Bundle Name: {song.musicBundleName}, Asset: {audioPath}");
+        }
 
-            singleSongBuildMap.Add(new AssetBundleBuild
+        if(allChartPaths.Count > 0)
+        {
+            buildMap.Add(new AssetBundleBuild
             {
-                assetBundleName = song.chartBundleName,
-                assetNames = new string[] { songInfoPath, timelinePath }
+                assetBundleName = "songs/charts",
+                assetNames = allChartPaths.ToArray()
             });
-            singleSongBuildMapLog.AppendLine($"  - Chart Bundle Name: {song.chartBundleName}, Assets: {songInfoPath}, {timelinePath}");
-            
-            UnityEngine.Debug.Log(singleSongBuildMapLog.ToString());
-
-            if (singleSongBuildMap.Count == 0)
-            {
-                UnityEngine.Debug.LogWarning($"[GEMINI_DEBUG] No valid AssetBundleBuild objects created for song '{song.id}'. Skipping build for this song.");
-                continue;
-            }
-
-            BuildPipeline.BuildAssetBundles(platformDirectory, singleSongBuildMap.ToArray(),
-                BuildAssetBundleOptions.None, 
-                EditorUserBuildSettings.activeBuildTarget);
-
-            UnityEngine.Debug.Log($"[GEMINI_DEBUG] Build completed for song '{song.id}'.");
         }
 
-        UnityEngine.Debug.Log(string.Format("Build of {0} song(s) complete.", songsToBuild.Count));
-        ReloadData();
-    }
-    #endregion
-
-    #region Git Integration
-    private void UpdateGitStatus()
-    {
-        _globalBranchStatus = "Checking...";
-        _songListGitStatus = "Checking...";
-        Repaint();
-    }
-
-    private void CommitAndPush()
-    {
-        UnityEngine.Debug.Log("--- Starting Git Commit & Push ---");
-
-        string branchNameOutput = RunGitCommandSync("rev-parse --abbrev-ref HEAD");
-        if (branchNameOutput.Contains("ERROR:") || string.IsNullOrEmpty(branchNameOutput))
+        if (buildMap.Count == 0) { EditorUtility.DisplayDialog("No Songs Found", "Could not find any valid song source folders to build.", "OK"); return; } 
+    
+        var finalBuildMapLog = new System.Text.StringBuilder();
+        finalBuildMapLog.AppendLine("[GEMINI_DEBUG] Final Build Map to be processed by Unity:");
+        foreach(var build in buildMap)
         {
-            UnityEngine.Debug.LogError("Could not determine current git branch. Aborting push.");
-            return;
-        }
-        string currentBranch = branchNameOutput.Trim();
-        UnityEngine.Debug.Log($"Detected current branch as '{currentBranch}'");
-
-        string addResult = RunGitCommandSync("add .");
-        UnityEngine.Debug.Log("Git Add Result:\n" + addResult);
-        if (addResult.Contains("ERROR:") || addResult.Contains("EXCEPTION:")) return;
-
-        string formattedMessage = _commitMessage.Replace("\"", "\\\"");
-        string commitResult = RunGitCommandSync(string.Format("commit -m \"{0}\"", formattedMessage));
-        UnityEngine.Debug.Log("Git Commit Result:\n" + commitResult);
-
-        string pullResult = RunGitCommandSync($"pull --rebase origin {currentBranch}");
-        UnityEngine.Debug.Log($"Git Pull --rebase Result (from branch {currentBranch}):\n" + pullResult);
-        if (pullResult.Contains("ERROR:") || pullResult.Contains("EXCEPTION:") || pullResult.ToLower().Contains("conflict"))
-        {
-            UnityEngine.Debug.LogError("Aborting push due to pull/rebase failure. Please resolve conflicts manually in the terminal.");
-            return;
-        }
-
-        string pushResult = RunGitCommandSync($"push -u origin {currentBranch}");
-        UnityEngine.Debug.Log($"Git Push Result (to branch {currentBranch}):\n" + pushResult);
-
-        UnityEngine.Debug.Log("--- Git Commit & Push finished. ---");
-
-        EditorApplication.delayCall += UpdateGitStatus;
-    }            
-    private string RunGitCommandSync(string args)
-    {
-        string output, error;
-        bool success = RunProcessSync("git", args, out output, out error);
-
-        if (!success)
-        {
-            if (error.Contains("not a git repository")) return "ERROR: Not a Git Repository";
-            return $"ERROR: {error}";
-        }
-        
-        if (error.Contains("nothing to commit"))
-        {
-            UnityEngine.Debug.Log("Git: Nothing to commit.");
-            return output; 
-        }
-
-        if (string.IsNullOrEmpty(output) && !string.IsNullOrEmpty(error))
-        {
-            return error;
-        }
-
-        return output.Trim();
-    }
-
-    private bool RunProcessSync(string command, string args, out string output, out string error)
-    {
-        try
-        {
-            ProcessStartInfo startInfo = new ProcessStartInfo(command)
-            {
-                Arguments = args,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                WorkingDirectory = Application.dataPath.Replace("/Assets", "")
-            };
-
-            Process process = new Process { StartInfo = startInfo };
-            
-            var outputBuilder = new System.Text.StringBuilder();
-            var errorBuilder = new System.Text.StringBuilder();
-
-            process.OutputDataReceived += (sender, e) => { if (e.Data != null) outputBuilder.AppendLine(e.Data); };
-            process.ErrorDataReceived += (sender, e) => { if (e.Data != null) errorBuilder.AppendLine(e.Data); };
-
-            process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
-            process.WaitForExit();
-
-            output = outputBuilder.ToString().Trim();
-            error = errorBuilder.ToString().Trim();
-
-            if (process.ExitCode != 0 && !string.IsNullOrEmpty(error))
-            {
-                 UnityEngine.Debug.LogError($"{command} Command Error (Exit Code: {process.ExitCode}):\n{error}");
-                 return false;
-            }
-            
-            return process.ExitCode == 0;
-        }
-        catch (Exception e)
-        {
-            UnityEngine.Debug.LogError($"Failed to run {command} command. Is it installed and in your system's PATH?\n{e.Message}");
-            output = "";
-            error = e.Message;
-            return false;
-        }
-    }
-    #endregion
-}
+            finalBuildMapLog.AppendLine($
