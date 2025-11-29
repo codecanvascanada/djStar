@@ -305,7 +305,7 @@ public class SongManager : EditorWindow
         UpdateGitStatus();
     }
 
-    private void SaveChanges()
+    private new void SaveChanges()
     {
         SongManifest manifest = new SongManifest();
         if (File.Exists(SongListPath)) { manifest = JsonUtility.FromJson<SongManifest>(File.ReadAllText(SongListPath)); }
@@ -426,10 +426,22 @@ public class SongManager : EditorWindow
     {
         string songDirectory = SongsSourceBasePath + songId;
         if (!Directory.Exists(songDirectory)) return null;
-        string[] files = Directory.GetFiles(songDirectory, $"*.{extension}");
+        string[] files = Directory.GetFiles(songDirectory, $"*."{extension}");
         return files.Length > 0 ? files[0] : null;
     }
             
+    private void OpenBuildFolder()
+    {
+        if (!Directory.Exists(AssetBundlesOutputPath)) Directory.CreateDirectory(AssetBundlesOutputPath);
+        EditorUtility.RevealInFinder(AssetBundlesOutputPath);
+    }
+
+    private void OpenSongListJsonFolder()
+    {
+        if (File.Exists(SongListPath)) EditorUtility.RevealInFinder(SongListPath);
+        else UnityEngine.Debug.LogError($"Song Manager: SongList.json not found at {SongListPath}");
+    }
+
     private void BuildSongs(List<SongMetadata> songsToBuild, bool forceRebuild)
     {
         string platformDirectory = Path.Combine(AssetBundlesOutputPath, EditorUserBuildSettings.activeBuildTarget.ToString());
