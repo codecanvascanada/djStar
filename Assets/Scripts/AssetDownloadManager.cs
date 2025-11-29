@@ -16,8 +16,6 @@ public class SongManifest
 public class SongMetadata
 {
     public string id;
-    public string chartBundleName;
-    public string musicBundleName;
     public int version;
     public bool unlockedByDefault;
     public int priceCoins;
