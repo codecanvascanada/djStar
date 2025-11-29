@@ -65,6 +65,7 @@ public class AssetDownloadManager : MonoBehaviour
 
     private IEnumerator LoadMasterBundles()
     {
+        // First, load the manifest
         yield return StartCoroutine(LoadSongManifestCoroutine());
 
         if (!IsManifestLoaded)
