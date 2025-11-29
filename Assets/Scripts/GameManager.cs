@@ -716,7 +716,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                UnityEngine.Debug.LogWarning($"Null entry found in background images list for '{_currentSong.id}' at index {nextImageIndex}.");
+                UnityEngine.Debug.LogWarning($"Null entry found in background images list for '{_currentSong.songName}' at index {nextImageIndex}.");
             }
             nextImageIndex++;
         }
@@ -736,7 +736,7 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                     UnityEngine.Debug.LogWarning($"Null entry found in background images list for '{_currentSong.id}' at index {nextImageIndex}.");
+                     UnityEngine.Debug.LogWarning($"Null entry found in background images list for '{_currentSong.songName}' at index {nextImageIndex}.");
                 }
                 nextImageIndex++;
             }
