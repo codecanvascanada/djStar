@@ -419,7 +419,7 @@ public class SongManager : EditorWindow
     {
         string songDirectory = SongsSourceBasePath + songId;
         if (!Directory.Exists(songDirectory)) return null;
-        string[] files = Directory.GetFiles(songDirectory, $"*."{extension}");
+        string[] files = Directory.GetFiles(songDirectory, $"*.{extension}");
         return files.Length > 0 ? files[0] : null;
     }
 
