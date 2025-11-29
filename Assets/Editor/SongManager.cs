@@ -374,7 +374,7 @@ public class SongManager : EditorWindow
     private void ScanForNewSongs()
     {
         SongManifest manifest = new SongManifest();
-        if (File.Exists(SongListPath)) { manifest = JsonUtility.FromJson<SongManifest>(File.ReadAllText(SongListPath)); }
+        if (File.Exists(SongListPath)) { manifest = JsonUtility.FromJson<SongManifest>(File.ReadAllText(SongListPath)); } 
         else { manifest.songs = new List<SongMetadata>(); }
         var ignoreList = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "title" };
         var existingSongIds = new HashSet<string>(manifest.songs.Select(s => s.id), StringComparer.OrdinalIgnoreCase);
@@ -388,8 +388,6 @@ public class SongManager : EditorWindow
                 newSongIds.Add(songId);
                 manifest.songs.Add(new SongMetadata {
                     id = songId,
-                    chartBundleName = songId + "/chart",
-                    musicBundleName = songId + "/music",
                     version = 1,
                     unlockedByDefault = false,
                     priceCoins = 1000,
@@ -412,14 +410,10 @@ public class SongManager : EditorWindow
         ReloadData();
     }
             
-    private void BuildSingleSong(SongMetadata songToBuild) { BuildSongs(new List<SongMetadata> { songToBuild }, false); }
-    private void BuildChangedSongs()
-    {
-        List<SongMetadata> songsToBuild = _songInfos.Where(s => s.status.Contains("Needs Build") || s.status.Contains("New")).Select(s => s.metadata).ToList();
-        if (songsToBuild.Count == 0) { EditorUtility.DisplayDialog("No Changes", "All songs are up-to-date.", "OK"); return; }
-        BuildSongs(songsToBuild, false);
+    private void BuildAllSongs(bool forceRebuild) 
+    { 
+        BuildSongs(_songInfos.Select(s => s.metadata).ToList(), forceRebuild); 
     }
-    private void BuildAllSongs(bool forceRebuild) { BuildSongs(_songInfos.Select(s => s.metadata).ToList(), forceRebuild); }
             
     private string FindSpecificAsset(string songId, string extension)
     {
@@ -448,42 +442,42 @@ public class SongManager : EditorWindow
         if (forceRebuild && Directory.Exists(platformDirectory)) { Directory.Delete(platformDirectory, true); }
         if (!Directory.Exists(platformDirectory)) { Directory.CreateDirectory(platformDirectory); }
 
-        List<AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
+        List<string> allAudioPaths = new List<string>();
+        List<string> allChartPaths = new List<string>();
+
+        var ignoreList = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "title", "calibrationsong" };
 
         foreach (var song in songsToBuild)
         {
-            string sourceFolder = SongsSourceBasePath + song.id;
-
-            if (!Directory.Exists(sourceFolder))
-            {
-                UnityEngine.Debug.LogWarning($"Skipping '{song.id}' in build, source folder not found at '{sourceFolder}'");
-                continue;
-            }
+            if(ignoreList.Contains(song.id)) continue;
 
             string audioPath = FindSourceAudio(song.id);
+            if (!string.IsNullOrEmpty(audioPath)) allAudioPaths.Add(audioPath);
+
             string songInfoPath = FindSpecificAsset(song.id, "asset");
+            if (!string.IsNullOrEmpty(songInfoPath)) allChartPaths.Add(songInfoPath);
+            
             string timelinePath = FindSpecificAsset(song.id, "playable");
+            if (!string.IsNullOrEmpty(timelinePath)) allChartPaths.Add(timelinePath);
+        }
 
-            if (string.IsNullOrEmpty(audioPath) || string.IsNullOrEmpty(songInfoPath) || string.IsNullOrEmpty(timelinePath))
-            {
-                UnityEngine.Debug.LogWarning($"Skipping '{song.id}' due to missing critical assets. Audio: {!string.IsNullOrEmpty(audioPath)}, SongInfo: {!string.IsNullOrEmpty(songInfoPath)}, Timeline: {!string.IsNullOrEmpty(timelinePath)}");
-                continue;
-            }
+        List<AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
 
-            UnityEngine.Debug.Log($"[GEMINI_DEBUG] Build Log for song '{song.id}':");
-            UnityEngine.Debug.Log($"          => Music Bundle '{song.musicBundleName}' will contain: {audioPath}");
-            UnityEngine.Debug.Log($"          => Chart Bundle '{song.chartBundleName}' will contain: {songInfoPath} AND {timelinePath}");
-
+        if(allAudioPaths.Count > 0)
+        {
             buildMap.Add(new AssetBundleBuild
             {
-                assetBundleName = song.musicBundleName,
-                assetNames = new string[] { audioPath }
+                assetBundleName = "songs/music",
+                assetNames = allAudioPaths.ToArray()
             });
+        }
 
+        if(allChartPaths.Count > 0)
+        {
             buildMap.Add(new AssetBundleBuild
             {
-                assetBundleName = song.chartBundleName,
-                assetNames = new string[] { songInfoPath, timelinePath }
+                assetBundleName = "songs/charts",
+                assetNames = allChartPaths.ToArray()
             });
         }
 
