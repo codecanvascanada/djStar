@@ -173,9 +173,9 @@ public class SongManager : EditorWindow
             List<string> currentTags = songInfo.tags_edit.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();
             string primaryTag = "None";
 
-            if (currentTags.Contains("base")) { primaryTag = "Base"; } 
-            else if (currentTags.Contains("new")) { primaryTag = "New"; } 
-            else if (currentTags.Contains("dlc")) { primaryTag = "DLC"; } 
+            if (currentTags.Contains("base")) { primaryTag = "Base"; }
+            else if (currentTags.Contains("new")) { primaryTag = "New"; }
+            else if (currentTags.Contains("dlc")) { primaryTag = "DLC"; }
             
             Color tagButtonColor = Color.gray;
             if (primaryTag == "Base") tagButtonColor = Color.cyan;
@@ -189,12 +189,12 @@ public class SongManager : EditorWindow
                 int currentIndex = cycleTags.IndexOf(primaryTag.ToLower());
                 string nextTag;
 
-                if (currentIndex == -1) { nextTag = cycleTags[0]; } 
-                else if (currentIndex == cycleTags.Count - 1) { nextTag = "None"; } 
-                else { nextTag = cycleTags[currentIndex + 1]; } 
+                if (currentIndex == -1) { nextTag = cycleTags[0]; }
+                else if (currentIndex == cycleTags.Count - 1) { nextTag = "None"; }
+                else { nextTag = cycleTags[currentIndex + 1]; }
 
                 currentTags.RemoveAll(t => cycleTags.Contains(t));
-                if (nextTag != "None") { currentTags.Add(nextTag); } 
+                if (nextTag != "None") { currentTags.Add(nextTag); }
                 
                 songInfo.tags_edit = string.Join(", ", currentTags);
                 songInfo.MarkAsDirty();
@@ -209,20 +209,16 @@ public class SongManager : EditorWindow
 
             if (GUILayout.Button(new GUIContent("[+", "Increment version number"), GUILayout.Width(30))) { IncrementVersion(songInfo); }
             if (GUILayout.Button("To OGG", GUILayout.Width(60))) { EditorApplication.delayCall += () => ConvertToCompatibleOGG(songInfo); }
-            if (GUILayout.Button("Build", GUILayout.Width(60))) { EditorApplication.delayCall += () => BuildSingleSong(songInfo.metadata); } 
-            
-            EditorGUILayout.EndHorizontal();
         }
     }
             
     private void DrawGlobalActions()
     {
         EditorGUILayout.LabelField("Global Actions", EditorStyles.boldLabel);
-        if (GUILayout.Button("Build Changed Songs")) { EditorApplication.delayCall += BuildChangedSongs; }
-        if (GUILayout.Button("Force Rebuild All Songs"))
+        if (GUILayout.Button("Build All Songs"))
         {
             if (EditorUtility.DisplayDialog("Confirm Rebuild",
-                "This will delete the entire platform-specific AssetBundles directory and rebuild everything from scratch. Are you sure?",
+                "This will build all songs into consolidated bundles. Are you sure?",
                 "Yes, Rebuild All", "Cancel"))
             {
                 EditorApplication.delayCall += () => BuildAllSongs(true);
@@ -249,11 +245,7 @@ public class SongManager : EditorWindow
     #region Utility Methods
     private string GetTooltipForStatus(string status)
     {
-        if (status.Contains("Needs Build")) return "Source assets changed. Needs a rebuild.";
-        if (status.Contains("Synced")) return "AssetBundle is up-to-date.";
-        if (status.Contains("New")) return "Song not yet built.";
-        if (status.Contains("Error")) return "Source folder not found.";
-        return "Unknown status.";
+        return "N/A with consolidated bundles.";
     }
 
     private string FindSourceAudio(string songId)
@@ -261,7 +253,6 @@ public class SongManager : EditorWindow
         string songDirectory = SongsSourceBasePath + songId;
         if (!Directory.Exists(songDirectory)) return null;
 
-        // Prefer WAV over MP3 for higher quality source
         string[] wavFiles = Directory.GetFiles(songDirectory, "*.wav");
         if (wavFiles.Length > 0) return wavFiles[0];
 
@@ -281,25 +272,13 @@ public class SongManager : EditorWindow
         string json = File.ReadAllText(SongListPath);
         SongManifest manifest = JsonUtility.FromJson<SongManifest>(json);
         if (manifest == null || manifest.songs == null) { return; }
-        string platformName = EditorUserBuildSettings.activeBuildTarget.ToString();
-        string platformBundlePath = Path.Combine(AssetBundlesOutputPath, platformName);
+        
         var ignoreList = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "title" };
+        
         foreach (var songMetadata in manifest.songs)
         {
             if (ignoreList.Contains(songMetadata.id)) { continue; }
-            var info = new SongBuildInfo(songMetadata);
-            string sourceFolderPath = SongsSourceBasePath + songMetadata.id;
-            string bundleFilePath = Path.Combine(platformBundlePath, songMetadata.chartBundleName); 
-            if (!Directory.Exists(sourceFolderPath)) { info.status = "❌ Error"; info.statusColor = Color.red; }
-            else if (!File.Exists(bundleFilePath)) { info.status = "✨ New"; info.statusColor = Color.cyan; }
-            else
-            {
-                DateTime sourceUpdateTime = Directory.GetLastWriteTimeUtc(sourceFolderPath);
-                DateTime bundleUpdateTime = File.GetLastWriteTimeUtc(bundleFilePath);
-                if (sourceUpdateTime > bundleUpdateTime) { info.status = "⚠️ Needs Build"; info.statusColor = Color.yellow; }
-                else { info.status = "✅ Synced"; info.statusColor = Color.green; }
-            }
-            _songInfos.Add(info);
+            _songInfos.Add(new SongBuildInfo(songMetadata));
         }
         Repaint();
         UpdateGitStatus();
@@ -308,7 +287,7 @@ public class SongManager : EditorWindow
     private new void SaveChanges()
     {
         SongManifest manifest = new SongManifest();
-        if (File.Exists(SongListPath)) { manifest = JsonUtility.FromJson<SongManifest>(File.ReadAllText(SongListPath)); } 
+        if (File.Exists(SongListPath)) { manifest = JsonUtility.FromJson<SongManifest>(File.ReadAllText(SongListPath)); }
         else { manifest.songs = new List<SongMetadata>(); }
         foreach (var info in _songInfos)
         {
@@ -349,7 +328,7 @@ public class SongManager : EditorWindow
         if (sourceAudioPath.EndsWith(".ogg", StringComparison.OrdinalIgnoreCase)) {
             outputOggPath = Path.Combine(Path.GetDirectoryName(sourceAudioPath), Path.GetFileNameWithoutExtension(sourceAudioPath) + "_new.ogg");
         }
-        string ffmpegArgs = $"-y -i \"{sourceAudioPath}\" -q:a 5 -ar 44100 \"{outputOggPath}\"";
+        string ffmpegArgs = $"-y -i \"{sourceAudioPath}\" -q:a 5 -ar 44100 \"{outputOggPath}\" ";
         UnityEngine.Debug.Log($"Running ffmpeg with args: {ffmpegArgs}");
         string output, error;
         bool success = RunProcessSync(FfmpegPath, ffmpegArgs, out output, out error);
@@ -409,12 +388,12 @@ public class SongManager : EditorWindow
         }
         ReloadData();
     }
-            
+    
     private void BuildAllSongs(bool forceRebuild) 
     { 
         BuildSongs(_songInfos.Select(s => s.metadata).ToList(), forceRebuild); 
-    } 
-           
+    }
+            
     private string FindSpecificAsset(string songId, string extension)
     {
         string songDirectory = SongsSourceBasePath + songId;
@@ -442,7 +421,8 @@ public class SongManager : EditorWindow
         if (forceRebuild && Directory.Exists(platformDirectory)) { Directory.Delete(platformDirectory, true); }
         if (!Directory.Exists(platformDirectory)) { Directory.CreateDirectory(platformDirectory); }
 
-        List<AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
+        List<string> allAudioPaths = new List<string>();
+        List<string> allChartPaths = new List<string>();
 
         var ignoreList = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "title", "calibrationsong" };
 
@@ -459,6 +439,8 @@ public class SongManager : EditorWindow
             string timelinePath = FindSpecificAsset(song.id, "playable");
             if (!string.IsNullOrEmpty(timelinePath)) allChartPaths.Add(timelinePath);
         }
+
+        List<AssetBundleBuild> buildMap = new List<AssetBundleBuild>();
 
         if(allAudioPaths.Count > 0)
         {
@@ -478,7 +460,7 @@ public class SongManager : EditorWindow
             });
         }
 
-        if (buildMap.Count == 0) { EditorUtility.DisplayDialog("No Songs Found", "Could not find any valid song source folders to build.", "OK"); return; } 
+        if (buildMap.Count == 0) { EditorUtility.DisplayDialog("No Songs Found", "Could not find any valid song source folders to build.", "OK"); return; }
     
         var finalBuildMapLog = new System.Text.StringBuilder();
         finalBuildMapLog.AppendLine("[GEMINI_DEBUG] Final Build Map to be processed by Unity:");
