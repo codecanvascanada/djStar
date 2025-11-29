@@ -261,6 +261,7 @@ public class SongManager : EditorWindow
         string songDirectory = SongsSourceBasePath + songId;
         if (!Directory.Exists(songDirectory)) return null;
 
+        // Prefer WAV over MP3 for higher quality source
         string[] wavFiles = Directory.GetFiles(songDirectory, "*.wav");
         if (wavFiles.Length > 0) return wavFiles[0];
 
@@ -424,7 +425,7 @@ public class SongManager : EditorWindow
     {
         string songDirectory = SongsSourceBasePath + songId;
         if (!Directory.Exists(songDirectory)) return null;
-        string[] files = Directory.GetFiles(songDirectory, $"*.{extension}");
+        string[] files = Directory.GetFiles(songDirectory, $"*."{extension}");
         return files.Length > 0 ? files[0] : null;
     }
 
@@ -522,7 +523,7 @@ public class SongManager : EditorWindow
         UnityEngine.Debug.Log("--- Starting Git Commit & Push ---");
 
         string branchNameOutput = RunGitCommandSync("rev-parse --abbrev-ref HEAD");
-        if (branchNameOutput.Contains("ERROR:") || string.IsNullOrEmpty(branchNameOutput)) 
+        if (branchNameOutput.Contains("ERROR:") || string.IsNullOrEmpty(branchNameOutput))
         {
             UnityEngine.Debug.LogError("Could not determine current git branch. Aborting push.");
             return;
@@ -582,7 +583,7 @@ public class SongManager : EditorWindow
     {
         try
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo(command) 
+            ProcessStartInfo startInfo = new ProcessStartInfo(command)
             {
                 Arguments = args,
                 RedirectStandardOutput = true,
