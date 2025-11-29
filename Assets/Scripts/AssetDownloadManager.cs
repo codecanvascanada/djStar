@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine.Networking;
-using UnityEngine.Timeline;
+using UnityEngine.Playables;
 
 [Serializable]
 public class SongManifest
@@ -30,6 +31,7 @@ public class AssetDownloadManager : MonoBehaviour
 
     public SongManifest manifest;
     public bool IsManifestLoaded { get; private set; } = false;
+    public bool AreMasterBundlesLoaded { get; private set; } = false;
 
     private string manifestPath;
     private SongInfo _preparedSong;
@@ -63,16 +65,14 @@ public class AssetDownloadManager : MonoBehaviour
 
     private IEnumerator LoadMasterBundles()
     {
-        // First, load the manifest
         yield return StartCoroutine(LoadSongManifestCoroutine());
 
-        if (manifest == null || manifest.songs == null)
+        if (!IsManifestLoaded)
         {
             Debug.LogError("[AssetDownloadManager] Cannot load master bundles because song manifest failed to load.");
             yield break;
         }
 
-        // Get the highest version number from the manifest to use for bundle loading
         int latestVersion = manifest.songs.Max(s => s.version);
         string assetBundleBaseUrl = "https://raw.githubusercontent.com/codecanvascanada/djStar/master/AssetBundles/";
 
@@ -109,6 +109,11 @@ public class AssetDownloadManager : MonoBehaviour
                 Debug.LogError($"[AssetDownloadManager] Failed to download master charts bundle: {uwr.error}");
             }
         }
+
+        if(_musicBundle != null && _chartsBundle != null)
+        {
+            AreMasterBundlesLoaded = true;
+        }
     }
 
     private IEnumerator LoadSongManifestCoroutine()
@@ -117,7 +122,6 @@ public class AssetDownloadManager : MonoBehaviour
         using (UnityWebRequest uwr = UnityWebRequest.Get(urlWithCacheBuster))
         {
             yield return uwr.SendWebRequest();
-
             if (uwr.result == UnityWebRequest.Result.Success)
             {
                 string json = uwr.downloadHandler.text;
@@ -159,16 +163,14 @@ public class AssetDownloadManager : MonoBehaviour
         }
 
         // Load assets by name from the already loaded master bundles.
-        // The asset name should be the same as the songId.
         SongInfo songInfo = _chartsBundle.LoadAsset<SongInfo>(songId);
         AudioClip audioClip = _musicBundle.LoadAsset<AudioClip>(songId);
         PlayableAsset timeline = _chartsBundle.LoadAsset<PlayableAsset>(songId);
         
         if (songInfo != null && audioClip != null && timeline != null)
         {
-            // Create a temporary SongInfo instance for this play session to avoid modifying the source ScriptableObject
             SongInfo runtimeSongInfo = Instantiate(songInfo);
-            runtimeSongInfo.name = songInfo.name + " (Runtime)"; // To distinguish from the original
+            runtimeSongInfo.name = songInfo.name + " (Runtime)";
             runtimeSongInfo.songAudioClip = audioClip;
             runtimeSongInfo.songPlayableAsset = timeline;
             
@@ -184,7 +186,7 @@ public class AssetDownloadManager : MonoBehaviour
             onComplete?.Invoke(null);
         }
 
-        yield return null; // Coroutine must yield something
+        yield return null;
     }
     
     public void UnloadAllBundles()
@@ -200,6 +202,7 @@ public class AssetDownloadManager : MonoBehaviour
             _chartsBundle.Unload(true);
             _chartsBundle = null;
         }
+        AreMasterBundlesLoaded = false;
         Debug.Log("[GEMINI_DEBUG] Master bundles unloaded.");
     }
 

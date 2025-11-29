@@ -34,8 +34,8 @@ public class StageSelectManager : MonoBehaviour
         // Wait until the AssetDownloadManager has been initialized.
         yield return new WaitUntil(() => AssetDownloadManager.instance != null);
 
-        // Then, wait until the manifest has been successfully loaded.
-        yield return new WaitUntil(() => AssetDownloadManager.instance.IsManifestLoaded);
+        // Then, wait until the manifest and master bundles have been successfully loaded.
+        yield return new WaitUntil(() => AssetDownloadManager.instance.IsManifestLoaded && AssetDownloadManager.instance.AreMasterBundlesLoaded);
 
         // Now it's safe to display the songs.
         DisplaySongs();
@@ -123,6 +123,7 @@ public class StageSelectManager : MonoBehaviour
         Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Preparing assets for '{songId}'...");
 
         Action<SongInfo> onComplete = (loadedSongInfo) => {
+            if (loadingPanel != null) loadingPanel.SetActive(false);
             if (loadedSongInfo != null)
             {
                 Debug.Log($"[GEMINI_DEBUG] OnSongSelected.onComplete: Assets for '{songId}' are ready. Starting game...");
@@ -135,6 +136,7 @@ public class StageSelectManager : MonoBehaviour
         };
 
         // Since master bundles are pre-loaded, we just prepare the song directly from them.
+        if (loadingPanel != null) loadingPanel.SetActive(true);
         StartCoroutine(AssetDownloadManager.instance.PrepareSongCoroutine(songId, onComplete));
     }
     private IEnumerator AnimateProgressBar(float targetProgress)
