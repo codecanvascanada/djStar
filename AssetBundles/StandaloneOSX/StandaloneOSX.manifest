@@ -1,11 +1,11 @@
 ManifestFileVersion: 0
-CRC: 2385889110
+CRC: 1789354886
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
+      Name: skyblue/music
+      Dependencies: {}
+    Info_1:
       Name: skyblue/chart
       Dependencies:
         Dependency_0: skyblue/music
-    Info_1:
-      Name: skyblue/music
-      Dependencies: {}
