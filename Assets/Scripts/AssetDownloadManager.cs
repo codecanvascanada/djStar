@@ -98,13 +98,41 @@ public class AssetDownloadManager : MonoBehaviour
 
     public bool IsBundleCached(string songId)
     {
-        // This method is less relevant now since we unload bundles every time,
-        // but it can be kept for potential future UI logic.
-        // It will effectively always return false with the current implementation.
-        if (manifest == null || manifest.songs == null) return false;
+        Debug.Log($"[GEMINI_DEBUG] IsBundleCached({songId}) called.");
+        if (manifest == null || manifest.songs == null)
+        {
+            Debug.Log($"[GEMINI_DEBUG] IsBundleCached: Manifest not loaded or empty. Returning false.");
+            return false;
+        }
         SongMetadata metadata = manifest.songs.Find(s => s.id == songId);
-        if (metadata == null) return false;
-        return _loadedBundles.ContainsKey(metadata.chartBundleName) && _loadedBundles.ContainsKey(metadata.musicBundleName);
+        if (metadata == null)
+        {
+            Debug.Log($"[GEMINI_DEBUG] IsBundleCached: Metadata for '{songId}' not found. Returning false.");
+            return false;
+        }
+
+        bool chartCached = _loadedBundles.ContainsKey(metadata.chartBundleName);
+        bool musicCached = _loadedBundles.ContainsKey(metadata.musicBundleName);
+        bool result = chartCached && musicCached;
+
+        Debug.Log($"[GEMINI_DEBUG] IsBundleCached: For '{songId}' -> ChartBundle '{metadata.chartBundleName}' cached: {chartCached}, MusicBundle '{metadata.musicBundleName}' cached: {musicCached}. Result: {result}");
+        return result;
+    }
+
+    public void UnloadAllBundles()
+    {
+        Debug.Log($"[GEMINI_DEBUG] UnloadAllBundles() called. Current loaded bundles count: {_loadedBundles.Count}");
+        int unloadedCount = 0;
+        foreach (var bundle in _loadedBundles.Values)
+        {
+            if (bundle != null)
+            {
+                bundle.Unload(true);
+                unloadedCount++;
+            }
+        }
+        _loadedBundles.Clear();
+        Debug.Log($"[GEMINI_DEBUG] UnloadAllBundles: {unloadedCount} bundles unloaded. _loadedBundles cleared. Count: {_loadedBundles.Count}");
     }
 
     private IEnumerator LoadBundleCoroutine(string bundleName, int version)
