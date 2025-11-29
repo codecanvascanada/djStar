@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 1339272050
+CRC: 625416691
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a83b280893567b8b8daea4d598a2e76a
+    Hash: 1166d6fc8c0816825224db9411f1971d
   TypeTreeHash:
     serializedVersion: 2
     Hash: 711e8b72a4a42a3758e0ff63a8b12c7e
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: a83b280893567b8b8daea4d598a2e76a
+    Hash: 1166d6fc8c0816825224db9411f1971d
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -40,7 +40,7 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: Unity.Timeline
   ClassName: UnityEngine.Timeline.TimelineClip
 Assets:
-- Assets/Songs/calibrationsong/calibrationSong.asset
-- Assets/Songs/calibrationsong/calibrationSong.playable
+- Assets/Songs/calibrationsong/calibrationsong.asset
+- Assets/Songs/calibrationsong/calibrationsong.playable
 Dependencies:
 - /Users/aj/djStar/AssetBundles/StandaloneOSX/calibrationsong/music

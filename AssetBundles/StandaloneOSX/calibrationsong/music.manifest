@@ -1,20 +1,20 @@
 ManifestFileVersion: 0
-CRC: 689600473
+CRC: 4152285234
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e99e31ed14dadc60b5e4b92610ef02a7
+    Hash: 771321047bc6db53b21c8b346809520e
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9a2ca7bdbd1871f7131daf57de908e0c
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: e99e31ed14dadc60b5e4b92610ef02a7
+    Hash: 771321047bc6db53b21c8b346809520e
 HashAppended: 0
 ClassTypes:
 - Class: 83
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/Songs/calibrationsong/calibrationSong.mp3
+- Assets/Songs/calibrationsong/calibrationsong.mp3
 Dependencies: []
