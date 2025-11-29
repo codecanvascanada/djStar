@@ -126,13 +126,15 @@ public class StageSelectManager : MonoBehaviour
         }
 
         // Assuming 100 coins per play
-        if (!CurrencyManager.instance.SpendCoins(100))
-        {
-            // if (showDebugLogs) UnityEngine.Debug.Log("Not enough coins to play this song!");
-            // TODO: Show a UI message to the user
-            Debug.LogWarning("[GEMINI_DEBUG] OnSongSelected: Not enough coins to play this song!");
-            return;
-        }
+        // if (!CurrencyManager.instance.SpendCoins(100))
+        // {
+        //     // if (showDebugLogs) UnityEngine.Debug.Log("Not enough coins to play this song!");
+        //     // TODO: Show a UI message to the user
+        //     Debug.LogWarning("[GEMINI_DEBUG] OnSongSelected: Not enough coins to play this song!");
+        //     return;
+        // }
+        // TEMPORARILY DISABLED COIN CHECK FOR DEBUGGING
+        Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Coin check temporarily disabled. Proceeding with song '{songId}' preparation.");
         
         // if (showDebugLogs) UnityEngine.Debug.Log(string.Format("Song '{0}' selected. Preparing assets...", songId));
         Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Song '{songId}' selected. Preparing assets...");
