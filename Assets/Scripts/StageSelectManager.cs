@@ -97,55 +97,32 @@ public class StageSelectManager : MonoBehaviour
     public void OnSongSelected(string songId)
     {
         Debug.Log($"[GEMINI_DEBUG] OnSongSelected({songId}) called.");
+        
         // --- Unlock Check ---
         SongMetadata songMeta = AssetDownloadManager.instance.manifest.songs.Find(s => s.id == songId);
         if (songMeta == null)
         {
-            // if (showDebugLogs) UnityEngine.Debug.LogError(string.Format("Could not find metadata for songId: {0}", songId));
             Debug.LogWarning($"[GEMINI_DEBUG] OnSongSelected: Could not find metadata for songId: {songId}");
             return;
         }
 
-        bool isUnlocked = songMeta.unlockedByDefault || (PlayerDataManager.instance != null && PlayerDataManager.instance.IsSongUnlocked(songMeta.id));
-
+        bool isUnlocked = songMeta.unlockedByDefault || (PlayerDataManager.instance != null && PlayerDataManager.instance.IsSongUnlocked(songId));
         if (!isUnlocked)
         {
-            // if (showDebugLogs) UnityEngine.Debug.Log(string.Format("Song '{0}' is locked. Please purchase it in the shop.", songId));
-            // TODO: Here you would show a UI popup to navigate to the shop.
             Debug.LogWarning($"[GEMINI_DEBUG] OnSongSelected: Song '{songId}' is locked.");
             return;
         }
-        // --- End Unlock Check ---
-
-        // Check if player has enough coins
-        if (CurrencyManager.instance == null)
-        {
-            // if (showDebugLogs) UnityEngine.Debug.LogError("CurrencyManager not found!");
-            Debug.LogError("[GEMINI_DEBUG] OnSongSelected: CurrencyManager not found!");
-            return;
-        }
-
-        // Assuming 100 coins per play
+        
+        // --- Coin Check (Temporarily Disabled) ---
         // if (!CurrencyManager.instance.SpendCoins(100))
         // {
-        //     // if (showDebugLogs) UnityEngine.Debug.Log("Not enough coins to play this song!");
-        //     // TODO: Show a UI message to the user
         //     Debug.LogWarning("[GEMINI_DEBUG] OnSongSelected: Not enough coins to play this song!");
         //     return;
         // }
-        // TEMPORARILY DISABLED COIN CHECK FOR DEBUGGING
-        Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Coin check temporarily disabled. Proceeding with song '{songId}' preparation.");
         
-        // if (showDebugLogs) UnityEngine.Debug.Log(string.Format("Song '{0}' selected. Preparing assets...", songId));
-        Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Song '{songId}' selected. Preparing assets...");
+        Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Preparing assets for '{songId}'...");
 
         Action<SongInfo> onComplete = (loadedSongInfo) => {
-            if (_progressAnimationCoroutine != null) StopCoroutine(_progressAnimationCoroutine);
-            if (loadingPanel != null)
-            {
-                Debug.Log($"[GEMINI_DEBUG] OnSongSelected.onComplete: Setting loadingPanel.SetActive(false). Current state: {loadingPanel.activeSelf}");
-                loadingPanel.SetActive(false);
-            }
             if (loadedSongInfo != null)
             {
                 Debug.Log($"[GEMINI_DEBUG] OnSongSelected.onComplete: Assets for '{songId}' are ready. Starting game...");
@@ -157,28 +134,8 @@ public class StageSelectManager : MonoBehaviour
             }
         };
 
-        // bool isCached = AssetDownloadManager.instance.IsBundleCached(songId); // Not used for flow control anymore
-        Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Cache check skipped. Forcing download for {songId}.");
-
-        Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Displaying loading panel and calling PrepareSongCoroutine with progress.");
-        if (loadingPanel != null)
-        {
-            Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Setting loadingPanel.SetActive(true). Current state: {loadingPanel.activeSelf}");
-            loadingPanel.SetActive(true);
-        }
-        else
-        {
-            Debug.LogError("[GEMINI_DEBUG] OnSongSelected: loadingPanel is NULL! Cannot display progress.");
-        }
-        if (progressBar != null) progressBar.value = 0;
-        if (progressText != null) progressText.text = "0%";
-
-        Action<float> onProgress = (progress) => {
-            if (_progressAnimationCoroutine != null) StopCoroutine(_progressAnimationCoroutine);
-            _progressAnimationCoroutine = StartCoroutine(AnimateProgressBar(progress));
-        };
-
-        StartCoroutine(AssetDownloadManager.instance.PrepareSongCoroutine(songId, onComplete, onProgress));
+        // Since master bundles are pre-loaded, we just prepare the song directly from them.
+        StartCoroutine(AssetDownloadManager.instance.PrepareSongCoroutine(songId, onComplete));
     }
     private IEnumerator AnimateProgressBar(float targetProgress)
     {

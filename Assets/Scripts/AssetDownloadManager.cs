@@ -4,8 +4,8 @@ using System.IO;
 using System;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.Timeline;
 
-// Data structures to hold the manifest information
 [Serializable]
 public class SongManifest
 {
@@ -33,9 +33,10 @@ public class AssetDownloadManager : MonoBehaviour
 
     private string manifestPath;
     private SongInfo _preparedSong;
-    private string assetBundleBaseUrl;
+    private string _platformName;
     
-    private Dictionary<string, AssetBundle> _loadedBundles = new Dictionary<string, AssetBundle>();
+    private AssetBundle _musicBundle;
+    private AssetBundle _chartsBundle;
 
     void Awake()
     {
@@ -45,9 +46,9 @@ public class AssetDownloadManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
 
             manifestPath = "https://raw.githubusercontent.com/codecanvascanada/djStar/master/Assets/ServerMock/SongList.json";
-            assetBundleBaseUrl = "https://raw.githubusercontent.com/codecanvascanada/djStar/master/AssetBundles/";
+            _platformName = GetPlatformName();
 
-            StartCoroutine(LoadSongManifestCoroutine());
+            StartCoroutine(LoadMasterBundles());
         }
         else
         {
@@ -58,6 +59,56 @@ public class AssetDownloadManager : MonoBehaviour
     void OnDestroy()
     {
         UnloadAllBundles();
+    }
+
+    private IEnumerator LoadMasterBundles()
+    {
+        // First, load the manifest
+        yield return StartCoroutine(LoadSongManifestCoroutine());
+
+        if (manifest == null || manifest.songs == null)
+        {
+            Debug.LogError("[AssetDownloadManager] Cannot load master bundles because song manifest failed to load.");
+            yield break;
+        }
+
+        // Get the highest version number from the manifest to use for bundle loading
+        int latestVersion = manifest.songs.Max(s => s.version);
+        string assetBundleBaseUrl = "https://raw.githubusercontent.com/codecanvascanada/djStar/master/AssetBundles/";
+
+        // Load Music Bundle
+        string musicBundleUrl = $"{assetBundleBaseUrl}{_platformName}/songs/music?v={latestVersion}";
+        using (UnityWebRequest uwr = UnityWebRequestAssetBundle.GetAssetBundle(musicBundleUrl, (uint)latestVersion, 0))
+        {
+            Debug.Log($"[AssetDownloadManager] Loading master music bundle from: {musicBundleUrl}");
+            yield return uwr.SendWebRequest();
+            if (uwr.result == UnityWebRequest.Result.Success)
+            {
+                _musicBundle = DownloadHandlerAssetBundle.GetContent(uwr);
+                Debug.Log("[AssetDownloadManager] Master music bundle loaded.");
+            }
+            else
+            {
+                Debug.LogError($"[AssetDownloadManager] Failed to download master music bundle: {uwr.error}");
+            }
+        }
+
+        // Load Charts Bundle
+        string chartsBundleUrl = $"{assetBundleBaseUrl}{_platformName}/songs/charts?v={latestVersion}";
+        using (UnityWebRequest uwr = UnityWebRequestAssetBundle.GetAssetBundle(chartsBundleUrl, (uint)latestVersion, 0))
+        {
+            Debug.Log($"[AssetDownloadManager] Loading master charts bundle from: {chartsBundleUrl}");
+            yield return uwr.SendWebRequest();
+            if (uwr.result == UnityWebRequest.Result.Success)
+            {
+                _chartsBundle = DownloadHandlerAssetBundle.GetContent(uwr);
+                Debug.Log("[AssetDownloadManager] Master charts bundle loaded.");
+            }
+            else
+            {
+                Debug.LogError($"[AssetDownloadManager] Failed to download master charts bundle: {uwr.error}");
+            }
+        }
     }
 
     private IEnumerator LoadSongManifestCoroutine()
@@ -72,10 +123,11 @@ public class AssetDownloadManager : MonoBehaviour
                 string json = uwr.downloadHandler.text;
                 manifest = JsonUtility.FromJson<SongManifest>(json);
                 IsManifestLoaded = true;
+                Debug.Log("[AssetDownloadManager] Song Manifest loaded.");
             }
             else
             {
-                Debug.LogError($"Failed to load song manifest from {urlWithCacheBuster}: {uwr.error}");
+                Debug.LogError($"[AssetDownloadManager] Failed to load song manifest from {urlWithCacheBuster}: {uwr.error}");
                 manifest = new SongManifest { songs = new List<SongMetadata>() };
             }
         }
@@ -94,162 +146,61 @@ public class AssetDownloadManager : MonoBehaviour
         #endif
     }
 
-    public bool IsBundleCached(string songId)
-    {
-        Debug.Log($"[GEMINI_DEBUG] IsBundleCached({songId}) called.");
-        if (manifest == null || manifest.songs == null)
-        {
-            Debug.Log($"[GEMINI_DEBUG] IsBundleCached: Manifest not loaded or empty. Returning false.");
-            return false;
-        }
-        SongMetadata metadata = manifest.songs.Find(s => s.id == songId);
-        if (metadata == null)
-        {
-            Debug.Log($"[GEMINI_DEBUG] IsBundleCached: Metadata for '{songId}' not found. Returning false.");
-            return false;
-        }
-
-        bool chartCached = _loadedBundles.ContainsKey(metadata.chartBundleName);
-        bool musicCached = _loadedBundles.ContainsKey(metadata.musicBundleName);
-        bool result = chartCached && musicCached;
-
-        Debug.Log($"[GEMINI_DEBUG] IsBundleCached: For '{songId}' -> ChartBundle '{metadata.chartBundleName}' cached: {chartCached}, MusicBundle '{metadata.musicBundleName}' cached: {musicCached}. Result: {result}");
-        return result;
-    }
-
-    private IEnumerator LoadBundleCoroutine(string bundleName, int version)
-    {
-        if (string.IsNullOrEmpty(bundleName) || _loadedBundles.ContainsKey(bundleName))
-        {
-            yield break;
-        }
-
-        string platformName = GetPlatformName();
-        string bundleUrl = assetBundleBaseUrl + platformName + "/" + bundleName + "?v=" + version;
-
-        using (UnityWebRequest uwr = UnityWebRequestAssetBundle.GetAssetBundle(bundleUrl, (uint)version, 0))
-        {
-            yield return uwr.SendWebRequest();
-            if (uwr.result == UnityWebRequest.Result.Success)
-            {
-                AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(uwr);
-                if (bundle != null)
-                {
-                    _loadedBundles[bundleName] = bundle;
-                }
-                else
-                {
-                    Debug.LogError($"[AssetDownloadManager] Failed to get content from bundle '{bundleName}'.");
-                }
-            }
-            else
-            {
-                Debug.LogError($"[AssetDownloadManager] Failed to download bundle '{bundleName}': {uwr.error}");
-            }
-        }
-    }
-
-    public IEnumerator PrepareSongCoroutine(string songId, Action<SongInfo> onComplete, Action<float> onProgress)
+    public IEnumerator PrepareSongCoroutine(string songId, Action<SongInfo> onComplete)
     {
         Debug.Log($"[GEMINI_DEBUG] ----- New Song Preparation Started for ID: '{songId}' -----");
-
-        UnloadAllBundles(); 
         _preparedSong = null;
-        onProgress?.Invoke(0);
 
-        if (!IsManifestLoaded)
+        if (_chartsBundle == null || _musicBundle == null)
         {
-            Debug.LogError("[AssetDownloadManager] Manifest is not loaded yet.");
+            Debug.LogError("[AssetDownloadManager] Master bundles are not loaded yet. Cannot prepare song.");
             onComplete?.Invoke(null);
             yield break;
         }
 
-        SongMetadata metadata = manifest.songs.Find(s => s.id == songId);
-        if (metadata == null)
-        {
-            Debug.LogError($"[AssetDownloadManager] Song with id '{songId}' not found in manifest.");
-            onComplete?.Invoke(null);
-            yield break;
-        }
+        // Load assets by name from the already loaded master bundles.
+        // The asset name should be the same as the songId.
+        SongInfo songInfo = _chartsBundle.LoadAsset<SongInfo>(songId);
+        AudioClip audioClip = _musicBundle.LoadAsset<AudioClip>(songId);
+        PlayableAsset timeline = _chartsBundle.LoadAsset<PlayableAsset>(songId);
         
-        Debug.Log($"[GEMINI_DEBUG] Found metadata for '{songId}': ChartBundle='{metadata.chartBundleName}', MusicBundle='{metadata.musicBundleName}'");
-
-        yield return StartCoroutine(LoadBundleCoroutine(metadata.musicBundleName, metadata.version));
-        if (!_loadedBundles.ContainsKey(metadata.musicBundleName))
+        if (songInfo != null && audioClip != null && timeline != null)
         {
-            Debug.LogError($"[AssetDownloadManager] Failed to load required music bundle: {metadata.musicBundleName}");
-            onComplete?.Invoke(null);
-            yield break;
-        }
-        onProgress?.Invoke(0.5f);
-
-        yield return StartCoroutine(LoadBundleCoroutine(metadata.chartBundleName, metadata.version));
-        if (!_loadedBundles.ContainsKey(metadata.chartBundleName))
-        {
-             Debug.LogError($"[AssetDownloadManager] Failed to load required chart bundle: {metadata.chartBundleName}");
-            onComplete?.Invoke(null);
-            yield break;
-        }
-        onProgress?.Invoke(1.0f);
-        
-        AssetBundle chartBundle = _loadedBundles[metadata.chartBundleName];
-        AssetBundle musicBundle = _loadedBundles[metadata.musicBundleName];
-
-        SongInfo songInfo = null;
-        AudioClip correctAudioClip = null;
-
-        string[] chartAssetNames = chartBundle.GetAllAssetNames();
-        foreach (string assetName in chartAssetNames)
-        {
-            if (chartBundle.LoadAsset(assetName) is SongInfo loadedAsset)
-            {
-                songInfo = loadedAsset;
-                Debug.Log($"[GEMINI_DEBUG] Loaded SongInfo asset: '{loadedAsset.name}' from bundle '{metadata.chartBundleName}'");
-                break;
-            }
-        }
-
-        string[] musicAssetNames = musicBundle.GetAllAssetNames();
-        foreach (string assetName in musicAssetNames)
-        {
-            if (musicBundle.LoadAsset(assetName) is AudioClip clip)
-            {
-                correctAudioClip = clip;
-                Debug.Log($"[GEMINI_DEBUG] Loaded AudioClip asset: '{clip.name}' from bundle '{metadata.musicBundleName}'");
-                break;
-            }
-        }
-        
-        if (songInfo != null && correctAudioClip != null)
-        {
-            songInfo.songAudioClip = correctAudioClip;
-            Debug.Log($"[AssetDownloadManager] Successfully loaded and corrected assets for '{songId}'. Audio '{correctAudioClip.name}' is now assigned.");
+            // Create a temporary SongInfo instance for this play session to avoid modifying the source ScriptableObject
+            SongInfo runtimeSongInfo = Instantiate(songInfo);
+            runtimeSongInfo.name = songInfo.name + " (Runtime)"; // To distinguish from the original
+            runtimeSongInfo.songAudioClip = audioClip;
+            runtimeSongInfo.songPlayableAsset = timeline;
             
-            _preparedSong = songInfo;
-            onComplete?.Invoke(songInfo);
+            _preparedSong = runtimeSongInfo;
+            Debug.Log($"[AssetDownloadManager] Successfully prepared assets for '{songId}'.");
+            onComplete?.Invoke(_preparedSong);
         }
         else
         {
-            if (songInfo == null) Debug.LogError($"[AssetDownloadManager] Failed to find any SongInfo asset in bundle '{metadata.chartBundleName}'.");
-            if (correctAudioClip == null) Debug.LogError($"[AssetDownloadManager] Failed to find any AudioClip asset in bundle '{metadata.musicBundleName}'.");
+            if (songInfo == null) Debug.LogError($"[AssetDownloadManager] Failed to find SongInfo asset named '{songId}' in charts bundle.");
+            if (audioClip == null) Debug.LogError($"[AssetDownloadManager] Failed to find AudioClip asset named '{songId}' in music bundle.");
+            if (timeline == null) Debug.LogError($"[AssetDownloadManager] Failed to find PlayableAsset named '{songId}' in charts bundle.");
             onComplete?.Invoke(null);
         }
+
+        yield return null; // Coroutine must yield something
     }
     
     public void UnloadAllBundles()
     {
-        Debug.Log($"[GEMINI_DEBUG] UnloadAllBundles() called. Current loaded bundles count: {_loadedBundles.Count}");
-        int unloadedCount = 0;
-        foreach (var bundle in _loadedBundles.Values)
+        Debug.Log("[GEMINI_DEBUG] UnloadAllBundles() called.");
+        if (_musicBundle != null)
         {
-            if (bundle != null)
-            {
-                bundle.Unload(true);
-                unloadedCount++;
-            }
+            _musicBundle.Unload(true);
+            _musicBundle = null;
         }
-        _loadedBundles.Clear();
-        Debug.Log($"[GEMINI_DEBUG] UnloadAllBundles: {unloadedCount} bundles unloaded. _loadedBundles cleared. Count: {_loadedBundles.Count}");
+        if (_chartsBundle != null)
+        {
+            _chartsBundle.Unload(true);
+            _chartsBundle = null;
+        }
+        Debug.Log("[GEMINI_DEBUG] Master bundles unloaded.");
     }
 
     public SongInfo GetPreparedSong()
