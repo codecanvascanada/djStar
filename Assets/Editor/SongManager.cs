@@ -173,9 +173,9 @@ public class SongManager : EditorWindow
             List<string> currentTags = songInfo.tags_edit.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(t => t.Trim()).ToList();
             string primaryTag = "None";
 
-            if (currentTags.Contains("base")) { primaryTag = "Base"; }
-            else if (currentTags.Contains("new")) { primaryTag = "New"; }
-            else if (currentTags.Contains("dlc")) { primaryTag = "DLC"; }
+            if (currentTags.Contains("base")) { primaryTag = "Base"; } 
+            else if (currentTags.Contains("new")) { primaryTag = "New"; } 
+            else if (currentTags.Contains("dlc")) { primaryTag = "DLC"; } 
             
             Color tagButtonColor = Color.gray;
             if (primaryTag == "Base") tagButtonColor = Color.cyan;
@@ -189,12 +189,12 @@ public class SongManager : EditorWindow
                 int currentIndex = cycleTags.IndexOf(primaryTag.ToLower());
                 string nextTag;
 
-                if (currentIndex == -1) { nextTag = cycleTags[0]; }
-                else if (currentIndex == cycleTags.Count - 1) { nextTag = "None"; }
-                else { nextTag = cycleTags[currentIndex + 1]; }
+                if (currentIndex == -1) { nextTag = cycleTags[0]; } 
+                else if (currentIndex == cycleTags.Count - 1) { nextTag = "None"; } 
+                else { nextTag = cycleTags[currentIndex + 1]; } 
 
                 currentTags.RemoveAll(t => cycleTags.Contains(t));
-                if (nextTag != "None") { currentTags.Add(nextTag); }
+                if (nextTag != "None") { currentTags.Add(nextTag); } 
                 
                 songInfo.tags_edit = string.Join(", ", currentTags);
                 songInfo.MarkAsDirty();
@@ -209,7 +209,7 @@ public class SongManager : EditorWindow
 
             if (GUILayout.Button(new GUIContent("[+", "Increment version number"), GUILayout.Width(30))) { IncrementVersion(songInfo); }
             if (GUILayout.Button("To OGG", GUILayout.Width(60))) { EditorApplication.delayCall += () => ConvertToCompatibleOGG(songInfo); }
-            if (GUILayout.Button("Build", GUILayout.Width(60))) { EditorApplication.delayCall += () => BuildSingleSong(songInfo.metadata); }
+            if (GUILayout.Button("Build", GUILayout.Width(60))) { EditorApplication.delayCall += () => BuildSingleSong(songInfo.metadata); } 
             
             EditorGUILayout.EndHorizontal();
         }
@@ -261,7 +261,6 @@ public class SongManager : EditorWindow
         string songDirectory = SongsSourceBasePath + songId;
         if (!Directory.Exists(songDirectory)) return null;
 
-        // Prefer WAV over MP3 for higher quality source
         string[] wavFiles = Directory.GetFiles(songDirectory, "*.wav");
         if (wavFiles.Length > 0) return wavFiles[0];
 
@@ -289,7 +288,7 @@ public class SongManager : EditorWindow
             if (ignoreList.Contains(songMetadata.id)) { continue; }
             var info = new SongBuildInfo(songMetadata);
             string sourceFolderPath = SongsSourceBasePath + songMetadata.id;
-            string bundleFilePath = Path.Combine(platformBundlePath, songMetadata.chartBundleName); // Check for chart bundle
+            string bundleFilePath = Path.Combine(platformBundlePath, songMetadata.chartBundleName); 
             if (!Directory.Exists(sourceFolderPath)) { info.status = "❌ Error"; info.statusColor = Color.red; }
             else if (!File.Exists(bundleFilePath)) { info.status = "✨ New"; info.statusColor = Color.cyan; }
             else
@@ -308,7 +307,7 @@ public class SongManager : EditorWindow
     private new void SaveChanges()
     {
         SongManifest manifest = new SongManifest();
-        if (File.Exists(SongListPath)) { manifest = JsonUtility.FromJson<SongManifest>(File.ReadAllText(SongListPath)); }
+        if (File.Exists(SongListPath)) { manifest = JsonUtility.FromJson<SongManifest>(File.ReadAllText(SongListPath)); } 
         else { manifest.songs = new List<SongMetadata>(); }
         foreach (var info in _songInfos)
         {
@@ -374,7 +373,7 @@ public class SongManager : EditorWindow
     private void ScanForNewSongs()
     {
         SongManifest manifest = new SongManifest();
-        if (File.Exists(SongListPath)) { manifest = JsonUtility.FromJson<SongManifest>(File.ReadAllText(SongListPath)); }
+        if (File.Exists(SongListPath)) { manifest = JsonUtility.FromJson<SongManifest>(File.ReadAllText(SongListPath)); } 
         else { manifest.songs = new List<SongMetadata>(); }
         var ignoreList = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "title" };
         var existingSongIds = new HashSet<string>(manifest.songs.Select(s => s.id), StringComparer.OrdinalIgnoreCase);
@@ -425,7 +424,7 @@ public class SongManager : EditorWindow
     {
         string songDirectory = SongsSourceBasePath + songId;
         if (!Directory.Exists(songDirectory)) return null;
-        string[] files = Directory.GetFiles(songDirectory, $"*.{extension}");
+        string[] files = Directory.GetFiles(songDirectory, $"*."{extension}");
         return files.Length > 0 ? files[0] : null;
     }
 
@@ -448,7 +447,6 @@ public class SongManager : EditorWindow
         if (forceRebuild && Directory.Exists(platformDirectory)) { Directory.Delete(platformDirectory, true); }
         if (!Directory.Exists(platformDirectory)) { Directory.CreateDirectory(platformDirectory); }
         
-        // Build bundles for each song individually to prevent state pollution
         foreach (var song in songsToBuild)
         {
             string sourceFolder = SongsSourceBasePath + song.id;
