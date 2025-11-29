@@ -157,36 +157,28 @@ public class StageSelectManager : MonoBehaviour
             }
         };
 
-        bool isCached = AssetDownloadManager.instance.IsBundleCached(songId);
-        Debug.Log($"[GEMINI_DEBUG] OnSongSelected: IsBundleCached({songId}) returned: {isCached}");
+        // bool isCached = AssetDownloadManager.instance.IsBundleCached(songId); // Not used for flow control anymore
+        Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Cache check skipped. Forcing download for {songId}.");
 
-        if (isCached)
+        Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Displaying loading panel and calling PrepareSongCoroutine with progress.");
+        if (loadingPanel != null)
         {
-            Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Cache hit for {songId}. Calling PrepareSongCoroutine without progress.");
-            StartCoroutine(AssetDownloadManager.instance.PrepareSongCoroutine(songId, onComplete, null));
+            Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Setting loadingPanel.SetActive(true). Current state: {loadingPanel.activeSelf}");
+            loadingPanel.SetActive(true);
         }
         else
         {
-            Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Cache miss for {songId}. Displaying loading panel and calling PrepareSongCoroutine with progress.");
-            if (loadingPanel != null)
-            {
-                Debug.Log($"[GEMINI_DEBUG] OnSongSelected: Setting loadingPanel.SetActive(true). Current state: {loadingPanel.activeSelf}");
-                loadingPanel.SetActive(true);
-            }
-            else
-            {
-                Debug.LogError("[GEMINI_DEBUG] OnSongSelected: loadingPanel is NULL! Cannot display progress.");
-            }
-            if (progressBar != null) progressBar.value = 0;
-            if (progressText != null) progressText.text = "0%";
-
-            Action<float> onProgress = (progress) => {
-                if (_progressAnimationCoroutine != null) StopCoroutine(_progressAnimationCoroutine);
-                _progressAnimationCoroutine = StartCoroutine(AnimateProgressBar(progress));
-            };
-
-            StartCoroutine(AssetDownloadManager.instance.PrepareSongCoroutine(songId, onComplete, onProgress));
+            Debug.LogError("[GEMINI_DEBUG] OnSongSelected: loadingPanel is NULL! Cannot display progress.");
         }
+        if (progressBar != null) progressBar.value = 0;
+        if (progressText != null) progressText.text = "0%";
+
+        Action<float> onProgress = (progress) => {
+            if (_progressAnimationCoroutine != null) StopCoroutine(_progressAnimationCoroutine);
+            _progressAnimationCoroutine = StartCoroutine(AnimateProgressBar(progress));
+        };
+
+        StartCoroutine(AssetDownloadManager.instance.PrepareSongCoroutine(songId, onComplete, onProgress));
     }
     private IEnumerator AnimateProgressBar(float targetProgress)
     {
