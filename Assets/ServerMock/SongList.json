@@ -2,8 +2,6 @@
     "songs": [
         {
             "id": "20minutes",
-            "chartBundleName": "20minutes/chart",
-            "musicBundleName": "20minutes/music",
             "version": 19,
             "unlockedByDefault": true,
             "priceCoins": 1000,
@@ -15,8 +13,6 @@
         },
         {
             "id": "calibrationsong",
-            "chartBundleName": "calibrationsong/chart",
-            "musicBundleName": "calibrationsong/music",
             "version": 19,
             "unlockedByDefault": true,
             "priceCoins": 1000,
@@ -28,8 +24,6 @@
         },
         {
             "id": "cherry",
-            "chartBundleName": "cherry/chart",
-            "musicBundleName": "cherry/music",
             "version": 19,
             "unlockedByDefault": true,
             "priceCoins": 1000,
@@ -41,8 +35,6 @@
         },
         {
             "id": "happy",
-            "chartBundleName": "happy/chart",
-            "musicBundleName": "happy/music",
             "version": 19,
             "unlockedByDefault": true,
             "priceCoins": 1000,
@@ -54,8 +46,6 @@
         },
         {
             "id": "honey",
-            "chartBundleName": "honey/chart",
-            "musicBundleName": "honey/music",
             "version": 19,
             "unlockedByDefault": true,
             "priceCoins": 1000,
@@ -67,8 +57,6 @@
         },
         {
             "id": "melody",
-            "chartBundleName": "melody/chart",
-            "musicBundleName": "melody/music",
             "version": 19,
             "unlockedByDefault": true,
             "priceCoins": 1000,
@@ -80,8 +68,6 @@
         },
         {
             "id": "moonlight",
-            "chartBundleName": "moonlight/chart",
-            "musicBundleName": "moonlight/music",
             "version": 19,
             "unlockedByDefault": true,
             "priceCoins": 1000,
@@ -93,8 +79,6 @@
         },
         {
             "id": "unfold",
-            "chartBundleName": "unfold/chart",
-            "musicBundleName": "unfold/music",
             "version": 19,
             "unlockedByDefault": true,
             "priceCoins": 1000,
@@ -106,8 +90,6 @@
         },
         {
             "id": "skyblue",
-            "chartBundleName": "skyblue/chart",
-            "musicBundleName": "skyblue/music",
             "version": 19,
             "unlockedByDefault": true,
             "priceCoins": 1000,
