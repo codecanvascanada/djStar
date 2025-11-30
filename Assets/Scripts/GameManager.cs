@@ -419,123 +419,65 @@ public class GameManager : MonoBehaviour
             #region Coroutines
 
             private IEnumerator StartSongSequentially()
-
             {
-
         #if UNITY_EDITOR
-
                 if (timelineRecorder != null)
-
                 {
-
                     Debug.Log($"[GameManager] TimelineRecorder.isRecording = {timelineRecorder.isRecording}");
-
                 }
-
         #endif
-
-                Debug.Log($"[GameManager] StartSongSequentially started. startDelay = {startDelay}");
-
+                Debug.Log($"[GameManager] StartSongSequentially started. Countdown: {startDelay}s");
         
-
                 // 1. PREPARATION
-
                 if (musicSource != null && musicSource.clip != null)
-
                 {
-
                     if (musicSource.clip.loadState != AudioDataLoadState.Loaded)
-
                     {
-
                         yield return new WaitUntil(() => musicSource.clip.loadState == AudioDataLoadState.Loaded);
-
                     }
-
                 }
-
         
-
                 // 2. FADE IN
-
                 if (FadeController.instance != null)
-
                 {
-
                     FadeController.instance.FadeIn(2.0f);
-
                 }
-
         
-
-                director.time = -startDelay;
-
-                Debug.Log($"[GameManager] director.time set to: {director.time}");
-
-        
-
-        
-
+                // 3. SETTINGS & BINDINGS
+                // Get user offset (use editor override if set, otherwise use saved game settings)
+                int offsetFrames = editorAudioOffsetFrames != 0 ? editorAudioOffsetFrames : GameSettings.UserAudioOffsetFrames;
+                float userOffsetSeconds = (offsetFrames / timelineFPS);
+                
+                // Bind timeline tracks to the spawner
                 if (director.playableAsset is TimelineAsset timelineAsset)
-
                 {
-
                     if (noteSpawner != null)
-
                     {
-
                         foreach (var track in timelineAsset.GetOutputTracks())
-
                         {
-
                             if (track is NoteTrack) { director.SetGenericBinding(track, noteSpawner.gameObject); }
-
                         }
-
                     }
-
                 }
-
         
-
-                // 3. TIMELINE PLAY
-
+                // 4. PLAY
                 if (_currentSong != null && director.playableAsset != null)
-
                 {
-
+                    // Start notes (Timeline) immediately
+                    director.time = 0;
                     director.Play();
+                    Debug.Log("[GameManager] Timeline (notes) started at time 0.");
 
-        
-
-                    double directorSpeed = 1.0f;
-
-                    if (director.playableGraph.IsValid()) {
-
-                        directorSpeed = director.playableGraph.GetRootPlayable(0).GetSpeed();
-
-                    }
-
-        
-
-                    if (directorSpeed == 0) directorSpeed = 1.0f; // Avoid division by zero
-
-        
-
-                    double calculatedDelay = startDelay / directorSpeed;
-
-                    double audioStartTime = AudioSettings.dspTime + calculatedDelay;
-
-                    Debug.Log($"[GameManager] Audio scheduled. Speed: {directorSpeed}, Calculated Delay: {calculatedDelay}, Start Time: {audioStartTime}, Current DSP: {AudioSettings.dspTime}");
-
-        
+                    // Schedule audio with countdown delay AND user offset
+                    double finalAudioDelay = startDelay + userOffsetSeconds;
+                    if(finalAudioDelay < 0) finalAudioDelay = 0;
+                    double audioStartTime = AudioSettings.dspTime + finalAudioDelay;
 
                     musicSource.PlayScheduled(audioStartTime);
-
+                    Debug.Log($"[GameManager] Audio scheduled with {finalAudioDelay}s delay (Countdown: {startDelay}s, User Offset: {userOffsetSeconds}s).");
+                    
                     _songEndCoroutine = StartCoroutine(WaitForSongToEndCoroutine());
-
                 }
-
             }
 
         
