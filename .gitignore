@@ -4,10 +4,6 @@
 # 2. Un-ignore this .gitignore file
 !.gitignore
 
-# 3. Un-ignore the AssetBundles folder and its contents
-!/AssetBundles
-!/AssetBundles/**
-
-# 4. Un-ignore the ServerMock folder and its contents
-!/Assets/ServerMock
-!/Assets/ServerMock/**
+# 3. Un-ignore the ServerData folder for Addressables
+!/ServerData
+!/ServerData/**
