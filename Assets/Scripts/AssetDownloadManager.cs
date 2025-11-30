@@ -86,8 +86,12 @@ public class AssetDownloadManager : MonoBehaviour
     
     public IEnumerator PrepareSongCoroutine(string songId, Action<SongInfo> onComplete)
     {
-        Debug.Log($"[GEMINI_DEBUG] ----- Addressables: New Song Preparation Started for ID: '{songId}' -----");
-        _preparedSong = null;
+        // Release previously prepared song to free up memory
+        if(_preparedSong != null)
+        {
+            Addressables.ReleaseInstance(_preparedSong.gameObject);
+            _preparedSong = null;
+        }
 
         // Construct addresses based on the songId
         string infoAddress = $"{songId}_info";
@@ -95,7 +99,7 @@ public class AssetDownloadManager : MonoBehaviour
         string timelineAddress = $"{songId}_timeline";
 
         // Load all 3 assets in parallel
-        var songInfoHandle = Addressables.LoadAssetAsync<SongInfo>(infoAddress);
+        var songInfoHandle = Addressables.LoadAssetAsync<GameObject>(infoAddress);
         var audioClipHandle = Addressables.LoadAssetAsync<AudioClip>(audioAddress);
         var timelineHandle = Addressables.LoadAssetAsync<PlayableAsset>(timelineAddress);
 
@@ -104,40 +108,43 @@ public class AssetDownloadManager : MonoBehaviour
         yield return timelineHandle;
 
         // Check if all operations were successful
-        if (songInfoHandle.Status != AsyncOperationStatus.Succeeded ||
-            audioClipHandle.Status != AsyncOperationStatus.Succeeded ||
-            timelineHandle.Status != AsyncOperationStatus.Succeeded)
+        bool success = songInfoHandle.Status == AsyncOperationStatus.Succeeded &&
+                       audioClipHandle.Status == AsyncOperationStatus.Succeeded &&
+                       timelineHandle.Status == AsyncOperationStatus.Succeeded;
+
+        if (success)
         {
-            if (songInfoHandle.Status != AsyncOperationStatus.Succeeded) Debug.LogError($"Failed to load SongInfo for address: {infoAddress}");
-            if (audioClipHandle.Status != AsyncOperationGStatus.Succeeded) Debug.LogError($"Failed to load AudioClip for address: {audioAddress}");
-            if (timelineHandle.Status != AsyncOperationStatus.Succeeded) Debug.LogError($"Failed to load PlayableAsset for address: {timelineAddress}");
+            // All assets loaded, now create the runtime instance
+            GameObject songInfoInstance = songInfoHandle.Result;
+            SongInfo runtimeSongInfo = songInfoInstance.GetComponent<SongInfo>();
+            
+            runtimeSongInfo.songAudioClip = audioClipHandle.Result;
+            runtimeSongInfo.songPlayableAsset = timelineHandle.Result;
+            
+            _preparedSong = runtimeSongInfo;
+            Debug.Log($"[AssetDownloadManager] Successfully prepared assets for '{songId}' using Addressables.");
+            onComplete?.Invoke(_preparedSong);
+        }
+        else
+        {
+            if (songInfoHandle.Status != AsyncOperationStatus.Succeeded) Debug.LogError($"Failed to load SongInfo for address: {infoAddress} - {songInfoHandle.OperationException}");
+            if (audioClipHandle.Status != AsyncOperationStatus.Succeeded) Debug.LogError($"Failed to load AudioClip for address: {audioAddress} - {audioClipHandle.OperationException}");
+            if (timelineHandle.Status != AsyncOperationStatus.Succeeded) Debug.LogError($"Failed to load PlayableAsset for address: {timelineAddress} - {timelineHandle.OperationException}");
             
             onComplete?.Invoke(null);
-            yield break;
         }
-
-        // All assets loaded, now create the runtime instance
-        SongInfo loadedSongInfo = songInfoHandle.Result;
-        AudioClip loadedAudioClip = audioClipHandle.Result;
-        PlayableAsset loadedTimeline = timelineHandle.Result;
-
-        SongInfo runtimeSongInfo = Instantiate(loadedSongInfo);
-        runtimeSongInfo.name = loadedSongInfo.name + " (Runtime)";
-        runtimeSongInfo.songAudioClip = loadedAudioClip;
-        runtimeSongInfo.songPlayableAsset = loadedTimeline;
-            
-        _preparedSong = runtimeSongInfo;
-        Debug.Log($"[AssetDownloadManager] Successfully prepared assets for '{songId}' using Addressables.");
-        onComplete?.Invoke(_preparedSong);
-        
-        // Release the handles
-        Addressables.Release(songInfoHandle);
-        Addressables.Release(audioClipHandle);
-        Addressables.Release(timelineHandle);
     }
     
     public SongInfo GetPreparedSong()
     {
         return _preparedSong;
+    }
+
+    void OnDestroy()
+    {
+        if (_preparedSong != null)
+        {
+            Addressables.ReleaseInstance(_preparedSong.gameObject);
+        }
     }
 }
