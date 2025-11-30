@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: 20minutes-chart
+  m_EditorClassIdentifier: 
+  m_GroupName: 20minutes-chart
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 0030eba063a2a4fdf80c762b7019ee5f
+  m_SerializeEntries:
+  - m_GUID: 4c9cb1cf7830146d6829dae1e4928473
+    m_Address: Assets/Songs/20minutes/20minutes.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f7cfe6c0c42ae4077b691a27b1d12998
+    m_Address: Assets/Songs/20minutes/20minutes.playable
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 502ba777a98434248aaa58a3ee0de8f1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c33d1e36bd86f4c029491d21d5963e42, type: 2}
+    - {fileID: 11400000, guid: e46fe03613d1641fd80a6b92c5478db3, type: 2}

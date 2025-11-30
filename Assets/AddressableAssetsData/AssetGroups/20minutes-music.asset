@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: 20minutes-music
+  m_EditorClassIdentifier: 
+  m_GroupName: 20minutes-music
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 725fcffd155214dc18237ed3280b7304
+  m_SerializeEntries:
+  - m_GUID: d9c0cbbc4669a484caa100fec341e563
+    m_Address: Assets/Songs/20minutes/20minutes.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 502ba777a98434248aaa58a3ee0de8f1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 04a9805defbfa4f38af6fb53315a3174, type: 2}
+    - {fileID: 11400000, guid: e795ee9400d8e4b2f93ada60b56b0aca, type: 2}

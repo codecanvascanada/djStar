@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: title-music
+  m_EditorClassIdentifier: 
+  m_GroupName: title-music
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b97792b2da34a4dbbbbb79dffbf3786f
+  m_SerializeEntries:
+  - m_GUID: 4e2755e2a8d1e48cf847d0dbe2324d63
+    m_Address: Assets/Songs/title/title.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 502ba777a98434248aaa58a3ee0de8f1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 51c4e321faa764034a02d9be094b765d, type: 2}
+    - {fileID: 11400000, guid: e4c41209ac18041798a60a1998e0e10f, type: 2}

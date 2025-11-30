@@ -217,13 +217,13 @@ public class SongManager : EditorWindow
     private void DrawGlobalActions()
     {
         EditorGUILayout.LabelField("Global Actions", EditorStyles.boldLabel);
-        if (GUILayout.Button("Build All Songs"))
+        if (GUILayout.Button("Build All Song Bundles"))
         {
             if (EditorUtility.DisplayDialog("Confirm Rebuild",
                 "This will build all songs into consolidated bundles. Are you sure?",
                 "Yes, Rebuild All", "Cancel"))
             {
-                EditorApplication.delayCall += () => BuildAllSongs(true); 
+                EditorApplication.delayCall += () => BuildAllSongs(true);
             }
         }
         if (GUILayout.Button("Open Build Folder")) { OpenBuildFolder(); }
@@ -281,8 +281,18 @@ public class SongManager : EditorWindow
         {
             if (ignoreList.Contains(songMetadata.id)) { continue; }
             var info = new SongBuildInfo(songMetadata);
-            info.status = "✅"; // Simplified status
-            info.statusColor = Color.green;
+            string sourceFolderPath = SongsSourceBasePath + songMetadata.id;
+            
+            if (!Directory.Exists(sourceFolderPath)) 
+            {
+                info.status = "❌ Error"; 
+                info.statusColor = Color.red; 
+            }
+            else
+            {
+                info.status = "✅ Ready";
+                info.statusColor = Color.green;
+            }
             _songInfos.Add(info);
         }
         Repaint();

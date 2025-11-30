@@ -1,0 +1,32 @@
+Unity Editor version:    2022.3.62f2 (7670c08855a9)
+Branch:                  2022.3/respin/2022.3.62f2-4af31df585-v2
+Build type:              Release
+Batch mode:              YES
+macOS version:           Version 15.1.1 (Build 24B91)
+Darwin version:          24.1.0
+Architecture:            arm64
+Running under Rosetta:   NO
+Available memory:        16384 MB
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Channel LicenseClient-aj doesn't exist
+Launching external process: /Applications/Unity/Hub/Editor/2022.3.62f2/Unity.app/Contents/Frameworks/UnityLicensingClient.app/Contents/MacOS/Unity.Licensing.Client
+[Licensing::Module] Successfully launched the LicensingClient (PId: 1970)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-aj" at "2025-11-19T00:13:44.663552Z"
+[Licensing::Client] Code 1 while verifying Licensing Client signature (process Id: 1970, path: "/Applications/Unity/Hub/Editor/2022.3.62f2/Unity.app/Contents/Frameworks/UnityLicensingClient.app/Contents/MacOS/Unity.Licensing.Client")
+[Licensing::Module] LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.16.2+bdef8f5
+  Session Id:              3df7082897e44376a4f0354bc488cfce
+  Correlation Id:          dfeb1f32142184e196ac408c61194c8e
+  External correlation Id: 1404899032639282825
+  Machine Id:              0r+PG5ctYl74eofRVyOrDx+xQls=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-aj" (connect: 0.90s, validation: 0.04s, handshake: 0.02s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-aj-notifications" at "2025-11-19T00:13:44.723368Z"
+[Licensing::Module] Connected to LicensingClient (PId: 1970, launch time: 0.00, total connection time: 0.96s)
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Error: Code 500 while processing request (status: Unable to update licenses. Errors: No ULF license found.,Token not found in cache)
+[Licensing::Client] Error: Code 500 while updating license in client (status: Unable to update licenses. Errors: No ULF license found.,Token not found in cache)
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Serial number assigned to: "270004-UnityPersXXXX"
+Pro License: NO
+2025-11-18 16:13:44.802 Unity[1969:37445] Unable to load nib file: MainMenu, exiting

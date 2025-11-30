@@ -1,0 +1,61 @@
+using UnityEngine;
+
+public class Note : MonoBehaviour
+{
+    public float speed = 20f;
+    public NoteData noteData; // Keep a reference to its data
+
+    [Tooltip("The child object that represents the note's visuals")]
+    public Transform visual; 
+    
+    private BoxCollider boxCollider;
+
+    void Awake()
+    {
+        boxCollider = GetComponent<BoxCollider>();
+    }
+
+    // The Spawner will call this method after instantiating the note
+    public void Setup(NoteData data)
+    {
+        noteData = data;
+
+        if (noteData.noteType == NoteType.Hold)
+        {
+            // The length of the note in world units is speed * duration.
+            float length = speed * noteData.holdDuration;
+
+            // The default cube is 1 unit long. We scale its Z-axis by the desired length.
+            if (visual != null)
+            {
+                visual.localScale = new Vector3(visual.localScale.x, visual.localScale.y, length);
+                // Move the visual part forward by half its length so the bottom edge aligns with the pivot
+                visual.localPosition = new Vector3(0, 0, length / 2f);
+            }
+
+            // Adjust the collider to match the visual length and position
+            if (boxCollider != null)
+            {
+                boxCollider.size = new Vector3(boxCollider.size.x, boxCollider.size.y, length);
+                boxCollider.center = new Vector3(0, 0, length / 2f);
+            }
+        }
+    }
+
+    void Update()
+    {
+        // Move the note towards the player
+        transform.Translate(Vector3.back * speed * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // This trigger acts as a "death zone" at the end of the track for any notes that were missed.
+        if (other.CompareTag("Cleanup"))
+        {
+            // Just destroy the note object. If it was a held note that was missed,
+            // the TargetController should have already handled it. This is a final safety net.
+            Destroy(gameObject);
+        }
+    }
+}

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: happy-music
+  m_EditorClassIdentifier: 
+  m_GroupName: happy-music
+  m_Data:
+    m_SerializedData: []
+  m_GUID: c8ea8cfaeca72476fbfef4ae4351dc46
+  m_SerializeEntries:
+  - m_GUID: aa60a08780541446abf2fbe82dbae2ab
+    m_Address: Assets/Songs/happy/happy.ogg
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 502ba777a98434248aaa58a3ee0de8f1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d8748b653732c44d697a721a9d3aa726, type: 2}
+    - {fileID: 11400000, guid: 361ec2e9a8a754b73a952ec5923e5e00, type: 2}
