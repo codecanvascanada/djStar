@@ -426,7 +426,7 @@ public class GameManager : MonoBehaviour
                     Debug.Log($"[GameManager] TimelineRecorder.isRecording = {timelineRecorder.isRecording}");
                 }
         #endif
-                Debug.Log($"[GameManager] StartSongSequentially started. Countdown: {startDelay}s");
+                Debug.Log($"[GameManager] StartSongSequentially started. startDelay (for notes only): {startDelay}s");
         
                 // 1. PREPARATION
                 if (musicSource != null && musicSource.clip != null)
@@ -468,13 +468,13 @@ public class GameManager : MonoBehaviour
                     director.Play();
                     Debug.Log("[GameManager] Timeline (notes) started at time 0.");
 
-                    // Schedule audio with countdown delay AND user offset
-                    double finalAudioDelay = startDelay + userOffsetSeconds;
+                    // Schedule audio with ONLY user offset
+                    double finalAudioDelay = userOffsetSeconds; // startDelay is no longer added to audio delay
                     if(finalAudioDelay < 0) finalAudioDelay = 0;
                     double audioStartTime = AudioSettings.dspTime + finalAudioDelay;
 
                     musicSource.PlayScheduled(audioStartTime);
-                    Debug.Log($"[GameManager] Audio scheduled with {finalAudioDelay}s delay (Countdown: {startDelay}s, User Offset: {userOffsetSeconds}s).");
+                    Debug.Log($"[GameManager] Audio scheduled with {finalAudioDelay}s delay (User Offset: {userOffsetSeconds}s).");
                     
                     _songEndCoroutine = StartCoroutine(WaitForSongToEndCoroutine());
                 }
