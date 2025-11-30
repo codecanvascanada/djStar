@@ -426,6 +426,10 @@ public class SongManager : EditorWindow
         if (forceRebuild && Directory.Exists(platformDirectory)) { Directory.Delete(platformDirectory, true); }
         if (!Directory.Exists(platformDirectory)) { Directory.CreateDirectory(platformDirectory); }
 
+        // Manually create the 'songs' subdirectory if it doesn't exist
+        string songsSubDir = Path.Combine(platformDirectory, "songs");
+        if (!Directory.Exists(songsSubDir)) { Directory.CreateDirectory(songsSubDir); }
+
         List<string> allAudioPaths = new List<string>();
         List<string> allChartPaths = new List<string>();
 
