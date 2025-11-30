@@ -1,0 +1,175 @@
+using UnityEngine;
+using System.Linq;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+public class BeatmapRecorder_Legacy : MonoBehaviour
+{
+    [Tooltip("The SongData asset we want to record notes into.")]
+    public SongData targetSongData;
+
+    [Tooltip("Notes recorded within this time of the previous note will be snapped to the same time.")]
+    public float quantizationThreshold = 0.05f;
+
+    [Tooltip("Minimum duration in seconds to register a note as a Hold note.")]
+    public float holdTimeThreshold = 0.2f;
+
+    [Tooltip("Assign the 4 TargetController objects from your lanes here, in order.")]
+    public TargetController[] targetControllers;
+
+    private NoteData[] lastPressedNotes;
+
+    void Start()
+    {
+        if (targetControllers != null)
+        {
+            lastPressedNotes = new NoteData[targetControllers.Length];
+        }
+    }
+
+    void OnDisable()
+    {
+        // If we were in record mode when play mode stopped, sort the newly created notes.
+        if (GameManager.Instance.isRecordMode && targetSongData != null && targetSongData.notes.Count > 0)
+        {
+            SortNotes();
+        }
+    }
+
+    void Update()
+    {
+        // This entire script should only run in RECORD mode.
+        if (!GameManager.Instance.isRecordMode || targetSongData == null || GameManager.Instance == null || !GameManager.Instance.musicSource.isPlaying)
+        {
+            return;
+        }
+
+        for (int i = 0; i < targetControllers.Length; i++)
+        {
+            KeyCode key = targetControllers[i].keyToPress;
+
+            if (Input.GetKeyDown(key))
+            {
+                RecordNotePress(i);
+            }
+            else if (Input.GetKeyUp(key))
+            {
+                EndHoldNote(i);
+            }
+        }
+    }
+
+    void RecordNotePress(int laneIndex)
+    {
+        float currentTime = (float)AudioSettings.dspTime - GameManager.Instance.songStartTime;
+#if UNITY_WEBGL
+        currentTime += GameManager.Instance.webglSyncOffset;
+#endif
+
+        NoteData newNote = new NoteData
+        {
+            laneIndex = laneIndex,
+            timeToHit = currentTime,
+            noteType = NoteType.Tap,
+            holdDuration = 0
+        };
+
+        targetSongData.notes.Add(newNote);
+        lastPressedNotes[laneIndex] = newNote;
+
+        Debug.Log($"Started note in Lane {laneIndex} at time {newNote.timeToHit}");
+    }
+
+    void EndHoldNote(int laneIndex)
+    {
+        NoteData noteToComplete = lastPressedNotes[laneIndex];
+
+        if (noteToComplete != null)
+        {
+            float currentTime = (float)AudioSettings.dspTime - GameManager.Instance.songStartTime;
+#if UNITY_WEBGL
+            currentTime += GameManager.Instance.webglSyncOffset;
+#endif
+            float duration = currentTime - noteToComplete.timeToHit;
+
+            if (duration > holdTimeThreshold) 
+            {
+                noteToComplete.noteType = NoteType.Hold;
+                noteToComplete.holdDuration = duration;
+                Debug.Log($"Ended Hold Note in Lane {laneIndex}. Duration: {duration}");
+            }
+            
+#if UNITY_EDITOR
+            EditorUtility.SetDirty(targetSongData);
+#endif
+
+            lastPressedNotes[laneIndex] = null;
+        }
+    }
+
+    void SortNotes()
+    {
+        if (targetSongData.notes.Count == 0) return;
+
+        // 1. Sort by time to ensure chronological order
+        targetSongData.notes = targetSongData.notes.OrderBy(note => note.timeToHit).ToList();
+
+        // 2. Quantize by grouping notes into chords
+        var processedNotes = new System.Collections.Generic.List<NoteData>();
+        var currentChord = new System.Collections.Generic.List<NoteData>();
+
+        // Start with the first note
+        currentChord.Add(targetSongData.notes[0]);
+
+        for (int i = 1; i < targetSongData.notes.Count; i++)
+        {
+            NoteData anchorNote = currentChord[0];
+            NoteData currentNote = targetSongData.notes[i];
+            float timeDifference = currentNote.timeToHit - anchorNote.timeToHit;
+
+            // If current note is close enough to the anchor of the current chord, add it
+            if (timeDifference < quantizationThreshold)
+            {
+                currentChord.Add(currentNote);
+            }
+            else // Otherwise, the chord is finished. Process it and start a new one.
+            {
+                ProcessChord(currentChord);
+                processedNotes.AddRange(currentChord);
+
+                currentChord.Clear();
+                currentChord.Add(currentNote);
+            }
+        }
+
+        // Process the last remaining chord
+        ProcessChord(currentChord);
+        processedNotes.AddRange(currentChord);
+
+        // Replace the old list with the new, processed list
+        targetSongData.notes = processedNotes;
+
+#if UNITY_EDITOR
+        EditorUtility.SetDirty(targetSongData);
+#endif
+        Debug.Log($"Beatmap for {targetSongData.name} has been sorted and quantized.");
+    }
+
+    void ProcessChord(System.Collections.Generic.List<NoteData> chord)
+    {
+        if (chord.Count <= 1) return;
+
+        NoteData anchorNote = chord[0];
+
+        // Snap all notes in the chord to the anchor's time and duration
+        foreach (var note in chord)
+        {
+            note.timeToHit = anchorNote.timeToHit;
+            if (note.noteType == NoteType.Hold && anchorNote.noteType == NoteType.Hold)
+            {
+                note.holdDuration = anchorNote.holdDuration;
+            }
+        }
+    }
+}

@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 468a46d0ae32c3544b7d98094e6448a9, type: 3}
+  m_Name: AddressableAssetSettings
+  m_EditorClassIdentifier: 
+  m_DefaultGroup: 4f34c60d17cad4bbb89c4f95c2596cff
+  m_currentHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_OptimizeCatalogSize: 0
+  m_BuildRemoteCatalog: 0
+  m_BundleLocalCatalog: 0
+  m_CatalogRequestsTimeout: 0
+  m_DisableCatalogUpdateOnStart: 0
+  m_IgnoreUnsupportedFilesInBuild: 0
+  m_UniqueBundleIds: 0
+  m_NonRecursiveBuilding: 1
+  m_CCDEnabled: 0
+  m_maxConcurrentWebRequests: 3
+  m_ContiguousBundles: 1
+  m_StripUnityVersionFromBundleBuild: 0
+  m_DisableVisibleSubAssetRepresentations: 0
+  m_ShaderBundleNaming: 0
+  m_ShaderBundleCustomNaming: 
+  m_MonoScriptBundleNaming: 0
+  m_CheckForContentUpdateRestrictionsOption: 0
+  m_MonoScriptBundleCustomNaming: 
+  m_RemoteCatalogBuildPath:
+    m_Id: 88c897f061d9f4bb08b204ae57c624f3
+  m_RemoteCatalogLoadPath:
+    m_Id: c24bb822fbc1c4fea998248e3aa5b7df
+  m_ContentStateBuildPathProfileVariableName: <default settings path>
+  m_CustomContentStateBuildPath: 
+  m_ContentStateBuildPath: 
+  m_BuildAddressablesWithPlayerBuild: 0
+  m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
+  m_GroupAssets:
+  - {fileID: 11400000, guid: ba601bfa2d04b4cf49d275ec075634ba, type: 2}
+  - {fileID: 11400000, guid: c93e460a0e01945a788aaed77ede3832, type: 2}
+  m_BuildSettings:
+    m_CompileScriptsInVirtualMode: 0
+    m_CleanupStreamingAssetsAfterBuilds: 1
+    m_LogResourceManagerExceptions: 1
+    m_BundleBuildPath: Temp/com.unity.addressables/AssetBundles
+  m_ProfileSettings:
+    m_Profiles:
+    - m_InheritedParent: 
+      m_Id: d78f33cfdf2474510ae2d76130dea1f4
+      m_ProfileName: Default
+      m_Values:
+      - m_Id: ee684520c973449fcac249e8522e6be1
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+      - m_Id: 2699cfa3d09644b2286a554671c33ef3
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: 327ac633200014353b26de28c5458a24
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: 88c897f061d9f4bb08b204ae57c624f3
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: c24bb822fbc1c4fea998248e3aa5b7df
+        m_Value: https://raw.githubusercontent.com/codecanvascanada/djStar/master/{Remote.BuildTarget}
+    m_ProfileEntryNames:
+    - m_Id: ee684520c973449fcac249e8522e6be1
+      m_Name: BuildTarget
+      m_InlineUsage: 0
+    - m_Id: 2699cfa3d09644b2286a554671c33ef3
+      m_Name: Local.BuildPath
+      m_InlineUsage: 0
+    - m_Id: 327ac633200014353b26de28c5458a24
+      m_Name: Local.LoadPath
+      m_InlineUsage: 0
+    - m_Id: 88c897f061d9f4bb08b204ae57c624f3
+      m_Name: Remote.BuildPath
+      m_InlineUsage: 0
+    - m_Id: c24bb822fbc1c4fea998248e3aa5b7df
+      m_Name: Remote.LoadPath
+      m_InlineUsage: 0
+    m_ProfileVersion: 1
+  m_LabelTable:
+    m_LabelNames:
+    - default
+  m_SchemaTemplates: []
+  m_GroupTemplateObjects:
+  - {fileID: 11400000, guid: 0d47640303b3341f78551ef053a8acf9, type: 2}
+  m_InitializationObjects: []
+  m_CertificateHandlerType:
+    m_AssemblyName: 
+    m_ClassName: 
+  m_ActivePlayerDataBuilderIndex: 3
+  m_DataBuilders:
+  - {fileID: 11400000, guid: c58bde39654e8414583eb165f4839d5c, type: 2}
+  - {fileID: 11400000, guid: 65acbb2c2fa424528ba26045706043a8, type: 2}
+  - {fileID: 11400000, guid: de0d3365654c34ec5a5ad7c26735e7d2, type: 2}
+  - {fileID: 11400000, guid: c6dc6e785c7724386aa94ab71462173d, type: 2}
+  m_ActiveProfileId: d78f33cfdf2474510ae2d76130dea1f4
+  m_HostingServicesManager:
+    m_HostingServiceInfos: []
+    m_Settings: {fileID: 11400000}
+    m_NextInstanceId: 0
+    m_RegisteredServiceTypeRefs: []
+    m_PingTimeoutInMilliseconds: 5000

@@ -1,0 +1,108 @@
+using UnityEngine;
+using TMPro;
+
+public class LyricManager : MonoBehaviour
+{
+    [Header("Components")]
+    [Tooltip("가사를 표시할 TextMeshPro UI")]
+    public TextMeshProUGUI lyricTextUI;
+
+    private SongData currentSongData;
+    private int currentLyricIndex = -1;
+    private float previousTime = 0f; // 음악 루프 감지를 위해 이전 시간을 저장
+
+    void Start()
+    {
+        // ClearLyrics(); // 테스트를 위해 시작 시 텍스트를 지우는 기능을 임시로 비활성화
+    }
+
+    // MusicGalleryManager가 호출할 함수
+    public void PrepareLyrics(SongData song)
+    {
+        currentSongData = song;
+        currentLyricIndex = -1;
+        if (lyricTextUI != null) lyricTextUI.text = "";
+    }
+
+    // MusicGalleryManager가 호출할 함수
+    public void ClearLyrics()
+    {
+        currentSongData = null;
+        if (lyricTextUI != null) lyricTextUI.text = "";
+    }
+
+    void Update()
+    {
+        // 표시할 곡의 데이터가 없거나, 배경음악 시스템이 없으면 아무것도 하지 않음
+        if (currentSongData == null || BackgroundMusic.instance == null)
+        {
+            return;
+        }
+
+        // 음악이 재생 중이 아닐 때는 업데이트를 중단
+        if (!BackgroundMusic.instance.audioSource.isPlaying)
+        {
+            return;
+        }
+
+        // MusicGalleryManager가 올바른 SongData를 전달했다고 믿고, 현재 음악 시간에 맞춰 가사 업데이트를 진행
+#if UNITY_WEBGL
+        // WebGL에서는 audioSource.time이 정확하지 않으므로, 정밀 오디오 타이머인 dspTime을 사용하여 동기화합니다.
+        // musicDspStartTime이 0보다 클 때만 (음악이 시작되었을 때만) 시간을 계산합니다.
+        float currentTime = (BackgroundMusic.instance.musicDspStartTime > 0) ? (float)(AudioSettings.dspTime - BackgroundMusic.instance.musicDspStartTime) : 0f;
+#else
+        // 다른 플랫폼에서는 기존 방식대로 audioSource.time을 사용합니다.
+        float currentTime = BackgroundMusic.instance.audioSource.time;
+#endif
+
+        // 음악이 루프되었는지 감지 (현재 시간이 이전 시간보다 작아지면 루프된 것으로 간주)
+        if (currentTime < previousTime)
+        {
+            currentLyricIndex = -1; // 가사 인덱스 초기화
+            if (lyricTextUI != null) lyricTextUI.text = ""; // 루프 시 가사 UI 즉시 초기화
+        }
+        previousTime = currentTime; // 현재 시간을 다음 프레임을 위해 저장
+
+        UpdateLyric(currentTime);
+    }
+
+    private void UpdateLyric(float currentTime)
+    {
+        Debug.Log("LyricManager UpdateLyric, currentTime: " + currentTime);
+
+        if (currentSongData.lyrics == null || currentSongData.lyrics.Count == 0) return;
+
+        int lyricIndexToShow = -1;
+        for (int i = 0; i < currentSongData.lyrics.Count; i++)
+        {
+            if (currentTime >= currentSongData.lyrics[i].timeInSeconds)
+            {
+                lyricIndexToShow = i;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (lyricIndexToShow != currentLyricIndex)
+        {
+            currentLyricIndex = lyricIndexToShow;
+            if (currentLyricIndex != -1)
+            {
+                lyricTextUI.text = currentSongData.lyrics[currentLyricIndex].line;
+            }
+            else
+            {
+                lyricTextUI.text = "";
+            }
+        }
+    }
+
+    public void ResetForLoop()
+    {
+        currentLyricIndex = -1;
+        if (lyricTextUI != null) lyricTextUI.text = "";
+        previousTime = 0f;
+    }
+}
