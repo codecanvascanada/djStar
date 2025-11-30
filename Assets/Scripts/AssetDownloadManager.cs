@@ -121,7 +121,7 @@ public class AssetDownloadManager : MonoBehaviour
 
         // Wait for all handles to complete
         var combinedHandle = Addressables.ResourceManager.CreateGenericGroupOperation(
-            new List<AsyncOperationHandle> { _songInfoHandle.Handle, _audioClipHandle.Handle, _timelineHandle.Handle }, true);
+            new List<AsyncOperationHandle> { _songInfoHandle, _audioClipHandle, _timelineHandle }, true);
 
         yield return combinedHandle;
         
