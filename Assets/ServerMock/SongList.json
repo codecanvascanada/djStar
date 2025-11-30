@@ -2,7 +2,7 @@
     "songs": [
         {
             "id": "20minutes",
-            "version": 19,
+            "version": 20,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -13,7 +13,7 @@
         },
         {
             "id": "calibrationsong",
-            "version": 19,
+            "version": 20,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -24,7 +24,7 @@
         },
         {
             "id": "cherry",
-            "version": 19,
+            "version": 20,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -35,7 +35,7 @@
         },
         {
             "id": "happy",
-            "version": 19,
+            "version": 20,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -46,7 +46,7 @@
         },
         {
             "id": "honey",
-            "version": 19,
+            "version": 20,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -57,7 +57,7 @@
         },
         {
             "id": "melody",
-            "version": 19,
+            "version": 20,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -68,7 +68,7 @@
         },
         {
             "id": "moonlight",
-            "version": 19,
+            "version": 20,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -79,7 +79,7 @@
         },
         {
             "id": "unfold",
-            "version": 19,
+            "version": 20,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
@@ -90,7 +90,7 @@
         },
         {
             "id": "skyblue",
-            "version": 19,
+            "version": 20,
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
