@@ -85,6 +85,10 @@ public class AssetDownloadManager : MonoBehaviour
         if (!initHandle.IsValid())
         {
             Debug.LogError("initHandle became invalid after completion.");
+            if (initHandle.OperationException != null)
+            {
+                Debug.LogError($"Underlying exception: {initHandle.OperationException}");
+            }
             s_isInitializing = false;
             yield break;
         }
