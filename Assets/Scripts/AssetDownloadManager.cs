@@ -27,6 +27,7 @@ public class SongMetadata
 public class AssetDownloadManager : MonoBehaviour
 {
     public static AssetDownloadManager instance;
+    private static bool s_isInitializing = false; // Static flag to ensure init only runs once
 
     public SongManifest manifest;
     public bool IsReady { get; private set; } = false;
@@ -41,15 +42,20 @@ public class AssetDownloadManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
+        if (instance != null && instance != this)
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-            StartCoroutine(InitializeAndLoadManifest());
-        }
-        else
-        {
+            Debug.LogWarning("Duplicate AssetDownloadManager found. Destroying this one.");
             Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        // Only initialize if it's not ready and not already in the process of initializing.
+        if (!IsReady && !s_isInitializing)
+        {
+            StartCoroutine(InitializeAndLoadManifest());
         }
     }
 
@@ -63,12 +69,14 @@ public class AssetDownloadManager : MonoBehaviour
 
     private IEnumerator InitializeAndLoadManifest()
     {
+        s_isInitializing = true;
         Debug.Log("Starting Addressables.InitializeAsync().");
         var initHandle = Addressables.InitializeAsync();
 
         if (!initHandle.IsValid())
         {
             Debug.LogError("Addressables.InitializeAsync() returned an invalid handle immediately.");
+            s_isInitializing = false;
             yield break;
         }
 
@@ -77,12 +85,14 @@ public class AssetDownloadManager : MonoBehaviour
         if (!initHandle.IsValid())
         {
             Debug.LogError("initHandle became invalid after completion.");
+            s_isInitializing = false;
             yield break;
         }
 
         if (initHandle.Status != AsyncOperationStatus.Succeeded)
         {
             Debug.LogError($"Addressables failed to initialize. Exception: {initHandle.OperationException}");
+            s_isInitializing = false;
             yield break;
         }
         Debug.Log("Addressables initialized successfully.");
@@ -103,6 +113,8 @@ public class AssetDownloadManager : MonoBehaviour
             Debug.LogError($"[AssetDownloadManager] Failed to load song manifest from Addressables: {_manifestHandle.OperationException}");
             manifest = new SongManifest { songs = new List<SongMetadata>() };
         }
+
+        s_isInitializing = false;
     }
 
     public IEnumerator PrepareSongCoroutine(string songId, System.Action<SongInfo> onComplete)
@@ -154,7 +166,7 @@ public class AssetDownloadManager : MonoBehaviour
             onComplete?.Invoke(null);
         }
     }
-    
+
     public SongInfo GetPreparedSong()
     {
         return _preparedSong;
@@ -166,6 +178,11 @@ public class AssetDownloadManager : MonoBehaviour
         if (_preparedSong != null)
         {
            Destroy(_preparedSong);
+        }
+
+        if (_manifestHandle.IsValid())
+        {
+            Addressables.Release(_manifestHandle);
         }
     }
 }
