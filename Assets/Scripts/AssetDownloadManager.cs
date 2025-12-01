@@ -52,55 +52,40 @@ public class AssetDownloadManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // Only initialize if it's not ready and not already in the process of initializing.
         if (!IsReady && !s_isInitializing)
         {
-            StartCoroutine(InitializeAndLoadManifest());
+            // Start the initialization process, which is now callback-based
+            InitializeAddressables();
         }
     }
 
-    private void ReleaseHandles()
-    {
-        if (_songInfoHandle.IsValid()) Addressables.Release(_songInfoHandle);
-        if (_audioClipHandle.IsValid()) Addressables.Release(_audioClipHandle);
-        if (_timelineHandle.IsValid()) Addressables.Release(_timelineHandle);
-        // Do not release the manifest handle here as we might need it across scenes
-    }
-
-    private IEnumerator InitializeAndLoadManifest()
+    private void InitializeAddressables()
     {
         s_isInitializing = true;
         Debug.Log("Starting Addressables.InitializeAsync().");
-        var initHandle = Addressables.InitializeAsync();
 
-        if (!initHandle.IsValid())
+        // Use a callback instead of yielding in a coroutine
+        AsyncOperationHandle<IResourceLocator> initHandle = Addressables.InitializeAsync();
+        initHandle.Completed += OnAddressablesInitialized;
+    }
+
+    private void OnAddressablesInitialized(AsyncOperationHandle<IResourceLocator> handle)
+    {
+        if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            Debug.LogError("Addressables.InitializeAsync() returned an invalid handle immediately.");
-            s_isInitializing = false;
-            yield break;
+            Debug.Log("Addressables initialized successfully.");
+            // Now that init is done, start the coroutine to load the manifest
+            StartCoroutine(LoadManifestCoroutine());
         }
-
-        yield return initHandle;
-
-        if (!initHandle.IsValid())
+        else
         {
-            Debug.LogError("initHandle became invalid after completion.");
-            if (initHandle.OperationException != null)
-            {
-                Debug.LogError($"Underlying exception: {initHandle.OperationException}");
-            }
+            Debug.LogError($"Addressables failed to initialize. Exception: {handle.OperationException}");
             s_isInitializing = false;
-            yield break;
         }
+    }
 
-        if (initHandle.Status != AsyncOperationStatus.Succeeded)
-        {
-            Debug.LogError($"Addressables failed to initialize. Exception: {initHandle.OperationException}");
-            s_isInitializing = false;
-            yield break;
-        }
-        Debug.Log("Addressables initialized successfully.");
-
+    private IEnumerator LoadManifestCoroutine()
+    {
         // Load the manifest using Addressables
         _manifestHandle = Addressables.LoadAssetAsync<TextAsset>("SongListJson");
         yield return _manifestHandle;
@@ -117,18 +102,24 @@ public class AssetDownloadManager : MonoBehaviour
             Debug.LogError($"[AssetDownloadManager] Failed to load song manifest from Addressables: {_manifestHandle.OperationException}");
             manifest = new SongManifest { songs = new List<SongMetadata>() };
         }
-
+        
+        // Initialization process is now fully complete
         s_isInitializing = false;
     }
 
+
+    private void ReleaseHandles()
+    {
+        if (_songInfoHandle.IsValid()) Addressables.Release(_songInfoHandle);
+        if (_audioClipHandle.IsValid()) Addressables.Release(_audioClipHandle);
+        if (_timelineHandle.IsValid()) Addressables.Release(_timelineHandle);
+    }
+    
     public IEnumerator PrepareSongCoroutine(string songId, System.Action<SongInfo> onComplete)
     {
         Debug.Log($"[GEMINI_DEBUG] ----- Addressables: New Song Preparation Started for ID: '{songId}' -----");
         
-        // Release handles for the song assets only
-        if (_songInfoHandle.IsValid()) Addressables.Release(_songInfoHandle);
-        if (_audioClipHandle.IsValid()) Addressables.Release(_audioClipHandle);
-        if (_timelineHandle.IsValid()) Addressables.Release(_timelineHandle);
+        ReleaseHandles();
 
         if(_preparedSong != null)
         {
@@ -148,9 +139,7 @@ public class AssetDownloadManager : MonoBehaviour
         
         yield return combinedHandle;
 
-        bool success = combinedHandle.Status == AsyncOperationStatus.Succeeded;
-
-        if (success)
+        if (combinedHandle.Status == AsyncOperationStatus.Succeeded)
         {
             SongInfo loadedSongInfo = _songInfoHandle.Result;
             AudioClip loadedAudioClip = _audioClipHandle.Result;
