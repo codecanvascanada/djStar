@@ -65,7 +65,20 @@ public class AssetDownloadManager : MonoBehaviour
     {
         Debug.Log("Starting Addressables.InitializeAsync().");
         var initHandle = Addressables.InitializeAsync();
+
+        if (!initHandle.IsValid())
+        {
+            Debug.LogError("Addressables.InitializeAsync() returned an invalid handle immediately.");
+            yield break;
+        }
+
         yield return initHandle;
+
+        if (!initHandle.IsValid())
+        {
+            Debug.LogError("initHandle became invalid after completion.");
+            yield break;
+        }
 
         if (initHandle.Status != AsyncOperationStatus.Succeeded)
         {
