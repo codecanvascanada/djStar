@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
 
                 if (director != null)
                 {
-                    // if (AssetDownloadManager.instance != null) { _currentSong = AssetDownloadManager.instance.GetPreparedSong(); }
+                    if (AssetDownloadManager.instance != null) { _currentSong = AssetDownloadManager.instance.GetPreparedSong(); }
                     if (_currentSong == null) { _currentSong = GameData.SelectedSongInfo; }
                                             if (_currentSong == null && testSong != null)
                                             {

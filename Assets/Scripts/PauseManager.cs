@@ -131,70 +131,69 @@ public class PauseManager : MonoBehaviour
 
     public void GoToCalibrationScene()
     {
-        // if (_isLoadingScene) return;
-        // _isLoadingScene = true;
-        // Resume();
-        // if (_gameManager != null)
-        // {
-        //     _gameManager.PrepareToExitScene();
-        // }
-        // StartCoroutine(LoadCalibrationSceneCoroutine());
+        if (_isLoadingScene) return;
+        _isLoadingScene = true;
+        Resume();
+        if (_gameManager != null)
+        {
+            _gameManager.PrepareToExitScene();
+        }
+        StartCoroutine(LoadCalibrationSceneCoroutine());
     }
 
     private IEnumerator LoadCalibrationSceneCoroutine()
     {
-        // // 1. Wait for the manifest and master bundles to be loaded by the singleton manager.
-        // float timeout = 10f; // 10 second timeout
-        // float timer = 0f;
-        // while (!AssetDownloadManager.instance.IsReady)
-        // {
-        //     timer += Time.deltaTime;
-        //     if (timer > timeout)
-        //     {
-        //         Debug.LogError("Failed to start calibration: Asset system loading timed out.");
-        //         _isLoadingScene = false;
-        //         yield break;
-        //     }
-        //     yield return null;
-        // }
+        // 1. Wait for the manifest and master bundles to be loaded by the singleton manager.
+        float timeout = 10f; // 10 second timeout
+        float timer = 0f;
+        while (!AssetDownloadManager.instance.IsReady)
+        {
+            timer += Time.deltaTime;
+            if (timer > timeout)
+            {
+                Debug.LogError("Failed to start calibration: Asset system loading timed out.");
+                _isLoadingScene = false;
+                yield break;
+            }
+            yield return null;
+        }
 
-        // // 2. Find the calibration song in the manifest.
-        // SongMetadata calibrationSongMeta = AssetDownloadManager.instance.manifest.songs.FirstOrDefault(s => s.id == "calibrationsong");
+        // 2. Find the calibration song in the manifest.
+        SongMetadata calibrationSongMeta = AssetDownloadManager.instance.manifest.songs.FirstOrDefault(s => s.id == "calibrationsong");
 
-        // if (calibrationSongMeta != null)
-        // {
-        //     // 3. Prepare the song using the AssetDownloadManager.
-        //     bool isSongPrepared = false;
-        //     SongInfo loadedSongInfo = null;
+        if (calibrationSongMeta != null)
+        {
+            // 3. Prepare the song using the AssetDownloadManager.
+            bool isSongPrepared = false;
+            SongInfo loadedSongInfo = null;
 
-        //     yield return StartCoroutine(AssetDownloadManager.instance.PrepareSongCoroutine(
-        //         calibrationSongMeta.id,
-        //         (songInfo) => {
-        //             if (songInfo != null)
-        //             {
-        //                 loadedSongInfo = songInfo;
-        //                 isSongPrepared = true;
-        //             }
-        //         }
-        //     ));
+            yield return StartCoroutine(AssetDownloadManager.instance.PrepareSongCoroutine(
+                calibrationSongMeta.id,
+                (songInfo) => {
+                    if (songInfo != null)
+                    {
+                        loadedSongInfo = songInfo;
+                        isSongPrepared = true;
+                    }
+                }
+            ));
 
-        //     // 4. If prepared, set GameData and load the scene.
-        //     if (isSongPrepared)
-        //     {
-        //         GameData.SelectedSongInfo = loadedSongInfo;
-        //         SceneManager.LoadScene(gameSceneName);
-        //     }
-        //     else
-        //     {
-        //         Debug.LogError("Failed to prepare calibration song assets!");
-        //         _isLoadingScene = false;
-        //     }
-        // }
-        // else
-        // {
-        //     Debug.LogError("PauseManager: Calibration Song 'calibrationsong' not found in manifest!");
-        //     _isLoadingScene = false;
-        // }
-        yield return null;
+            // 4. If prepared, set GameData and load the scene.
+            if (isSongPrepared)
+            {
+                GameData.SelectedSongInfo = loadedSongInfo;
+                SceneManager.LoadScene(gameSceneName);
+            }
+            else
+            {
+                Debug.LogError("Failed to prepare calibration song assets!");
+                _isLoadingScene = false;
+            }
+        }
+        else
+        {
+            Debug.LogError("PauseManager: Calibration Song 'calibrationsong' not found in manifest!");
+            _isLoadingScene = false;
+        }
     }
 }

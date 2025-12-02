@@ -22,63 +22,62 @@ public class TitleManager : MonoBehaviour
 
     private IEnumerator ForceInitialCalibrationCoroutine()
     {
-        // _isStartingGame = true;
+        _isStartingGame = true;
 
-        // // 1. Wait for the manifest and master bundles to be loaded by the singleton manager.
-        // float timeout = 10f; // 10 second timeout
-        // float timer = 0f;
-        // while (!AssetDownloadManager.instance.IsReady)
-        // {
-        //     timer += Time.deltaTime;
-        //     if (timer > timeout)
-        //     {
-        //         UnityEngine.Debug.LogError("Failed to start calibration: Asset system loading timed out.");
-        //         _isStartingGame = false;
-        //         yield break;
-        //     }
-        //     yield return null;
-        // }
+        // 1. Wait for the manifest and master bundles to be loaded by the singleton manager.
+        float timeout = 10f; // 10 second timeout
+        float timer = 0f;
+        while (!AssetDownloadManager.instance.IsReady)
+        {
+            timer += Time.deltaTime;
+            if (timer > timeout)
+            {
+                UnityEngine.Debug.LogError("Failed to start calibration: Asset system loading timed out.");
+                _isStartingGame = false;
+                yield break;
+            }
+            yield return null;
+        }
 
-        // // 2. Find the calibration song in the manifest.
-        // SongMetadata calibrationSongMeta = AssetDownloadManager.instance.manifest.songs.FirstOrDefault(s => s.id == "calibrationsong");
+        // 2. Find the calibration song in the manifest.
+        SongMetadata calibrationSongMeta = AssetDownloadManager.instance.manifest.songs.FirstOrDefault(s => s.id == "calibrationsong");
 
-        // if (calibrationSongMeta != null)
-        // {
-        //     // 3. Prepare the song using the AssetDownloadManager.
-        //     bool isSongPrepared = false;
-        //     SongInfo loadedSongInfo = null;
+        if (calibrationSongMeta != null)
+        {
+            // 3. Prepare the song using the AssetDownloadManager.
+            bool isSongPrepared = false;
+            SongInfo loadedSongInfo = null;
 
-        //     yield return StartCoroutine(AssetDownloadManager.instance.PrepareSongCoroutine(
-        //         calibrationSongMeta.id,
-        //         (songInfo) => {
-        //             if (songInfo != null)
-        //             {
-        //                 loadedSongInfo = songInfo;
-        //                 isSongPrepared = true;
-        //             }
-        //         }
-        //     ));
+            yield return StartCoroutine(AssetDownloadManager.instance.PrepareSongCoroutine(
+                calibrationSongMeta.id,
+                (songInfo) => {
+                    if (songInfo != null)
+                    {
+                        loadedSongInfo = songInfo;
+                        isSongPrepared = true;
+                    }
+                }
+            ));
 
-        //     // 4. If prepared, set GameData and load the scene.
-        //     if (isSongPrepared)
-        //     {
-        //         GameData.IsInitialCalibration = true;
-        //         GameData.SelectedSongInfo = loadedSongInfo;
-        //         SceneManager.LoadScene(gameSceneName);
-        //     }
-        //     else
-        //     {
-        //         UnityEngine.Debug.LogError("Failed to prepare calibration song assets!");
-        //         _isStartingGame = false;
-        //     }
-        // }
-        // else
-        // {
-        //     UnityEngine.Debug.LogWarning("Initial calibration song 'calibrationsong' not found in manifest! Loading stage select directly.");
-        //     GameData.IsInitialCalibration = false;
-        //     LoadStageSelect();
-        // }
-        yield return null;
+            // 4. If prepared, set GameData and load the scene.
+            if (isSongPrepared)
+            {
+                GameData.IsInitialCalibration = true;
+                GameData.SelectedSongInfo = loadedSongInfo;
+                SceneManager.LoadScene(gameSceneName);
+            }
+            else
+            {
+                UnityEngine.Debug.LogError("Failed to prepare calibration song assets!");
+                _isStartingGame = false;
+            }
+        }
+        else
+        {
+            UnityEngine.Debug.LogWarning("Initial calibration song 'calibrationsong' not found in manifest! Loading stage select directly.");
+            GameData.IsInitialCalibration = false;
+            LoadStageSelect();
+        }
     }
 
     private void LoadStageSelect()
@@ -93,9 +92,18 @@ public class TitleManager : MonoBehaviour
     {
         if (_isStartingGame) return;
 
-        // Bypassing calibration check for now
-        _isStartingGame = true;
-        LoadStageSelect();
+        // Check if the user has completed the initial calibration before.
+        if (PlayerPrefs.GetInt(InitialCalibrationKey, 0) == 0) // Key is "HasCompletedInitialCalibration"
+        {
+            // First time playing: force calibration.
+            StartCoroutine(ForceInitialCalibrationCoroutine());
+        }
+        else
+        {
+            // Not the first time: go to stage select.
+            _isStartingGame = true; // Set here as well to prevent re-entry during scene load
+            LoadStageSelect();
+        }
     }
 
 #if UNITY_EDITOR
