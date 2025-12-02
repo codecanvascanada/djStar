@@ -6,11 +6,16 @@
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
-            "requiredLevel": 1,
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_20minutes.bundle"
+            "assetBundleName": "songs_20minutes.bundle",
+            "assetBundleVariant": "",
+            "isOnSale": false,
+            "salePriceCoins": 0,
+            "salePriceGems": 0,
+            "saleStartDateTimeString": "",
+            "saleEndDateTimeString": ""
         },
         {
             "id": "calibrationsong",
@@ -18,11 +23,16 @@
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
-            "requiredLevel": 1,
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_calibrationsong.bundle"
+            "assetBundleName": "songs_calibrationsong.bundle",
+            "assetBundleVariant": "",
+            "isOnSale": false,
+            "salePriceCoins": 0,
+            "salePriceGems": 0,
+            "saleStartDateTimeString": "",
+            "saleEndDateTimeString": ""
         },
         {
             "id": "cherry",
@@ -30,11 +40,16 @@
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
-            "requiredLevel": 1,
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_cherry.bundle"
+            "assetBundleName": "songs_cherry.bundle",
+            "assetBundleVariant": "",
+            "isOnSale": false,
+            "salePriceCoins": 0,
+            "salePriceGems": 0,
+            "saleStartDateTimeString": "",
+            "saleEndDateTimeString": ""
         },
         {
             "id": "happy",
@@ -42,71 +57,101 @@
             "unlockedByDefault": true,
             "priceCoins": 1000,
             "priceGems": 0,
-            "requiredLevel": 1,
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_happy.bundle"
+            "assetBundleName": "songs_happy.bundle",
+            "assetBundleVariant": "",
+            "isOnSale": false,
+            "salePriceCoins": 0,
+            "salePriceGems": 0,
+            "saleStartDateTimeString": "",
+            "saleEndDateTimeString": ""
         },
         {
             "id": "honey",
             "version": 21,
-            "unlockedByDefault": true,
+            "unlockedByDefault": false,
             "priceCoins": 1000,
             "priceGems": 0,
-            "requiredLevel": 1,
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_honey.bundle"
+            "assetBundleName": "songs_honey.bundle",
+            "assetBundleVariant": "",
+            "isOnSale": false,
+            "salePriceCoins": 0,
+            "salePriceGems": 0,
+            "saleStartDateTimeString": "",
+            "saleEndDateTimeString": ""
         },
         {
             "id": "melody",
             "version": 21,
-            "unlockedByDefault": true,
+            "unlockedByDefault": false,
             "priceCoins": 1000,
             "priceGems": 0,
-            "requiredLevel": 1,
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_melody.bundle"
+            "assetBundleName": "songs_melody.bundle",
+            "assetBundleVariant": "",
+            "isOnSale": false,
+            "salePriceCoins": 0,
+            "salePriceGems": 0,
+            "saleStartDateTimeString": "",
+            "saleEndDateTimeString": ""
         },
         {
             "id": "moonlight",
             "version": 21,
-            "unlockedByDefault": true,
+            "unlockedByDefault": false,
             "priceCoins": 1000,
             "priceGems": 0,
-            "requiredLevel": 1,
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_moonlight.bundle"
+            "assetBundleName": "songs_moonlight.bundle",
+            "assetBundleVariant": "",
+            "isOnSale": false,
+            "salePriceCoins": 0,
+            "salePriceGems": 0,
+            "saleStartDateTimeString": "",
+            "saleEndDateTimeString": ""
         },
         {
             "id": "unfold",
             "version": 21,
-            "unlockedByDefault": true,
+            "unlockedByDefault": false,
             "priceCoins": 1000,
             "priceGems": 0,
-            "requiredLevel": 1,
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_unfold.bundle"
+            "assetBundleName": "songs_unfold.bundle",
+            "assetBundleVariant": "",
+            "isOnSale": false,
+            "salePriceCoins": 0,
+            "salePriceGems": 0,
+            "saleStartDateTimeString": "",
+            "saleEndDateTimeString": ""
         },
         {
             "id": "skyblue",
             "version": 21,
-            "unlockedByDefault": true,
+            "unlockedByDefault": false,
             "priceCoins": 1000,
             "priceGems": 0,
-            "requiredLevel": 1,
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_skyblue.bundle"
+            "assetBundleName": "songs_skyblue.bundle",
+            "assetBundleVariant": "",
+            "isOnSale": false,
+            "salePriceCoins": 0,
+            "salePriceGems": 0,
+            "saleStartDateTimeString": "",
+            "saleEndDateTimeString": ""
         }
     ],
     "promotions": []
