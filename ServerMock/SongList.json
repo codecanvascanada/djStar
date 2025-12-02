@@ -1,0 +1,103 @@
+{
+    "songs": [
+        {
+            "id": "20minutes",
+            "version": 21,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "calibrationsong",
+            "version": 21,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "cherry",
+            "version": 21,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "happy",
+            "version": 21,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "honey",
+            "version": 21,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "melody",
+            "version": 21,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "moonlight",
+            "version": 21,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "unfold",
+            "version": 21,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        },
+        {
+            "id": "skyblue",
+            "version": 21,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "requiredLevel": 1,
+            "tags": [
+                "new"
+            ]
+        }
+    ]
+}
