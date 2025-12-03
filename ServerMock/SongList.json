@@ -15,8 +15,19 @@
             "difficulties": [
                 {
                     "difficultyName": "Easy",
-                    "level": 1,
                     "assetBundleName": "songs_20minutes_easy.bundle"
+                },
+                {
+                    "difficultyName": "Normal",
+                    "assetBundleName": "songs_20minutes_normal.bundle"
+                },
+                {
+                    "difficultyName": "Hard",
+                    "assetBundleName": "songs_20minutes_hard.bundle"
+                },
+                {
+                    "difficultyName": "Crazy",
+                    "assetBundleName": "songs_20minutes_crazy.bundle"
                 }
             ],
             "isOnSale": false,
@@ -40,7 +51,6 @@
             "difficulties": [
                 {
                     "difficultyName": "Normal",
-                    "level": 1,
                     "assetBundleName": "songs_calibrationsong_normal.bundle"
                 }
             ],
@@ -65,7 +75,6 @@
             "difficulties": [
                 {
                     "difficultyName": "Easy",
-                    "level": 1,
                     "assetBundleName": "songs_cherry_easy.bundle"
                 }
             ],
@@ -90,7 +99,6 @@
             "difficulties": [
                 {
                     "difficultyName": "Easy",
-                    "level": 1,
                     "assetBundleName": "songs_happy_easy.bundle"
                 }
             ],
@@ -115,7 +123,6 @@
             "difficulties": [
                 {
                     "difficultyName": "Easy",
-                    "level": 1,
                     "assetBundleName": "songs_honey_easy.bundle"
                 }
             ],
@@ -140,7 +147,6 @@
             "difficulties": [
                 {
                     "difficultyName": "Easy",
-                    "level": 1,
                     "assetBundleName": "songs_melody_easy.bundle"
                 }
             ],
@@ -165,7 +171,6 @@
             "difficulties": [
                 {
                     "difficultyName": "Easy",
-                    "level": 1,
                     "assetBundleName": "songs_moonlight_easy.bundle"
                 }
             ],
@@ -190,7 +195,6 @@
             "difficulties": [
                 {
                     "difficultyName": "Easy",
-                    "level": 1,
                     "assetBundleName": "songs_unfold_easy.bundle"
                 }
             ],
@@ -215,7 +219,6 @@
             "difficulties": [
                 {
                     "difficultyName": "Easy",
-                    "level": 1,
                     "assetBundleName": "songs_skyblue_easy.bundle"
                 }
             ],
