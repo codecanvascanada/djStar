@@ -1,0 +1,49 @@
+ManifestFileVersion: 0
+CRC: 451366150
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 11a5a54ac21b6db531b51f203ac3dba1
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f16b41dcb179adf11320a9d84e8a60d4
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 11a5a54ac21b6db531b51f203ac3dba1
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8b22792c3b570444eb18cb78c2af3a74, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 87c8ec3f25bd74b63b63c5bf1d127c8b, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 951b9fbb9622543e9a6876fe91ca8877, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4f10dd60657c6004587f237a7e90f8e4, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 1d0e215490a954b7c9dfdf0b3219414d, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Unity.Timeline
+  ClassName: UnityEngine.Timeline.AudioClipProperties
+- AssemblyName: Unity.Timeline
+  ClassName: UnityEngine.Timeline.AudioMixerProperties
+- AssemblyName: Unity.Timeline
+  ClassName: UnityEngine.Timeline.MarkerList
+- AssemblyName: Unity.Timeline
+  ClassName: UnityEngine.Timeline.TimelineAsset/EditorSettings
+- AssemblyName: Unity.Timeline
+  ClassName: UnityEngine.Timeline.TimelineClip
+Assets:
+- Assets/Songs/calibration/calibration.asset
+- Assets/Songs/calibration/calibration.playable
+- Assets/Songs/calibration/calibration.mp3
+Dependencies:
+- /Users/aj/djStar/AssetBundles/shared_assets.bundle

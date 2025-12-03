@@ -1,0 +1,38 @@
+ManifestFileVersion: 0
+CRC: 3801884012
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: songs_20minutes_easy.bundle
+      Dependencies: {}
+    Info_1:
+      Name: songs_calibration_normal.bundle
+      Dependencies:
+        Dependency_0: shared_assets.bundle
+    Info_2:
+      Name: songs_cherry_easy.bundle
+      Dependencies: {}
+    Info_3:
+      Name: songs_happy_easy.bundle
+      Dependencies: {}
+    Info_4:
+      Name: songs_honey_easy.bundle
+      Dependencies: {}
+    Info_5:
+      Name: songs_melody_easy.bundle
+      Dependencies:
+        Dependency_0: shared_assets.bundle
+    Info_6:
+      Name: songs_moonlight_easy.bundle
+      Dependencies: {}
+    Info_7:
+      Name: songs_skyblue_easy.bundle
+      Dependencies:
+        Dependency_0: shared_assets.bundle
+    Info_8:
+      Name: songs_unfold_easy.bundle
+      Dependencies:
+        Dependency_0: shared_assets.bundle
+    Info_9:
+      Name: shared_assets.bundle
+      Dependencies: {}
