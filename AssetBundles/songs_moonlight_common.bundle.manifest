@@ -1,0 +1,33 @@
+ManifestFileVersion: 0
+CRC: 484764840
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: cd8dffe7870f9c5c5b57ffeff5aaff92
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: e75e66701cd058fe7557c92ff94ce390
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: cd8dffe7870f9c5c5b57ffeff5aaff92
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 87c8ec3f25bd74b63b63c5bf1d127c8b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Songs/moonlight/images/3.jpeg
+- Assets/Songs/moonlight/moonlight.asset
+- Assets/Songs/moonlight/moonlight.ogg
+Dependencies:
+- /Users/aj/djStar/AssetBundles/songs_moonlight_easy.bundle
