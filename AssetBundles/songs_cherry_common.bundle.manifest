@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 1026178203
+CRC: 496364607
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 49839472b96abebb495a472365a46c50
+    Hash: 1ea64c563140651096dc74df735e1243
   TypeTreeHash:
     serializedVersion: 2
     Hash: e75e66701cd058fe7557c92ff94ce390
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 49839472b96abebb495a472365a46c50
+    Hash: 1ea64c563140651096dc74df735e1243
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -28,6 +28,7 @@ SerializeReferenceClassIdentifiers:
 - AssemblyName: Assembly-CSharp
   ClassName: TimedImage
 Assets:
+- Assets/Songs/cherry/art/Image_fx-2.png
 - Assets/Songs/cherry/cherry.ogg
 - Assets/Songs/cherry/cherry.asset
 Dependencies:
