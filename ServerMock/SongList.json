@@ -2,6 +2,8 @@
     "songs": [
         {
             "id": "20minutes",
+            "songTitle": "20minutes",
+            "artistName": "amj",
             "version": 21,
             "unlockedByDefault": true,
             "priceCoins": 1000,
@@ -9,8 +11,14 @@
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_20minutes.bundle",
-            "assetBundleVariant": "",
+            "albumArtPath": "Assets/Songs/20minutes/art/ring 1.jpg",
+            "difficulties": [
+                {
+                    "difficultyName": "Easy",
+                    "level": 1,
+                    "assetBundleName": "songs_20minutes_easy.bundle"
+                }
+            ],
             "isOnSale": false,
             "salePriceCoins": 0,
             "salePriceGems": 0,
@@ -19,6 +27,8 @@
         },
         {
             "id": "calibrationsong",
+            "songTitle": "calibration",
+            "artistName": "amj",
             "version": 21,
             "unlockedByDefault": true,
             "priceCoins": 1000,
@@ -26,8 +36,14 @@
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_calibrationsong.bundle",
-            "assetBundleVariant": "",
+            "albumArtPath": "",
+            "difficulties": [
+                {
+                    "difficultyName": "Normal",
+                    "level": 1,
+                    "assetBundleName": "songs_calibrationsong_normal.bundle"
+                }
+            ],
             "isOnSale": false,
             "salePriceCoins": 0,
             "salePriceGems": 0,
@@ -36,6 +52,8 @@
         },
         {
             "id": "cherry",
+            "songTitle": "cherry",
+            "artistName": "amj",
             "version": 21,
             "unlockedByDefault": true,
             "priceCoins": 1000,
@@ -43,8 +61,14 @@
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_cherry.bundle",
-            "assetBundleVariant": "",
+            "albumArtPath": "",
+            "difficulties": [
+                {
+                    "difficultyName": "Easy",
+                    "level": 1,
+                    "assetBundleName": "songs_cherry_easy.bundle"
+                }
+            ],
             "isOnSale": false,
             "salePriceCoins": 0,
             "salePriceGems": 0,
@@ -53,6 +77,8 @@
         },
         {
             "id": "happy",
+            "songTitle": "happy",
+            "artistName": "amj",
             "version": 21,
             "unlockedByDefault": true,
             "priceCoins": 1000,
@@ -60,8 +86,14 @@
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_happy.bundle",
-            "assetBundleVariant": "",
+            "albumArtPath": "",
+            "difficulties": [
+                {
+                    "difficultyName": "Easy",
+                    "level": 1,
+                    "assetBundleName": "songs_happy_easy.bundle"
+                }
+            ],
             "isOnSale": false,
             "salePriceCoins": 0,
             "salePriceGems": 0,
@@ -70,6 +102,8 @@
         },
         {
             "id": "honey",
+            "songTitle": "honey",
+            "artistName": "amj",
             "version": 21,
             "unlockedByDefault": false,
             "priceCoins": 1000,
@@ -77,8 +111,14 @@
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_honey.bundle",
-            "assetBundleVariant": "",
+            "albumArtPath": "",
+            "difficulties": [
+                {
+                    "difficultyName": "Easy",
+                    "level": 1,
+                    "assetBundleName": "songs_honey_easy.bundle"
+                }
+            ],
             "isOnSale": false,
             "salePriceCoins": 0,
             "salePriceGems": 0,
@@ -87,6 +127,8 @@
         },
         {
             "id": "melody",
+            "songTitle": "melody",
+            "artistName": "amj",
             "version": 21,
             "unlockedByDefault": false,
             "priceCoins": 1000,
@@ -94,8 +136,14 @@
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_melody.bundle",
-            "assetBundleVariant": "",
+            "albumArtPath": "",
+            "difficulties": [
+                {
+                    "difficultyName": "Easy",
+                    "level": 1,
+                    "assetBundleName": "songs_melody_easy.bundle"
+                }
+            ],
             "isOnSale": false,
             "salePriceCoins": 0,
             "salePriceGems": 0,
@@ -104,6 +152,8 @@
         },
         {
             "id": "moonlight",
+            "songTitle": "moonlight",
+            "artistName": "amj",
             "version": 21,
             "unlockedByDefault": false,
             "priceCoins": 1000,
@@ -111,8 +161,14 @@
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_moonlight.bundle",
-            "assetBundleVariant": "",
+            "albumArtPath": "",
+            "difficulties": [
+                {
+                    "difficultyName": "Easy",
+                    "level": 1,
+                    "assetBundleName": "songs_moonlight_easy.bundle"
+                }
+            ],
             "isOnSale": false,
             "salePriceCoins": 0,
             "salePriceGems": 0,
@@ -121,6 +177,8 @@
         },
         {
             "id": "unfold",
+            "songTitle": "unfold",
+            "artistName": "amj",
             "version": 21,
             "unlockedByDefault": false,
             "priceCoins": 1000,
@@ -128,8 +186,14 @@
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_unfold.bundle",
-            "assetBundleVariant": "",
+            "albumArtPath": "",
+            "difficulties": [
+                {
+                    "difficultyName": "Easy",
+                    "level": 1,
+                    "assetBundleName": "songs_unfold_easy.bundle"
+                }
+            ],
             "isOnSale": false,
             "salePriceCoins": 0,
             "salePriceGems": 0,
@@ -138,6 +202,8 @@
         },
         {
             "id": "skyblue",
+            "songTitle": "skyblue",
+            "artistName": "amj",
             "version": 21,
             "unlockedByDefault": false,
             "priceCoins": 1000,
@@ -145,8 +211,14 @@
             "tags": [
                 "new"
             ],
-            "assetBundleName": "songs_skyblue.bundle",
-            "assetBundleVariant": "",
+            "albumArtPath": "",
+            "difficulties": [
+                {
+                    "difficultyName": "Easy",
+                    "level": 1,
+                    "assetBundleName": "songs_skyblue_easy.bundle"
+                }
+            ],
             "isOnSale": false,
             "salePriceCoins": 0,
             "salePriceGems": 0,
