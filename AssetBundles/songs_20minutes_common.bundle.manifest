@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 2907920186
+CRC: 1080204412
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c318282e60c6dd83ee4bede9ac7dbc08
+    Hash: ec175c4ed37847ae2a79d5a03f34816e
   TypeTreeHash:
     serializedVersion: 2
     Hash: e75e66701cd058fe7557c92ff94ce390
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: c318282e60c6dd83ee4bede9ac7dbc08
+    Hash: ec175c4ed37847ae2a79d5a03f34816e
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -28,7 +28,7 @@ SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Songs/20minutes/20minutes.ogg
 - Assets/Songs/20minutes/images/bg.jpg
-- Assets/Songs/20minutes/art/ring.jpg
+- Assets/Songs/20minutes/art/20minutes.png
 - Assets/Songs/20minutes/20minutes.asset
 Dependencies:
 - /Users/aj/djStar/AssetBundles/songs_20minutes_crazy.bundle
