@@ -24,10 +24,6 @@
                 {
                     "difficultyName": "Hard",
                     "assetBundleName": "songs_20minutes_hard.bundle"
-                },
-                {
-                    "difficultyName": "Crazy",
-                    "assetBundleName": "songs_20minutes_crazy.bundle"
                 }
             ],
             "isOnSale": false,
@@ -71,7 +67,7 @@
             "tags": [
                 "new"
             ],
-            "albumArtPath": "Assets/Songs/cherry/art/stage.png",
+            "albumArtPath": "Assets/Songs/cherry/art/cherry.png",
             "difficulties": [
                 {
                     "difficultyName": "Easy",
@@ -95,7 +91,7 @@
             "tags": [
                 "new"
             ],
-            "albumArtPath": "Assets/Songs/happy/art/title.jpeg",
+            "albumArtPath": "Assets/Songs/happy/art/happy.png",
             "difficulties": [
                 {
                     "difficultyName": "Easy",
@@ -119,7 +115,7 @@
             "tags": [
                 "new"
             ],
-            "albumArtPath": "",
+            "albumArtPath": "Assets/Songs/honey/art/honey.png",
             "difficulties": [
                 {
                     "difficultyName": "Easy",
