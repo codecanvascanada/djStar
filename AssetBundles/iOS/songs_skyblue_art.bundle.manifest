@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 1010816965
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 30be9ead46592524ef3e46b02254e911
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2d8df09e698f722ada1caa03d3413830
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 30be9ead46592524ef3e46b02254e911
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Songs/skyblue/art/skyblue.png
+Dependencies: []

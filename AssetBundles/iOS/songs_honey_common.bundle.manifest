@@ -1,0 +1,34 @@
+ManifestFileVersion: 0
+CRC: 1212325111
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: d89a9ee8037b4cf303932e97f65567a5
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c5f6810a683aa24b66bc95e52c7d4776
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: d89a9ee8037b4cf303932e97f65567a5
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 87c8ec3f25bd74b63b63c5bf1d127c8b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: Assembly-CSharp
+  ClassName: TimedImage
+Assets:
+- Assets/Songs/honey/honey.asset
+- Assets/Songs/honey/honey.ogg
+Dependencies:
+- /Users/aj/djStar/AssetBundles/iOS/songs_honey_easy.bundle

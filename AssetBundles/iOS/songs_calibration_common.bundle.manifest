@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+CRC: 2308204844
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 18687fc1663d04ef26958c5987d76fe9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 701108cb8f474b311c0fcbed14389c8f
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 18687fc1663d04ef26958c5987d76fe9
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 87c8ec3f25bd74b63b63c5bf1d127c8b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Songs/calibration/calibration.asset
+- Assets/Songs/calibration/calibration.mp3
+Dependencies:
+- /Users/aj/djStar/AssetBundles/iOS/shared_assets.bundle
+- /Users/aj/djStar/AssetBundles/iOS/songs_calibration_normal.bundle
