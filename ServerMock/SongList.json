@@ -1,5 +1,5 @@
 {
-    "manifestVersion": "20251206211923",
+    "manifestVersion": "20251206213730",
     "songs": [
         {
             "id": "20minutes",
@@ -48,7 +48,7 @@
             "difficulties": [
                 {
                     "difficultyName": "Normal",
-                    "assetBundleName": "songs_calibrationsong_normal.bundle"
+                    "assetBundleName": "songs_calibration_normal.bundle"
                 }
             ],
             "isOnSale": false,
