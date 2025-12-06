@@ -1,0 +1,36 @@
+ManifestFileVersion: 0
+CRC: 2448289897
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 68931a6b335845b917187c4fef0be319
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: c5f6810a683aa24b66bc95e52c7d4776
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 68931a6b335845b917187c4fef0be319
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 87c8ec3f25bd74b63b63c5bf1d127c8b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Songs/20minutes/20minutes.ogg
+- Assets/Songs/20minutes/images/bg.jpg
+- Assets/Songs/20minutes/art/20minutes.png
+- Assets/Songs/20minutes/20minutes.asset
+Dependencies:
+- /Users/aj/djStar/AssetBundles/StandaloneOSX/songs_20minutes_easy.bundle
+- /Users/aj/djStar/AssetBundles/StandaloneOSX/songs_20minutes_hard.bundle
+- /Users/aj/djStar/AssetBundles/StandaloneOSX/songs_20minutes_normal.bundle
