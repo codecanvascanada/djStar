@@ -1,0 +1,22 @@
+ManifestFileVersion: 0
+CRC: 4170432475
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 2d6883d0c9796a086f67b69580f6c5fb
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 2d8df09e698f722ada1caa03d3413830
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 2d6883d0c9796a086f67b69580f6c5fb
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Songs/happy/art/happy.png
+Dependencies: []
