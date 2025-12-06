@@ -181,13 +181,13 @@
             "songTitle": "unfold",
             "artistName": "amj",
             "version": 21,
-            "unlockedByDefault": false,
+            "unlockedByDefault": true,
             "priceCoins": 100,
             "priceGems": 0,
             "tags": [
                 "new"
             ],
-            "albumArtPath": "",
+            "albumArtPath": "Assets/Songs/unfold/art/unfold.png",
             "difficulties": [
                 {
                     "difficultyName": "Easy",
