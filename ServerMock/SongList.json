@@ -164,7 +164,7 @@
             "tags": [
                 "new"
             ],
-            "albumArtPath": "",
+            "albumArtPath": "Assets/Songs/moonlight/art/moonlight.png",
             "difficulties": [
                 {
                     "difficultyName": "Easy",
@@ -212,7 +212,7 @@
             "tags": [
                 "new"
             ],
-            "albumArtPath": "",
+            "albumArtPath": "Assets/Songs/skyblue/art/skyblue.png",
             "difficulties": [
                 {
                     "difficultyName": "Easy",
