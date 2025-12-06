@@ -1,17 +1,19 @@
 ManifestFileVersion: 0
-CRC: 1608227537
+CRC: 2311701284
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 568ece633c6f537f8b5e0cd63aead009
+    Hash: 2f1a98560d907c56c1c22a45722b3c3b
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 701108cb8f474b311c0fcbed14389c8f
+    Hash: c5f6810a683aa24b66bc95e52c7d4776
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 568ece633c6f537f8b5e0cd63aead009
+    Hash: 2f1a98560d907c56c1c22a45722b3c3b
 HashAppended: 0
 ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
 - Class: 83
   Script: {instanceID: 0}
 - Class: 114
@@ -25,6 +27,7 @@ ClassTypes:
 SerializeReferenceClassIdentifiers: []
 Assets:
 - Assets/Songs/melody/melody.ogg
+- Assets/Songs/melody/art/melody.png
 - Assets/Songs/melody/melody.asset
 Dependencies:
 - /Users/aj/djStar/AssetBundles/shared_assets.bundle
