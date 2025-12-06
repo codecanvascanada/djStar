@@ -1,5 +1,5 @@
 {
-    "manifestVersion": "20251206045036",
+    "manifestVersion": "20251206075846",
     "songs": [
         {
             "id": "20minutes",
@@ -140,7 +140,7 @@
             "tags": [
                 "new"
             ],
-            "albumArtPath": "",
+            "albumArtPath": "Assets/Songs/melody/art/melody.png",
             "difficulties": [
                 {
                     "difficultyName": "Easy",
