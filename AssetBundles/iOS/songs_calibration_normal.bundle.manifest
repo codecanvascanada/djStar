@@ -1,17 +1,19 @@
 ManifestFileVersion: 0
-CRC: 1137384947
+CRC: 4100391656
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: bf6038623c55c3a2e285764ddfb59e74
+    Hash: 72e7af5ff601a1f8ba51e9b9f02611da
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 8942fad1e90fbbcded6a34e6657f92f7
+    Hash: 885a9016ed4a44f28dae7d01e58ab38d
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: bf6038623c55c3a2e285764ddfb59e74
+    Hash: 72e7af5ff601a1f8ba51e9b9f02611da
 HashAppended: 0
 ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: 8b22792c3b570444eb18cb78c2af3a74, type: 3}
 - Class: 114
@@ -37,4 +39,5 @@ SerializeReferenceClassIdentifiers:
   ClassName: UnityEngine.Timeline.TimelineClip
 Assets:
 - Assets/Songs/calibration/calibration.playable
-Dependencies: []
+Dependencies:
+- /Users/aj/djStar/AssetBundles/iOS/songs_calibration_common.bundle

@@ -1,17 +1,19 @@
 ManifestFileVersion: 0
-CRC: 1731835871
+CRC: 3109391684
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5d94f001741dd92ecb9740a59ad07797
+    Hash: 76d3ffe95d66cf80951fbcfe6b9b966e
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 8942fad1e90fbbcded6a34e6657f92f7
+    Hash: 885a9016ed4a44f28dae7d01e58ab38d
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 5d94f001741dd92ecb9740a59ad07797
+    Hash: 76d3ffe95d66cf80951fbcfe6b9b966e
 HashAppended: 0
 ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
 - Class: 114
   Script: {fileID: 11500000, guid: 8b22792c3b570444eb18cb78c2af3a74, type: 3}
 - Class: 114
@@ -37,4 +39,5 @@ SerializeReferenceClassIdentifiers:
   ClassName: UnityEngine.Timeline.TimelineClip
 Assets:
 - Assets/Songs/20minutes/20minutes_easy.playable
-Dependencies: []
+Dependencies:
+- /Users/aj/djStar/AssetBundles/WebGL/songs_20minutes_common.bundle

@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 797284565
+CRC: 262588206
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -16,7 +16,8 @@ AssetBundleManifest:
         Dependency_2: songs_20minutes_hard.bundle
     Info_3:
       Name: songs_20minutes_easy.bundle
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: songs_20minutes_common.bundle
     Info_4:
       Name: songs_20minutes_normal.bundle
       Dependencies: {}
@@ -33,7 +34,8 @@ AssetBundleManifest:
         Dependency_1: songs_calibration_normal.bundle
     Info_8:
       Name: songs_calibration_normal.bundle
-      Dependencies: {}
+      Dependencies:
+        Dependency_0: songs_calibration_common.bundle
     Info_9:
       Name: songs_cherry_art.bundle
       Dependencies: {}
