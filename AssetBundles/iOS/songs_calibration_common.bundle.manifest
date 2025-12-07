@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 2323890564
+CRC: 2364722320
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: cff52704e058763dd3ca3727338d6b1f
+    Hash: c833e429966ce3176fe260c1d9afb7e3
   TypeTreeHash:
     serializedVersion: 2
     Hash: 701108cb8f474b311c0fcbed14389c8f
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: cff52704e058763dd3ca3727338d6b1f
+    Hash: c833e429966ce3176fe260c1d9afb7e3
 HashAppended: 0
 ClassTypes:
 - Class: 83
@@ -24,8 +24,8 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/Songs/calibration/calibration.ogg
 - Assets/Songs/calibration/calibration.asset
+- Assets/Songs/calibration/calibration.ogg
 Dependencies:
 - /Users/aj/djStar/AssetBundles/iOS/shared_assets.bundle
 - /Users/aj/djStar/AssetBundles/iOS/songs_calibration_normal.bundle
