@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 1148179789
+CRC: 1484223751
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 20a4867c2b91182e7a7b55cddc8df9fb
+    Hash: 462b858b751b302fc4f735aa4bd5f112
   TypeTreeHash:
     serializedVersion: 2
     Hash: c5f6810a683aa24b66bc95e52c7d4776
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 20a4867c2b91182e7a7b55cddc8df9fb
+    Hash: 462b858b751b302fc4f735aa4bd5f112
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -26,7 +26,7 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers: []
 Assets:
-- Assets/Songs/20minutes/20minutes.ogg
+- Assets/Songs/20minutes/20minutes.wav
 - Assets/Songs/20minutes/images/bg.jpg
 - Assets/Songs/20minutes/20minutes.asset
 Dependencies:
