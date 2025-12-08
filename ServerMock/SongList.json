@@ -202,6 +202,28 @@
             "saleEndDateTimeString": ""
         },
         {
+            "id": "sugarrush",
+            "songTitle": "sugar rush",
+            "artistName": "sol",
+            "version": 0,
+            "unlockedByDefault": true,
+            "priceCoins": 0,
+            "priceGems": 0,
+            "tags": [],
+            "albumArtPath": "Assets/Songs/sugarrush/art/sugarrush.png",
+            "difficulties": [
+                {
+                    "difficultyName": "Easy",
+                    "assetBundleName": "songs_sugar_rush_easy.bundle"
+                }
+            ],
+            "isOnSale": false,
+            "salePriceCoins": 0,
+            "salePriceGems": 0,
+            "saleStartDateTimeString": "",
+            "saleEndDateTimeString": ""
+        },
+        {
             "id": "unfold",
             "songTitle": "unfold",
             "artistName": "amj",
