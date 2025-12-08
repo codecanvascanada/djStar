@@ -1,0 +1,31 @@
+ManifestFileVersion: 0
+CRC: 3794658502
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 3afd92a16ee64cd2b68790e7dadab081
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 701108cb8f474b311c0fcbed14389c8f
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: 3afd92a16ee64cd2b68790e7dadab081
+HashAppended: 0
+ClassTypes:
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: bfda56da833e2384a9677cd3c976a436, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 87c8ec3f25bd74b63b63c5bf1d127c8b, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/Songs/skyblue/skyblue.asset
+- Assets/Songs/skyblue/skyblue.ogg
+Dependencies:
+- /Users/aj/djStar/AssetBundles/Android/shared_assets.bundle
+- /Users/aj/djStar/AssetBundles/Android/songs_skyblue_easy.bundle
