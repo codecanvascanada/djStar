@@ -1,9 +1,0 @@
-# 1. Ignore everything by default
-*
-
-# 2. Un-ignore this .gitignore file
-!.gitignore
-
-# 3. Un-ignore the ServerData folder for Addressables
-!/ServerData
-!/ServerData/**
