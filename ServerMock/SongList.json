@@ -1,5 +1,5 @@
 {
-    "manifestVersion": "20251208165339",
+    "manifestVersion": "20251208200613",
     "songs": [
         {
             "id": "20minutes",
@@ -216,7 +216,7 @@
             "difficulties": [
                 {
                     "difficultyName": "Easy",
-                    "assetBundleName": "songs_sugar_rush_easy.bundle"
+                    "assetBundleName": "songs_sugarrush_easy.bundle"
                 }
             ],
             "isOnSale": false,
