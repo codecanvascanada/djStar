@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 1830454981
+CRC: 296391146
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
@@ -100,22 +100,25 @@ AssetBundleManifest:
       Dependencies:
         Dependency_0: songs_skyblue_common.bundle
     Info_27:
-      Name: songs_sugar_rush_common.bundle
-      Dependencies:
-        Dependency_0: songs_sugar_rush_easy.bundle
+      Name: songs_sugarrush_art.bundle
+      Dependencies: {}
     Info_28:
-      Name: songs_sugar_rush_easy.bundle
+      Name: songs_sugarrush_common.bundle
       Dependencies:
-        Dependency_0: songs_sugar_rush_common.bundle
+        Dependency_0: songs_sugarrush_easy.bundle
     Info_29:
+      Name: songs_sugarrush_easy.bundle
+      Dependencies:
+        Dependency_0: songs_sugarrush_common.bundle
+    Info_30:
       Name: songs_unfold_art.bundle
       Dependencies: {}
-    Info_30:
+    Info_31:
       Name: songs_unfold_common.bundle
       Dependencies:
         Dependency_0: shared_assets.bundle
         Dependency_1: songs_unfold_easy.bundle
-    Info_31:
+    Info_32:
       Name: songs_unfold_easy.bundle
       Dependencies:
         Dependency_0: songs_unfold_common.bundle
