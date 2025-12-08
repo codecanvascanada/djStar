@@ -1,5 +1,5 @@
 {
-    "manifestVersion": "20251208162037",
+    "manifestVersion": "20251208164124",
     "songs": [
         {
             "id": "20minutes",
@@ -207,9 +207,11 @@
             "artistName": "sol",
             "version": 0,
             "unlockedByDefault": true,
-            "priceCoins": 0,
+            "priceCoins": 1000,
             "priceGems": 0,
-            "tags": [],
+            "tags": [
+                "new"
+            ],
             "albumArtPath": "Assets/Songs/sugarrush/art/sugarrush.png",
             "difficulties": [
                 {
