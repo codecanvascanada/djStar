@@ -1,5 +1,5 @@
 {
-    "manifestVersion": "20251208024859",
+    "manifestVersion": "20251208162037",
     "songs": [
         {
             "id": "20minutes",
@@ -38,7 +38,7 @@
             "songTitle": "calibration",
             "artistName": "amj",
             "version": 21,
-            "unlockedByDefault": true,
+            "unlockedByDefault": false,
             "priceCoins": 1000,
             "priceGems": 0,
             "tags": [
@@ -178,30 +178,6 @@
             "saleEndDateTimeString": ""
         },
         {
-            "id": "unfold",
-            "songTitle": "unfold",
-            "artistName": "amj",
-            "version": 21,
-            "unlockedByDefault": true,
-            "priceCoins": 1000,
-            "priceGems": 0,
-            "tags": [
-                "new"
-            ],
-            "albumArtPath": "Assets/Songs/unfold/art/unfold.png",
-            "difficulties": [
-                {
-                    "difficultyName": "Easy",
-                    "assetBundleName": "songs_unfold_easy.bundle"
-                }
-            ],
-            "isOnSale": false,
-            "salePriceCoins": 0,
-            "salePriceGems": 0,
-            "saleStartDateTimeString": "",
-            "saleEndDateTimeString": ""
-        },
-        {
             "id": "skyblue",
             "songTitle": "skyblue",
             "artistName": "amj",
@@ -217,6 +193,30 @@
                 {
                     "difficultyName": "Easy",
                     "assetBundleName": "songs_skyblue_easy.bundle"
+                }
+            ],
+            "isOnSale": false,
+            "salePriceCoins": 0,
+            "salePriceGems": 0,
+            "saleStartDateTimeString": "",
+            "saleEndDateTimeString": ""
+        },
+        {
+            "id": "unfold",
+            "songTitle": "unfold",
+            "artistName": "amj",
+            "version": 21,
+            "unlockedByDefault": true,
+            "priceCoins": 1000,
+            "priceGems": 0,
+            "tags": [
+                "new"
+            ],
+            "albumArtPath": "Assets/Songs/unfold/art/unfold.png",
+            "difficulties": [
+                {
+                    "difficultyName": "Easy",
+                    "assetBundleName": "songs_unfold_easy.bundle"
                 }
             ],
             "isOnSale": false,
